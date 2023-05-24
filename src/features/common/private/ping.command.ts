@@ -1,9 +1,9 @@
-import { Chat } from "whatsapp-web.js";
+import { Chat, Message } from "whatsapp-web.js";
 import { Command } from "../../../core/command";
 
 export class PingCommand extends Command {
-    execute(chat: Chat, args: any): Promise<void> | null {
+    async execute(message: Message, args: any): Promise<void> {
+        const chat = await message.getChat();
         chat.sendMessage('PONG PONG');
-        return null;
     }
 }

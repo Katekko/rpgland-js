@@ -2,6 +2,10 @@ import qrcode from 'qrcode-terminal';
 import { Client, LocalAuth } from 'whatsapp-web.js';
 import { commands } from './commands';
 import { Command, CommandMap } from './core/command';
+import { FirebaseService } from './services/firebase';
+
+// Initializing the firebase service
+new FirebaseService();
 
 const client = new Client({ authStrategy: new LocalAuth() });
 const commandChar = '!';
@@ -23,8 +27,7 @@ client.on('message', async message => {
     if (command == null) return null;
 
     const args = _findArguments(commandLine);
-    const chat = await message.getChat();
-    command.execute(chat, args);
+    command.execute(message, args);
 });
 
 client.initialize();

@@ -8,6 +8,10 @@ export const translationPtBR: CommandTranslations = {
             hunt: "Aventure-se pela natureza para caçar criaturas perigosas e ganhar XP e moedas.",
             heal: "Consuma uma poção de vida para restaurar seus pontos de vida (HP) quando estiverem baixos.",
             shop: "Visite o mercado para gastar suas moedas suadas em vários itens, equipamentos e melhorias."
+        },
+        start: {
+            welcome: (name: string) => `🌍 Welcome to the world of RPG Land, ${name}! Embark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️`
+            error: '❌ Failed start your journey '
         }
     }
 };

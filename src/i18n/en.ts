@@ -8,6 +8,10 @@ export const translationEn: CommandTranslations = {
             hunt: "🏹 *HUNT*   -> ```Venture into the wilderness to hunt dangerous creatures and earn XP and coins.```",
             heal: "🩹 *HEAL*   -> ```Consume a life potion to restore your health points (HP) when it's low.```",
             shop: "🛍️ *SHOP*   -> ```Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.```"
+        },
+        start: {
+            welcome: (name: string) => `🌍 Welcome to the world of RPG Land, *${name}*!\nEmbark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️`,
+            error: '❌ Failed start your journey '
         }
     }
 };

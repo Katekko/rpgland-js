@@ -8,7 +8,11 @@ export type CommandTranslations = {
             hunt: string,
             heal: string,
             shop: string
-        };
+        },
+        start: {
+            welcome: (name: string) => string,
+            error: string,
+        }
     };
 };
 
