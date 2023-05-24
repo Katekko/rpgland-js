@@ -1,15 +1,9 @@
 import { CommandMap } from './core/command';
 import { PingCommand } from './features/common/private/ping.command';
+import { HelpCommand } from './features/rpg/both/help.command';
 
 /** All existent commands in the bot */
 export const commands: CommandMap = {
     ping: new PingCommand(),
-    katekko: {
-        gostoso: {
-            sera: new PingCommand()
-        },
-    },
-    pong: {
-        young: new PingCommand()
-    }
+    help: new HelpCommand(),
 };
