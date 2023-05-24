@@ -1,3 +1,4 @@
+import { MobModel } from "../core/models/mob.model";
 import { CommandTranslations } from "./translation";
 
 export const translationEn: CommandTranslations = {
@@ -16,6 +17,19 @@ export const translationEn: CommandTranslations = {
         },
         commons: {
             needToStart: '❌ You need to start you journey first'
+        },
+        hunt: {
+            find: {
+                found: (mob: MobModel) => `🏹 Get ready to battle! 🏹\nYou found a *${mob.name}* with *${mob.health}*❤️ health!`,
+                failedToSearch: `⚠️ You are already in hunting mode. Finish your current hunt before starting a new one.`,
+            },
+            attack: {
+                attacking: (mob: string, damage: number, remainingHealth: number) => `⚔️ You attacked the *${mob}* and dealt *${damage}* damage! ⚔️\nThe *${mob}* has *${remainingHealth}* ❤️ remaining.`,
+                attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 The *${mob}* attacked you and dealt *${damage}* damage! 🔥\nYou have *${remainingHealth}* ❤️ remaining.`,
+                defeated: (mob: string) => `☠️ You were defeated by the *${mob}*! ☠️\nYou have lost one level.`,
+                mobDefeated: (mob: string, exp: number) => `💥 You have defeated the *${mob}* and earned *${exp}* experience points!`,
+                failedToAttack: `⚠️ You are not currently hunting any mob. Use the command *-hunt find* to start hunting.`,
+            }
         }
     }
 };

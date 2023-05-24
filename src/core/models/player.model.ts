@@ -12,24 +12,36 @@ export class PlayerModel {
 
     public state: PlayerState;
 
-    public huntAgainst: String | null;
+    public huntAgainst: MobModel | null;
+    private maxAttack: number;
+
+    getRealAttack(): number {
+        return this.maxAttack * this.level;
+    }
+
+    private _getBaseHealth(): number {
+        return 40;
+    }
 
 
     constructor(id: string, name: string, telephoneNumber: string,
         level: number | null, exp: number | null,
-        health: number | null, state: PlayerState | null, huntAgainst: String | null) {
+        health: number | null, state: PlayerState | null,
+        huntAgainst: MobModel | null, attack: number | null) {
         this.id = id;
         this.name = name;
         this.level = level ?? 1;
         this.exp = exp ?? 0;
         this.telephoneNumber = telephoneNumber;
-        this.health = health ?? 40;
+        this.health = health ?? this._getBaseHealth();
         this.state = state ?? PlayerState.Idle;
         this.huntAgainst = huntAgainst;
+        this.maxAttack = attack ?? 1.5;
     }
 
-    static createNew(name: string, telephone: string ): PlayerModel {
-        const player = new PlayerModel(uuidv4(), name, telephone, null, null, null, null, null);
+    static createNew(name: string, telephone: string): PlayerModel {
+        const player = new PlayerModel(uuidv4(), name, telephone,
+            null, null, null, null, null, null);
         return player;
     }
 
@@ -42,7 +54,8 @@ export class PlayerModel {
             telephoneNumber: this.telephoneNumber,
             health: this.health,
             state: this.state,
-            huntAgainst: this.huntAgainst,
+            huntAgainst: this.huntAgainst?.toObject() ?? null,
+            maxAttack: this.maxAttack,
         };
 
         return playerDataObj;
@@ -51,10 +64,18 @@ export class PlayerModel {
     static fromData(data: FirebaseFirestore.DocumentData): PlayerModel {
         const model = new PlayerModel(
             data.id, data.name, data.telephoneNumber,
-            data.number, data.exp, data.health, data.state, 
-            data.huntAgainst.id,
+            data.number, data.exp, data.health, data.state,
+            MobModel.fromData(data.huntAgainst),
+            data.maxAttack,
         );
 
         return model;
+    }
+
+    setPlayerDeath() {
+        this.state = PlayerState.Idle;
+        this.huntAgainst = null;
+        this.level -= this.level == 1 ? 0 : 1;
+        this.health = this._getBaseHealth();
     }
 }

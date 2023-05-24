@@ -8,9 +8,11 @@ export class MobModel {
     public itemsDrop: ItemModel[];
     public health: number;
     public chanceToAppear: number;
+    public attack: number;
 
     constructor(id: string, name: string, level: number, expDrop: number,
-        itemsDrop: ItemModel[], health: number, chanceToAppear: number) {
+        itemsDrop: ItemModel[], health: number, chanceToAppear: number,
+        attack: number) {
         this.id = id;
         this.name = name;
         this.level = level;
@@ -18,6 +20,7 @@ export class MobModel {
         this.itemsDrop = itemsDrop;
         this.health = health;
         this.chanceToAppear = chanceToAppear;
+        this.attack = attack;
     }
 
     toObject(): object {
@@ -29,12 +32,15 @@ export class MobModel {
             itemsDrop: this.itemsDrop,
             health: this.health,
             chanceToAppear: this.chanceToAppear,
+            attack: this.attack,
         };
 
         return mobObj;
     }
 
-    static fromData(data: FirebaseFirestore.DocumentData): MobModel {
+    static fromData(data: FirebaseFirestore.DocumentData | null): MobModel | null {
+        if (data == null) return null;
+
         const model = new MobModel(
             data.id,
             data.name,
@@ -43,6 +49,7 @@ export class MobModel {
             [],
             data.health,
             data.chanceToAppear,
+            data.attack,
         );
         return model;
     }

@@ -1,4 +1,4 @@
-import { Message } from "whatsapp-web.js";
+import { Buttons, Message } from "whatsapp-web.js";
 import { Command } from "../../../../core/command";
 import { MobService } from "../../../../services/mobs.service";
 import { MobModel } from "../../../../core/models/mob.model";
@@ -16,6 +16,10 @@ export class HuntCommand extends Command {
         const player = await playerService.getPlayerByPhone(contact);
 
         if (player) {
+            if (player.state != PlayerState.Idle) {
+                message.reply(translate.commands.hunt.find.failedToSearch);
+                return;
+            }
             const mobs = await mobService.getAllMobs();
             const totalChance = mobs.reduce((sum, mob) => sum + mob.chanceToAppear, 0);
             let randomChance = Math.random() * totalChance;
@@ -33,9 +37,11 @@ export class HuntCommand extends Command {
 
             if (selectedMob) {
                 player!.state = PlayerState.Hunting;
-                player!.huntAgainst = selectedMob.id;
+                player!.huntAgainst = selectedMob;
+                playerService.savePlayer(player);
+                message.reply(translate.commands.hunt.find.found(selectedMob));
             }
-        }else {
+        } else {
             message.reply(translate.commands.commons.needToStart);
         }
     }

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { PlayerModel as PlayerModel } from '../core/models/player.model';
 import { store } from './firebase';
+import { Message } from 'whatsapp-web.js';
 
 export class PlayerService {
     constructor() { }
@@ -24,10 +25,20 @@ export class PlayerService {
                 const model = PlayerModel.fromData(data);
                 return model;
             }
-            
+
             return null;
         } catch (error) {
             throw error;
+        }
+    }
+
+    async getPlayerByMessage(message: Message): Promise<PlayerModel | null> {
+        try {
+            const contact = await message.getContact();
+            const phone = contact.number;
+            return this.getPlayerByPhone(phone);
+        } catch (err) {
+            throw err;
         }
     }
 }

@@ -12,7 +12,7 @@ new MobService().migrateMobs();
 new ItemsService().migrateItems();
 
 const client = new Client({ authStrategy: new LocalAuth() });
-const commandChar = '!';
+const commandChar = '-';
 
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });

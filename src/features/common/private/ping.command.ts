@@ -1,4 +1,4 @@
-import { Chat, Message } from "whatsapp-web.js";
+import { Message } from "whatsapp-web.js";
 import { Command } from "../../../core/command";
 
 export class PingCommand extends Command {
