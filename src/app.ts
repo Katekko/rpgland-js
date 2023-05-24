@@ -32,6 +32,7 @@ client.on('message', async message => {
 
     const args = _findArguments(commandLine);
     command.execute(message, args);
+    console.log(`${(await message.getContact()).pushname} ${message.body}`);
 });
 
 client.initialize();
