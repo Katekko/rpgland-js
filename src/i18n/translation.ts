@@ -13,6 +13,9 @@ export type CommandTranslations = {
             welcome: (name: string) => string,
             error: string,
             playerAlreadyStarted: string,
+        },
+        commons: {
+            needToStart: string
         }
     };
 };

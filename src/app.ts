@@ -1,5 +1,5 @@
 import qrcode from 'qrcode-terminal';
-import { Client, LocalAuth } from 'whatsapp-web.js';
+import { Client, LocalAuth, Message } from 'whatsapp-web.js';
 import { commands } from './commands';
 import { Command, CommandMap } from './core/command';
 import { FirebaseService } from './services/firebase';
@@ -27,7 +27,7 @@ client.on('message', async message => {
     if (!body.startsWith(commandChar)) return null;
     const commandLine = body.split(commandChar)[1];
 
-    const command = _findCommand(commandLine);
+    const command = _findCommand(commandLine, message);
     if (command == null) return null;
 
     const args = _findArguments(commandLine);
@@ -55,7 +55,7 @@ function _findArguments(commandLine: string): string[] {
     return args;
 }
 
-function _findCommand(commandLine: String, currentCommands: CommandMap = commands): Command | null {
+function _findCommand(commandLine: String, message: Message, currentCommands: CommandMap = commands): Command | null {
     try {
         const commandParts = commandLine.split(' ');
         for (const command of commandParts) {
@@ -76,7 +76,7 @@ function _findCommand(commandLine: String, currentCommands: CommandMap = command
 
         throw Error();
     } catch (error) {
-        console.log('command not found');
+        message.reply('❌ Command not found');
         return null;
     }
 }

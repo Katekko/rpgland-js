@@ -13,10 +13,10 @@ export class StartCommand extends Command {
         const contact = await message.getContact();
         const name = contact.pushname;
         const telephone = contact.number;
-        const player = new PlayerModel(uuidv4(), name, telephone, null, null, null);
+        const player = new PlayerModel(uuidv4(), name, telephone, null, null, null, null);
 
         try {
-            const response = await playerService.getPlayer(player);
+            const response = await playerService.getPlayerByPhone(player.telephoneNumber);
             if (response == null) {
                 await playerService.savePlayer(player);
                 message.reply(translation.commands.start.welcome(player.name));

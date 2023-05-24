@@ -14,16 +14,14 @@ export class PlayerService {
         }
     }
 
-    async getPlayer(player: PlayerModel): Promise<PlayerModel | null> {
+    async getPlayerByPhone(phone: string): Promise<PlayerModel | null> {
         try {
             const collection = store.collection('players');
-            const querySnapshot = await collection.where('telephoneNumber', '==', player.telephoneNumber).get();
+            const querySnapshot = await collection.where('telephoneNumber', '==', phone).get();
             if (!querySnapshot.empty) {
                 const documentSnapshot = querySnapshot.docs[0];
                 const data = documentSnapshot.data();
-                const model = new PlayerModel(
-                    data.id, data.name, data.telephoneNumber, data.number, data.exp, data.health
-                );
+                const model = PlayerModel.fromData(data);
                 return model;
             }
             
