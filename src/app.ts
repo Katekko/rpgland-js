@@ -14,7 +14,7 @@ client.on('ready', () => {
     console.log('Client is ready!');
 });
 
-client.on('message', message => {
+client.on('message', async message => {
     const body = message.body;
     if (!body.startsWith(commandChar)) return null;
     const commandLine = body.split(commandChar)[1];
@@ -23,7 +23,8 @@ client.on('message', message => {
     if (command == null) return null;
 
     const args = _findArguments(commandLine);
-    command.execute(args);
+    const chat = await message.getChat();
+    command.execute(chat, args);
 });
 
 client.initialize();
