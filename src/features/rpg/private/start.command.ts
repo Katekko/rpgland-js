@@ -10,8 +10,10 @@ export class StartCommand extends Command {
         const translation = i18n();
 
         const playerService = new PlayerService();
-        const name = (await message.getContact()).pushname;
-        const player = new PlayerData(uuidv4(), name);
+        const contact = await message.getContact();
+        const name = contact.pushname;
+        const telephone = contact.number;
+        const player = new PlayerData(uuidv4(), name, telephone);
 
         try {
             await playerService.startPlayer(player);
