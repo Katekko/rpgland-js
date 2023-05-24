@@ -7,14 +7,17 @@ export class MobModel {
     public expDrop: number;
     public itemsDrop: ItemModel[];
     public health: number;
+    public chanceToAppear: number;
 
-    constructor(id: string, name: string, level: number, expDrop: number, itemsDrop: ItemModel[], health: number) {
+    constructor(id: string, name: string, level: number, expDrop: number,
+        itemsDrop: ItemModel[], health: number, chanceToAppear: number) {
         this.id = id;
         this.name = name;
         this.level = level;
         this.expDrop = expDrop;
         this.itemsDrop = itemsDrop;
         this.health = health;
+        this.chanceToAppear = chanceToAppear;
     }
 
     toObject(): object {
@@ -22,11 +25,25 @@ export class MobModel {
             id: this.id,
             name: this.name,
             level: this.level,
-            exp: this.expDrop,
+            expDrop: this.expDrop,
             itemsDrop: this.itemsDrop,
             health: this.health,
+            chanceToAppear: this.chanceToAppear,
         };
 
         return mobObj;
+    }
+
+    static fromData(data: FirebaseFirestore.DocumentData): MobModel {
+        const model = new MobModel(
+            data.id,
+            data.name,
+            data.level,
+            data.expDrop,
+            [],
+            data.health,
+            data.chanceToAppear,
+        );
+        return model;
     }
 }

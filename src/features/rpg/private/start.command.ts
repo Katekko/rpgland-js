@@ -13,7 +13,7 @@ export class StartCommand extends Command {
         const contact = await message.getContact();
         const name = contact.pushname;
         const telephone = contact.number;
-        const player = new PlayerModel(uuidv4(), name, telephone, null, null);
+        const player = new PlayerModel(uuidv4(), name, telephone, null, null, null);
 
         try {
             const response = await playerService.getPlayer(player);

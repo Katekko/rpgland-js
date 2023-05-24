@@ -22,7 +22,7 @@ export class PlayerService {
                 const documentSnapshot = querySnapshot.docs[0];
                 const data = documentSnapshot.data();
                 const model = new PlayerModel(
-                    data.id, data.name, data.telephoneNumber, data.number, data.exp
+                    data.id, data.name, data.telephoneNumber, data.number, data.exp, data.health
                 );
                 return model;
             }
