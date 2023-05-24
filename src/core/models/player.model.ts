@@ -1,4 +1,4 @@
-export class PlayerData {
+export class PlayerModel {
     public id: string;
     public name: string;
     public level: number;

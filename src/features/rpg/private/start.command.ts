@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Message } from "whatsapp-web.js";
 import { Command } from "../../../core/command";
-import { PlayerData } from '../../../core/models/player.model';
+import { PlayerModel } from '../../../core/models/player.model';
 import { PlayerService } from "../../../services/player.service";
 import { i18n } from '../../../i18n/translation';
 
@@ -13,7 +13,7 @@ export class StartCommand extends Command {
         const contact = await message.getContact();
         const name = contact.pushname;
         const telephone = contact.number;
-        const player = new PlayerData(uuidv4(), name, telephone, null, null);
+        const player = new PlayerModel(uuidv4(), name, telephone, null, null);
 
         try {
             const response = await playerService.getPlayer(player);

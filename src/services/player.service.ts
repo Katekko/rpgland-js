@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { PlayerData as PlayerModel } from '../core/models/player.model';
+import { PlayerModel as PlayerModel } from '../core/models/player.model';
 import { store } from './firebase';
 
 export class PlayerService {
