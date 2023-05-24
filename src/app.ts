@@ -20,19 +20,31 @@ client.on('message', message => {
     const commandLine = body.split(commandChar)[1];
 
     const command = _findCommand(commandLine);
-    const args = _findArguments(commandLine);
+    if (command == null) return null;
 
-    if (command != null) command.execute(args);
+    const args = _findArguments(commandLine);
+    command.execute(args);
 });
 
 client.initialize();
 
 function _findArguments(commandLine: string): string[] {
     const commandParts = commandLine.split(' ');
-    if (commandParts.length === 1) return [];
+    const args: string[] = [];
 
-    const lastSubcommandIndex = commandParts.findIndex(part => !(part in commands));
-    return commandParts.slice(lastSubcommandIndex + 1);
+    let currentCommand: CommandMap | Command = commands;
+
+    for (let i = 0; i < commandParts.length; i++) {
+        const commandPart = commandParts[i];
+
+        if (typeof currentCommand === 'object' && commandPart in currentCommand) {
+            currentCommand = (currentCommand as CommandMap)[commandPart] as Command | CommandMap;
+        } else {
+            args.push(commandPart);
+        }
+    }
+
+    return args;
 }
 
 function _findCommand(commandLine: String, currentCommands: CommandMap = commands): Command | null {

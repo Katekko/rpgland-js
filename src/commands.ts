@@ -5,8 +5,11 @@ import { PingCommand } from './features/common/private/ping.command';
 export const commands: CommandMap = {
     ping: new PingCommand(),
     katekko: {
-        gostoso: new PingCommand(),
+        gostoso: {
+            sera: new PingCommand()
+        },
     },
+    pong: {
+        young: new PingCommand()
+    }
 };
-
-// commands.set('command2', new Command2());
