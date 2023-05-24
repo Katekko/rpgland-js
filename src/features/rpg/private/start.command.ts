@@ -13,11 +13,16 @@ export class StartCommand extends Command {
         const contact = await message.getContact();
         const name = contact.pushname;
         const telephone = contact.number;
-        const player = new PlayerData(uuidv4(), name, telephone);
+        const player = new PlayerData(uuidv4(), name, telephone, null, null);
 
         try {
-            await playerService.startPlayer(player);
-            message.reply(translation.commands.start.welcome(player.name));
+            const response = await playerService.getPlayer(player);
+            if (response == null) {
+                await playerService.savePlayer(player);
+                message.reply(translation.commands.start.welcome(player.name));
+            } else {
+                message.reply(translation.commands.start.playerAlreadyStarted);
+            }
         } catch (err) {
             console.error('Error adding player:', err);
             message.reply(translation.commands.start.error);

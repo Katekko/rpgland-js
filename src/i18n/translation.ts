@@ -12,6 +12,7 @@ export type CommandTranslations = {
         start: {
             welcome: (name: string) => string,
             error: string,
+            playerAlreadyStarted: string,
         }
     };
 };

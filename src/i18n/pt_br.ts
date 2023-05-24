@@ -10,8 +10,9 @@ export const translationPtBR: CommandTranslations = {
             shop: "Visite o mercado para gastar suas moedas suadas em vários itens, equipamentos e melhorias."
         },
         start: {
-            welcome: (name: string) => `🌍 Welcome to the world of RPG Land, ${name}! Embark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️`
-            error: '❌ Failed start your journey '
+            welcome: (name: string) => `🌍 Welcome to the world of RPG Land, ${name}! Embark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️`,
+            error: '❌ Failed start your journey ',
+            playerAlreadyStarted: '❌ Oops! Looks like you\'re already in the game.'
         }
     }
 };

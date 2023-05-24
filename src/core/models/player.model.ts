@@ -5,11 +5,11 @@ export class PlayerData {
     public exp: number;
     public telephoneNumber: string;
 
-    constructor(id: string, name: string, telephoneNumber: string) {
+    constructor(id: string, name: string, telephoneNumber: string, level: number | null, exp: number | null) {
         this.id = id;
         this.name = name;
-        this.level = 1;
-        this.exp = 0;
+        this.level = level ?? 1;
+        this.exp = exp ?? 0;
         this.telephoneNumber = telephoneNumber;
     }
 
