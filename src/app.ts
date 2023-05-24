@@ -1,7 +1,7 @@
 import qrcode from 'qrcode-terminal';
 import { Client, LocalAuth } from 'whatsapp-web.js';
 import { commands } from './commands';
-import { Command } from './core/command';
+import { Command, CommandMap } from './core/command';
 
 const client = new Client({ authStrategy: new LocalAuth() });
 const commandChar = '!';
@@ -29,31 +29,30 @@ client.initialize();
 
 function _findArguments(commandLine: string): string[] {
     const commandParts = commandLine.split(' ');
-    const lastSubcommandIndex = commandParts.findIndex(part => !commands.has(part));
+    const lastSubcommandIndex = commandParts.findIndex(part => !(part in commands));
     return commandParts.slice(lastSubcommandIndex + 1);
 }
 
-function _findCommand(commandLine: String): Command | null {
+function _findCommand(commandLine: String, currentCommands: CommandMap = commands): Command | null {
     try {
         const commandParts = commandLine.split(' ');
-
-        let currentCommand: any = commands;
-        for (let i = 0; i < commandParts.length; i++) {
-            const currentArgument = commandParts[i];
-            const command = currentCommand.get(currentArgument);
-
-            if (command == null) throw new Error();
-
-            if (command instanceof Command) {
-                return command;
-            } else if (command instanceof Map) {
-                currentCommand = command;
-            } else {
-                throw new Error();
+        for (const command of commandParts) {
+            if (currentCommands instanceof Command) {
+                return currentCommands;
             }
+
+            if (!(command in currentCommands)) {
+                throw Error();
+            }
+
+            currentCommands = currentCommands[command] as CommandMap;
         }
 
-        throw new Error();
+        if (currentCommands instanceof Command) {
+            return currentCommands;
+        }
+
+        throw Error();
     } catch (error) {
         console.log('command not found');
         return null;

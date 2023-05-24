@@ -1,8 +1,12 @@
+import { CommandMap } from './core/command';
 import { PingCommand } from './features/common/private/ping.command';
 
 /** All existent commands in the bot */
-export let commands: Map<string, any> = new Map<string, any>();
-commands.set('ping', new PingCommand());
-commands.set('katekko', new Map<string, any>().set('gostoso', new PingCommand()));
+export const commands: CommandMap = {
+    ping: new PingCommand(),
+    katekko: {
+        gostoso: new PingCommand(),
+    },
+};
 
 // commands.set('command2', new Command2());
