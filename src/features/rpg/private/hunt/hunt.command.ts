@@ -33,7 +33,7 @@ export class HuntCommand extends Command {
 
             if (selectedMob) {
                 player!.state = PlayerState.Hunting;
-                message.reply(`Selected mob: ${selectedMob.name}: ${player?.name} ${player?.state}`);
+                player!.huntAgainst = selectedMob.id;
             }
         }else {
             message.reply(translate.commands.commons.needToStart);
