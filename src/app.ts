@@ -29,6 +29,8 @@ client.initialize();
 
 function _findArguments(commandLine: string): string[] {
     const commandParts = commandLine.split(' ');
+    if (commandParts.length === 1) return [];
+
     const lastSubcommandIndex = commandParts.findIndex(part => !(part in commands));
     return commandParts.slice(lastSubcommandIndex + 1);
 }
