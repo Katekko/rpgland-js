@@ -1,4 +1,5 @@
 import { PlayerState } from "../enums/player_state.enum";
+import { ItemModel } from "./item.model";
 import { MobModel } from "./mob.model";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -17,6 +18,8 @@ export class PlayerModel {
 
     private baseExp = 100;
     private expMultiplier = 1.5;
+
+    public inventory: ItemModel[];
 
 
     // Max range of your attack
@@ -58,7 +61,7 @@ export class PlayerModel {
     constructor(id: string, name: string, telephoneNumber: string,
         level: number | null, exp: number | null,
         health: number | null, state: PlayerState | null,
-        huntAgainst: MobModel | null, baseAttack: number | null) {
+        huntAgainst: MobModel | null, baseAttack: number | null, inventory: ItemModel[] | null) {
         this.id = id;
         this.name = name;
         this.level = level ?? 1;
@@ -68,11 +71,12 @@ export class PlayerModel {
         this.state = state ?? PlayerState.Idle;
         this.huntAgainst = huntAgainst;
         this.baseAttack = baseAttack ?? this._getBaseAttack();
+        this.inventory = inventory ?? [];
     }
 
     static createNew(name: string, telephone: string): PlayerModel {
         const player = new PlayerModel(uuidv4(), name, telephone,
-            null, null, null, null, null, null);
+            null, null, null, null, null, null, null);
         return player;
     }
 
@@ -87,6 +91,7 @@ export class PlayerModel {
             state: this.state,
             huntAgainst: this.huntAgainst?.toObject() ?? null,
             maxAttack: this.baseAttack,
+            inventory: this.inventory.map((e) => e.toObject()),
         };
 
         return playerDataObj;
@@ -98,10 +103,9 @@ export class PlayerModel {
             data.level, data.exp, data.health, data.state,
             MobModel.fromData(data.huntAgainst),
             data.maxAttack,
+            data.inventory.map((e: any) => ItemModel.fromData(e)),
         );
 
         return model;
     }
-
-
 }

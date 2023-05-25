@@ -1,3 +1,4 @@
+import { ItemModel } from "../core/models/item.model";
 import { MobModel } from "../core/models/mob.model";
 import { PlayerModel } from "../core/models/player.model";
 import { translationEn } from "./en";
@@ -32,6 +33,7 @@ export type CommandTranslations = {
                 mobDefeated: (mobName: string, exp: number) => string,
                 failedToAttack: string,
                 levelUp: (level: number) => string,
+                itemFound: (item: ItemModel) => string,
             }
         },
         perfil: (player: PlayerModel) => string,

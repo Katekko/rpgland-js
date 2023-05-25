@@ -1,6 +1,6 @@
-import { PlayerModel as PlayerModel } from '../core/models/player.model';
-import { store } from './firebase';
 import { Message } from 'whatsapp-web.js';
+import { PlayerModel } from '../core/models/player.model';
+import { store } from './firebase';
 
 export class PlayerService {
     constructor() { }

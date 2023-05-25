@@ -1,3 +1,4 @@
+import { ItemModel } from "../core/models/item.model";
 import { MobModel } from "../core/models/mob.model";
 import { PlayerModel } from "../core/models/player.model";
 import { CommandTranslations } from "./translation";
@@ -46,6 +47,7 @@ export const translationEn: CommandTranslations = {
                 mobDefeated: (mob: string, exp: number) => `💥 You have defeated the *${mob}* and earned *${exp}* experience points!`,
                 failedToAttack: `⚠️ You are not currently hunting any mob. Use the command *${commandChar}hunt find* to start hunting.`,
                 levelUp: (level: number) => `🎉 Congratulations! 🎉\nYou have reached level *${level}*!`,
+                itemFound: (item: ItemModel) => `🎉 You found ${item.amount} ${item.name}! 🎉`
             }
         },
         perfil: (player: PlayerModel) => {

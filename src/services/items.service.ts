@@ -1,4 +1,4 @@
-import { ItemModel } from '../core/models/item.model';
+import { ItemFactory } from '../core/factories/items.factory';
 import { store } from './firebase';
 
 export class ItemsService {
@@ -7,12 +7,7 @@ export class ItemsService {
     async migrateItems(): Promise<void> {
         try {
             const collection = store.collection('items');
-            const coin = new ItemModel(
-                '7c0cd60e-0fc2-4dc7-88bf-bacbfbbbd6e1',
-                'Coin',
-                1
-            );
-
+            const coin = ItemFactory.makeCoin();
             await collection.doc(coin.id).set(coin.toObject());
         } catch (error) {
             throw error;

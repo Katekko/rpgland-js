@@ -3,6 +3,7 @@ import { CommandGuard } from "../../../../core/command";
 import { PlayerState } from "../../../../core/enums/player_state.enum";
 import { i18n } from "../../../../i18n/translation";
 import { PlayerService } from "../../../../services/player.service";
+import { ItemModel } from "../../../../core/models/item.model";
 
 export class HuntAttackCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
@@ -29,6 +30,16 @@ export class HuntAttackCommand extends CommandGuard {
                     player.huntAgainst = null;
                     player.exp += mob.expDrop;
                     message.reply(translate.commands.hunt.attack.mobDefeated(mob.name, mob.expDrop));
+
+                    mob.itemsDrop.forEach((item) => {
+                        if (Math.random() <= item.dropChance) {
+                            const itemQuantity = Math.floor(Math.random() * item.amount * mob.level) + 1;
+                            const newItem = new ItemModel(item.id, item.name, item.value, item.dropChance, 0);
+                            newItem.amount = itemQuantity;
+                            player.inventory.push(item);
+                            message.reply(translate.commands.hunt.attack.itemFound(newItem));
+                        }
+                    });
 
                     // Player levelup
                     if (player.exp >= player.getExpNeededForNextLevel()) {
@@ -57,7 +68,7 @@ export class HuntAttackCommand extends CommandGuard {
                     }
 
                     playerService.savePlayer(player);
-                }, 1000);
+                }, 100);
             }
         } catch (err) {
             // apply log here
