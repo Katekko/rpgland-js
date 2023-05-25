@@ -6,13 +6,14 @@ import { FirebaseService } from './services/firebase';
 import { MobService } from './services/mobs.service';
 import { ItemsService } from './services/items.service';
 
+export const commandChar = '--';
+
 // Initializing the firebase service
 new FirebaseService();
 new MobService().migrateMobs();
 new ItemsService().migrateItems();
 
 const client = new Client({ authStrategy: new LocalAuth() });
-const commandChar = '-';
 
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });

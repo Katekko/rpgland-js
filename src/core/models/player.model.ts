@@ -13,23 +13,52 @@ export class PlayerModel {
     public state: PlayerState;
 
     public huntAgainst: MobModel | null;
-    private maxAttack: number;
-
-    getRealAttack(): number {
-        return this.maxAttack * this.level;
-    }
-
-    private _getBaseHealth(): number {
-        return 40;
-    }
+    public baseAttack: number;
 
     private baseExp = 100;
     private expMultiplier = 1.5;
 
+
+    // Max range of your attack
+    getMaxAttack(): number {
+        return this.baseAttack * this.level;
+    }
+
+    // Random attack to attack the mob
+    getRandomAttack(): number {
+        const playerAttack = this.getMaxAttack();
+        const randomDamage = Math.random() * (playerAttack - 1) + 1;
+        const roundedDamage = Math.round(randomDamage);
+        return roundedDamage;
+    }
+
+    // Base health of the player
+    private _getBaseHealth(): number {
+        //modificadores de gear
+        return 40;
+    }
+
+    private _getBaseAttack(): number {
+        // modificadores de gear
+        return 5;
+    }
+
+    setPlayerDeath() {
+        this.state = PlayerState.Idle;
+        this.huntAgainst = null;
+        this.level -= this.level == 1 ? 0 : 1;
+        this.health = this._getBaseHealth();
+        this.exp = 0;
+    }
+
+    getExpNeededForNextLevel(): number {
+        return Math.floor(this.baseExp * Math.pow(this.expMultiplier, this.level - 1));
+    }
+
     constructor(id: string, name: string, telephoneNumber: string,
         level: number | null, exp: number | null,
         health: number | null, state: PlayerState | null,
-        huntAgainst: MobModel | null, attack: number | null) {
+        huntAgainst: MobModel | null, baseAttack: number | null) {
         this.id = id;
         this.name = name;
         this.level = level ?? 1;
@@ -38,7 +67,7 @@ export class PlayerModel {
         this.health = health ?? this._getBaseHealth();
         this.state = state ?? PlayerState.Idle;
         this.huntAgainst = huntAgainst;
-        this.maxAttack = attack ?? 1.5;
+        this.baseAttack = baseAttack ?? this._getBaseAttack();
     }
 
     static createNew(name: string, telephone: string): PlayerModel {
@@ -57,7 +86,7 @@ export class PlayerModel {
             health: this.health,
             state: this.state,
             huntAgainst: this.huntAgainst?.toObject() ?? null,
-            maxAttack: this.maxAttack,
+            maxAttack: this.baseAttack,
         };
 
         return playerDataObj;
@@ -66,7 +95,7 @@ export class PlayerModel {
     static fromData(data: FirebaseFirestore.DocumentData): PlayerModel {
         const model = new PlayerModel(
             data.id, data.name, data.telephoneNumber,
-            data.number, data.exp, data.health, data.state,
+            data.level, data.exp, data.health, data.state,
             MobModel.fromData(data.huntAgainst),
             data.maxAttack,
         );
@@ -74,14 +103,5 @@ export class PlayerModel {
         return model;
     }
 
-    setPlayerDeath() {
-        this.state = PlayerState.Idle;
-        this.huntAgainst = null;
-        this.level -= this.level == 1 ? 0 : 1;
-        this.health = this._getBaseHealth();
-    }
 
-    getExpNeededForNextLevel(): number {
-        return Math.floor(this.baseExp * Math.pow(this.expMultiplier, this.level - 1));
-    }
 }

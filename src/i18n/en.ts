@@ -2,6 +2,8 @@ import { MobModel } from "../core/models/mob.model";
 import { PlayerModel } from "../core/models/player.model";
 import { CommandTranslations } from "./translation";
 
+const commandChar = '--';
+
 function _createProfileBox(profile: string): string {
     const width = 20; // Width of the box
     const horizontalLine = '─'.repeat(width); // Horizontal line for the box
@@ -19,17 +21,17 @@ export const translationEn: CommandTranslations = {
         help: {
             title: "🌍 *Welcome to the world of RPG Land!* 🌍\n```Embark on an epic journey, conquer challenging areas, and become a legendary adventurer.\nHere's how to play:```",
             start: "🎮 *START*   -> ```Begin your adventure in RPG Land! Use this command to initiate your journey and explore the vast world filled with challenges, treasures, and epic quests.```",
-            hunt: "🏹 *HUNT*   -> ```Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ *-hunt find*\n⚔️ \*-hunt attack\*```",
+            hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ *${commandChar}hunt find*\n⚔️ \*${commandChar}hunt attack\*\`\`\` `,
             heal: "🩹 *HEAL*   -> ```Consume a life potion to restore your health points (HP)❤️ when it's low.```",
             shop: "🛍️ *SHOP*   -> ```Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.```"
         },
         start: {
-            welcome: (name: string) => `🌍 Welcome to the world of RPG Land, *${name}*! 🌍\nEmbark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️\n\n🕵️‍♂️ To find mobs, use the command: *-hunt find*\n⚔️ To attack a mob, use the command: *-hunt attack*`,
+            welcome: (name: string) => `🌍 Welcome to the world of RPG Land, *${name}*! 🌍\nEmbark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️\n\n🕵️‍♂️ To find mobs, use the command: *${commandChar}hunt find*\n⚔️ To attack a mob, use the command: *${commandChar}hunt attack*`,
             error: '❌ Failed start your journey ',
             playerAlreadyStarted: '❌ Oops! Looks like you\'re already in the game.'
         },
         commons: {
-            needToStart: '❌ You need to start you journey first\nType: *-start*',
+            needToStart: `❌ You need to start you journey first\nType: *${commandChar}start*`,
             somethingWrong: '❌❌❌ Something is off, please call Katekko ❌❌❌'
         },
         hunt: {
@@ -42,7 +44,8 @@ export const translationEn: CommandTranslations = {
                 attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 The *${mob}* attacked you and dealt *${damage}* damage! 🔥\nYou have *${remainingHealth}* ❤️ remaining.`,
                 defeated: (mob: string) => `☠️ You were defeated by the *${mob}*! ☠️\nYou have lost one level.`,
                 mobDefeated: (mob: string, exp: number) => `💥 You have defeated the *${mob}* and earned *${exp}* experience points!`,
-                failedToAttack: `⚠️ You are not currently hunting any mob. Use the command *-hunt find* to start hunting.`,
+                failedToAttack: `⚠️ You are not currently hunting any mob. Use the command *${commandChar}hunt find* to start hunting.`,
+                levelUp: (level: number) => `🎉 Congratulations! 🎉\nYou have reached level *${level}*!`,
             }
         },
         perfil: (player: PlayerModel) => {
@@ -52,7 +55,7 @@ export const translationEn: CommandTranslations = {
 
             const filledBar = '▓'.repeat(filledBarCount);
             const emptyBar = '░'.repeat(emptyBarCount);
-            return _createProfileBox(`🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t⚔️ *${player.getRealAttack()}*`);
+            return _createProfileBox(`🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t⚔️ *${player.getMaxAttack()}*`);
         },
     }
 };

@@ -31,6 +31,7 @@ export type CommandTranslations = {
                 defeated: (mobName: string) => string,
                 mobDefeated: (mobName: string, exp: number) => string,
                 failedToAttack: string,
+                levelUp: (level: number) => string,
             }
         },
         perfil: (player: PlayerModel) => string,
