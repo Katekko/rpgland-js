@@ -1,3 +1,4 @@
+import { ItemType } from "../core/enums/item_type.enum";
 import { ItemModel } from "../core/models/item.model";
 import { MobModel } from "../core/models/mob.model";
 import { PlayerModel } from "../core/models/player.model";
@@ -32,7 +33,7 @@ export const translationEn: CommandTranslations = {
             playerAlreadyStarted: '❌ Oops! Looks like you\'re already in the game.'
         },
         commons: {
-            needToStart: `❌ You need to start you journey first\nType: *${commandChar}start*`,
+            needToStart: `⚠️ You need to start you journey first\nType: *${commandChar}start*`,
             somethingWrong: '❌❌❌ Something is off, please call Katekko ❌❌❌'
         },
         hunt: {
@@ -57,7 +58,9 @@ export const translationEn: CommandTranslations = {
 
             const filledBar = '▓'.repeat(filledBarCount);
             const emptyBar = '░'.repeat(emptyBarCount);
-            return _createProfileBox(`🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t⚔️ *${player.getMaxAttack()}*`);
+
+            const coinItem = player.inventory.find(item => item.type === ItemType.Currency);
+            return _createProfileBox(`\`\`\`${player.state.toString()}\`\`\`\n\t🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t❤️ ${player.health}   ⚔️ *${player.getMaxAttack()}   💰 ${coinItem?.amount ?? 0}*`);
         },
     }
 };

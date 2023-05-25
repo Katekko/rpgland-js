@@ -4,6 +4,7 @@ import { PlayerState } from "../../../../core/enums/player_state.enum";
 import { i18n } from "../../../../i18n/translation";
 import { PlayerService } from "../../../../services/player.service";
 import { ItemModel } from "../../../../core/models/item.model";
+import { ItemFactory } from "../../../../core/factories/items.factory";
 
 export class HuntAttackCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
@@ -34,9 +35,15 @@ export class HuntAttackCommand extends CommandGuard {
                     mob.itemsDrop.forEach((item) => {
                         if (Math.random() <= item.dropChance) {
                             const itemQuantity = Math.floor(Math.random() * item.amount * mob.level) + 1;
-                            const newItem = new ItemModel(item.id, item.name, item.value, item.dropChance, 0);
+                            const newItem = ItemFactory.makeItemByType(item.type);
                             newItem.amount = itemQuantity;
-                            player.inventory.push(item);
+                            const existingItemIndex = player.inventory.findIndex(existingItem => existingItem.type === item.type);
+
+                            if (existingItemIndex !== -1) {
+                                player.inventory[existingItemIndex].amount += newItem.amount;
+                            } else {
+                                player.inventory.push(newItem);
+                            }
                             message.reply(translate.commands.hunt.attack.itemFound(newItem));
                         }
                     });
