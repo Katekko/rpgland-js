@@ -23,9 +23,9 @@ export const translationEn: CommandTranslations = {
         help: {
             title: "🌍 *Welcome to the world of RPG Land!* 🌍\n```Embark on an epic journey, conquer challenging areas, and become a legendary adventurer.\nHere's how to play:```",
             start: "🎮 *START*   -> ```Begin your adventure in RPG Land! Use this command to initiate your journey and explore the vast world filled with challenges, treasures, and epic quests.```",
-            hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ *${commandChar}hunt find*\n⚔️ \*${commandChar}hunt attack\*\`\`\` `,
+            hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ *${commandChar}hunt find*\n⚔️ \=*${commandChar}hunt attack\*\`\`\``,
             heal: "🩹 *HEAL*   -> ```Consume a life potion to restore your health points (HP)❤️ when it's low.```",
-            shop: "🛍️ *SHOP*   -> ```Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.```"
+            shop: `🛍️ *SHOP*   -> \`\`\`Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.\`\`\`\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``
         },
         start: {
             welcome: (name: string) => `🌍 Welcome to the world of RPG Land, *${name}*! 🌍\nEmbark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️\n\n🕵️‍♂️ To find mobs, use the command: *${commandChar}hunt find*\n⚔️ To attack a mob, use the command: *${commandChar}hunt attack*`,
@@ -71,7 +71,15 @@ export const translationEn: CommandTranslations = {
                 };
 
                 const continuousLine = drawContinuousLine(20);
-                return `🏪 Welcome to the Shop! 🛍️\n${continuousLine}\n${itemsInfo}\n${continuousLine}\nTo buy an item, use the command: *--shop buy <item name>*`;
+                return `🏪 Welcome to the Shop! 🛍️\n${continuousLine}\n${itemsInfo}\n${continuousLine}\nTo buy an item, use the command: *--shop buy <item name> <amount>*`;
+            },
+            itemNotFound: (itemName: string) => {
+                return `⚠️ The item *'${itemName}'* is not available in the shop.\nPlease check the item name and try again.`;
+            },
+            missingArguments: `⚠️ You need to provide the item name and the amount you want to buy.\nUsage: *--shop buy <item name> <amount>*`,
+            insufficientCoins: (itemName: string) => `⚠️ You don't have enough coins to purchase *${itemName}*.`,
+            buy: (item: ItemModel, amount: number, totalPrice: number) => {
+                return `✅ You have successfully purchased 🛒*${amount} ${item.name}* for 💰*${totalPrice}* coins!\nEnjoy your new item! 🎉`;
             }
         }
     }

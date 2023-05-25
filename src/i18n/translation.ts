@@ -38,8 +38,12 @@ export type CommandTranslations = {
         },
         perfil: (player: PlayerModel) => string,
         shop: {
-            info: (items: ItemModel[]) => string
-        }
+            info: (items: ItemModel[]) => string,
+            itemNotFound: (itemName: string) => string,
+            missingArguments: string,
+            insufficientCoins: (itemName: string) => string,
+            buy: (item: ItemModel, amount: number, totalPrice: number) => string,
+        },
     };
 };
 
