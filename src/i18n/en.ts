@@ -1,5 +1,18 @@
 import { MobModel } from "../core/models/mob.model";
+import { PlayerModel } from "../core/models/player.model";
 import { CommandTranslations } from "./translation";
+
+function _createProfileBox(profile: string): string {
+    const width = 20; // Width of the box
+    const horizontalLine = '─'.repeat(width); // Horizontal line for the box
+
+    const boxTop = `╭${horizontalLine}╮\n`; // Top line of the box
+    const boxBottom = `\n╰${horizontalLine}╯`; // Bottom line of the box
+
+    const emptyLine = `${' '.repeat(width)}`; // Empty line with matching width
+
+    return `${boxTop}${emptyLine}\n\t${profile}\n${emptyLine}${boxBottom}`;
+}
 
 export const translationEn: CommandTranslations = {
     commands: {
@@ -16,7 +29,8 @@ export const translationEn: CommandTranslations = {
             playerAlreadyStarted: '❌ Oops! Looks like you\'re already in the game.'
         },
         commons: {
-            needToStart: '❌ You need to start you journey first'
+            needToStart: '❌ You need to start you journey first\nType: *-start*',
+            somethingWrong: '❌❌❌ Something is off, please call Katekko ❌❌❌'
         },
         hunt: {
             find: {
@@ -30,6 +44,15 @@ export const translationEn: CommandTranslations = {
                 mobDefeated: (mob: string, exp: number) => `💥 You have defeated the *${mob}* and earned *${exp}* experience points!`,
                 failedToAttack: `⚠️ You are not currently hunting any mob. Use the command *-hunt find* to start hunting.`,
             }
-        }
+        },
+        perfil: (player: PlayerModel) => {
+            const progressBarLength = 10;
+            const filledBarCount = Math.floor((player.exp / player.getExpNeededForNextLevel()) * progressBarLength);
+            const emptyBarCount = progressBarLength - filledBarCount;
+
+            const filledBar = '▓'.repeat(filledBarCount);
+            const emptyBar = '░'.repeat(emptyBarCount);
+            return _createProfileBox(`🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t⚔️ *${player.getRealAttack()}*`);
+        },
     }
 };

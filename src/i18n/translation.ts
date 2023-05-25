@@ -1,4 +1,5 @@
 import { MobModel } from "../core/models/mob.model";
+import { PlayerModel } from "../core/models/player.model";
 import { translationEn } from "./en";
 
 export type CommandTranslations = {
@@ -17,6 +18,7 @@ export type CommandTranslations = {
         },
         commons: {
             needToStart: string
+            somethingWrong: string,
         },
         hunt: {
             find: {
@@ -30,7 +32,8 @@ export type CommandTranslations = {
                 mobDefeated: (mobName: string, exp: number) => string,
                 failedToAttack: string,
             }
-        }
+        },
+        perfil: (player: PlayerModel) => string,
     };
 };
 

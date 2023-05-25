@@ -3,11 +3,13 @@ import { Command } from "../../../core/command";
 import { PlayerModel } from '../../../core/models/player.model';
 import { PlayerService } from "../../../services/player.service";
 import { i18n } from '../../../i18n/translation';
+import { verifyPlayerisStartedMiddleware } from "../../../core/middlewares/verify_player_is_started.middleware";
 
 export class StartCommand extends Command {
     async execute(message: Message, args: any): Promise<void> {
-        const translation = i18n();
+        const playerStarted = await verifyPlayerisStartedMiddleware(message);
 
+        const translate = i18n();
         const playerService = new PlayerService();
         const contact = await message.getContact();
         const name = contact.pushname;
@@ -15,16 +17,15 @@ export class StartCommand extends Command {
         const player = PlayerModel.createNew(name, telephone);
 
         try {
-            const response = await playerService.getPlayerByPhone(player.telephoneNumber);
-            if (response == null) {
+            if (!playerStarted) {
                 await playerService.savePlayer(player);
-                message.reply(translation.commands.start.welcome(player.name));
+                message.reply(translate.commands.start.welcome(player.name));
             } else {
-                message.reply(translation.commands.start.playerAlreadyStarted);
+                message.reply(translate.commands.start.playerAlreadyStarted);
             }
         } catch (err) {
             console.error('Error adding player:', err);
-            message.reply(translation.commands.start.error);
+            message.reply(translate.commands.start.error);
         }
     }
 }

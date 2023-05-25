@@ -23,6 +23,8 @@ export class PlayerModel {
         return 40;
     }
 
+    private baseExp = 100;
+    private expMultiplier = 1.5;
 
     constructor(id: string, name: string, telephoneNumber: string,
         level: number | null, exp: number | null,
@@ -77,5 +79,9 @@ export class PlayerModel {
         this.huntAgainst = null;
         this.level -= this.level == 1 ? 0 : 1;
         this.health = this._getBaseHealth();
+    }
+
+    getExpNeededForNextLevel(): number {
+        return Math.floor(this.baseExp * Math.pow(this.expMultiplier, this.level - 1));
     }
 }

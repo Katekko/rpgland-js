@@ -1,4 +1,7 @@
 - Create perfil
+
+- Teste automatizado
+
 - Leveling
 
 - Drop coins
