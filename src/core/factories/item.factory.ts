@@ -7,7 +7,7 @@ export class ItemFactory {
     }
 
     static makeHealthPotion(): ItemModel {
-        return new ItemModel('872bad70-f696-4de5-a552-c16f132cb4d3', 'Health Potion', 5, 0.2, 2, ItemType.HealthPotion, 2);
+        return new ItemModel('872bad70-f696-4de5-a552-c16f132cb4d3', 'Health Potion', 5, 0.2, 0, ItemType.HealthPotion, 2);
     }
 
     static makeItemByType(type: ItemType): ItemModel {

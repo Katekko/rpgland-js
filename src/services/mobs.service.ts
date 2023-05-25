@@ -29,7 +29,7 @@ export class MobService {
                     ItemFactory.makeCoin(), 
                     ItemFactory.makeHealthPotion()
                 ],  
-                8, .35, 4,
+                8, .45, 4,
             );
 
             await collection.doc(slime.id).set(slime.toObject());
@@ -42,7 +42,7 @@ export class MobService {
                     ItemFactory.makeCoin(), 
                     ItemFactory.makeHealthPotion()
                 ],   
-                20, .15, 10,
+                20, .05, 10,
             );
 
             await collection.doc(slime.id).set(slime.toObject());
