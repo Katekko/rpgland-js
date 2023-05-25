@@ -46,6 +46,11 @@ export type CommandTranslations = {
         },
         ranking: {
             leaderboard: (players: PlayerModel[]) => string,
+        },
+        heal: {
+            healedWithItem: (healedAmount: number, currentHealth: number, itemName: string) => string,
+            noPotion: string,
+            failedToHeal: string
         }
     };
 };

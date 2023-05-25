@@ -35,7 +35,7 @@ export class ShopBuyCommand extends Command {
 
             coinItem.amount -= totalPrice;
 
-            const existingItem = player.inventory.find(item => item.id === item.id);
+            const existingItem = player.inventory.find(e => e.id === item.id);
 
             if (existingItem) {
                 existingItem.amount += quantity;

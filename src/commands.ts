@@ -2,7 +2,8 @@ import { CommandMap } from './core/command';
 import { PingCommand } from './features/common/private/ping.command';
 import { HelpCommand } from './features/rpg/both/help.command';
 import { PerfilCommand } from './features/rpg/both/perfil.command';
-import { RankingCommand } from './features/rpg/both/rankink.command';
+import { RankingCommand } from './features/rpg/both/ranking.command';
+import { HealCommand } from './features/rpg/private/heal.command';
 import { HuntCommand } from './features/rpg/private/hunt/hunt.command';
 import { HuntAttackCommand } from './features/rpg/private/hunt/hunt_attack.command';
 import { ShopCommand } from './features/rpg/private/shop/shop.command';
@@ -24,4 +25,5 @@ export const commands: CommandMap = {
         buy: new ShopBuyCommand(),
     },
     ranking: new RankingCommand(),
+    heal: new HealCommand(),
 };

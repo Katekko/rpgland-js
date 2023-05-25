@@ -7,8 +7,10 @@ export class ItemsService {
     async migrateItems(): Promise<void> {
         try {
             const collection = store.collection('items');
-            const coin = ItemFactory.makeCoin();
-            await collection.doc(coin.id).set(coin.toObject());
+            const items = ItemFactory.getAllItemsForMigration();
+            for (const item of items) {
+                await collection.doc(item.id).set(item.toObject());
+            }
         } catch (error) {
             throw error;
         }

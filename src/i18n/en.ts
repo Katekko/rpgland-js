@@ -23,7 +23,7 @@ export const translationEn: CommandTranslations = {
         help: {
             title: "🌍 *Welcome to the world of RPG Land!* 🌍\n```Embark on an epic journey, conquer challenging areas, and become a legendary adventurer.\nHere's how to play:```",
             start: "🎮 *START*   -> ```Begin your adventure in RPG Land! Use this command to initiate your journey and explore the vast world filled with challenges, treasures, and epic quests.```",
-            hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ *${commandChar}hunt find*\n⚔️ \=*${commandChar}hunt attack\*\`\`\``,
+            hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ \*${commandChar}hunt find\*\n⚔️ \*${commandChar}hunt attack\*\`\`\``,
             heal: "🩹 *HEAL*   -> ```Consume a life potion to restore your health points (HP)❤️ when it's low.```",
             shop: `🛍️ *SHOP*   -> \`\`\`Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.\`\`\`\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``
         },
@@ -93,6 +93,13 @@ export const translationEn: CommandTranslations = {
                 }
                 return leaderboardMessage;
             }
+        },
+        heal: {
+            healedWithItem: (healedAmount: number, currentHealth: number, itemName: string) => {
+                return `🩹 You have been healed by *${healedAmount} HP* using a ${itemName}! 🎉\nYour current health is ❤️*${currentHealth} HP*.`;
+            },
+            noPotion: "😰 You don't have any *health potions left*. Visit the shop or continue hunting to obtain more.",
+            failedToHeal: "⚠️ You are currently busy and cannot heal at the moment. Finish your current activity and try again."
         }
     }
 };

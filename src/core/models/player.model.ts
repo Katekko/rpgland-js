@@ -21,6 +21,9 @@ export class PlayerModel {
 
     public inventory: ItemModel[];
 
+    getMaxHealth(): number {
+        return this._getBaseHealth();
+    }
 
     // Max range of your attack
     getMaxAttack(): number {
