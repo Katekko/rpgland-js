@@ -10,7 +10,8 @@ export type CommandTranslations = {
             start: string,
             hunt: string,
             heal: string,
-            shop: string
+            shop: string,
+            perfil: string,
         },
         start: {
             welcome: (name: string) => string,

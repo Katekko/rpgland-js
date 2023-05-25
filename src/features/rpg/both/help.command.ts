@@ -4,6 +4,11 @@ import { Command } from "../../../core/command";
 export class HelpCommand extends Command {
     async execute(message: Message, args: any): Promise<void> {
         const chat = await message.getChat();
-        chat.sendMessage(`${this.translate.commands.help.title}\n\n${this.translate.commands.help.start}\n\n${this.translate.commands.help.hunt}\n\n${this.translate.commands.help.heal}\n\n${this.translate.commands.help.shop}`)
+        chat.sendMessage(`${this.translate.commands.help.title}
+        \n\n${this.translate.commands.help.start}
+        \n\n${this.translate.commands.help.hunt}
+        \n\n${this.translate.commands.help.heal}
+        \n\n${this.translate.commands.help.shop}
+        \n\n${this.translate.commands.help.perfil}`)
     }
 }
