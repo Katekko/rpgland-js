@@ -60,7 +60,14 @@ export const translationEn: CommandTranslations = {
             const emptyBar = '░'.repeat(emptyBarCount);
 
             const coinItem = player.inventory.find(item => item.type === ItemType.Currency);
-            return _createProfileBox(`\`\`\`${player.state.toString()}\`\`\`\n\t🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t❤️ ${player.health}   ⚔️ *${player.getMaxAttack()}   💰 ${coinItem?.amount ?? 0}*`);
+
+            const potionCount = player.inventory.reduce((total, item) => {
+                if (item.type === ItemType.HealthPotion) {
+                    return total + item.amount;
+                }
+                return total;
+            }, 0);
+            return _createProfileBox(`\`\`\`${player.state.toString()}\`\`\`\n\t🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t❤️ ${player.health}   ⚔️ *${player.getMaxAttack()}   💰 ${coinItem?.amount ?? 0}   🍷 ${potionCount}*`);
         },
         shop: {
             info: (items: ItemModel[]) => {
