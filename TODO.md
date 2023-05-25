@@ -1,2 +1,3 @@
+- colocar vida maxima no perfil
 - Host
 - Teste automatizado

@@ -37,7 +37,8 @@ export const translationEn: CommandTranslations = {
         commons: {
             needToStart: `⚠️ You need to start you journey first\nType: *${commandChar}start*`,
             somethingWrong: '❌❌❌ Something is off, please call Katekko ❌❌❌',
-            waitMessage: '⏳ Please wait a moment before sending another message.'
+            waitMessage: '⏳ Please wait a moment before sending another message.',
+            notAuthorized: '❌ You are not authorized to use this bot. ❌\nPlease contact the administrator for access.\n*Katekko#1429* ',
         },
         hunt: {
             find: {

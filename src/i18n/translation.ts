@@ -23,6 +23,7 @@ export type CommandTranslations = {
             needToStart: string
             somethingWrong: string,
             waitMessage: string,
+            notAuthorized: string,
         },
         hunt: {
             find: {

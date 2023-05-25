@@ -6,6 +6,7 @@ import { FirebaseService } from './services/firebase';
 import { MobService } from './services/mobs.service';
 import { ItemsService } from './services/items.service';
 import { i18n } from './i18n/translation';
+import { CommonsService } from './services/commons.service';
 
 export const commandChar = '--';
 
@@ -26,11 +27,19 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
+    const translate = i18n();
     const playerId = message.from;
+    const commonsService = new CommonsService()
+    const whitelistedNumbers = await commonsService.getWhitelist();
+
+    if (!whitelistedNumbers.includes((await message.getContact()).number)) {
+        message.reply(translate.commands.commons.notAuthorized);
+        return;
+    }
+
     const currentTime = Date.now();
     const lastMessageTime = cooldowns[playerId] || 0;
     const timeDifference = currentTime - lastMessageTime;
-    const translate = i18n();
 
     // Set the cooldown duration in milliseconds (e.g., 1 second = 1000 milliseconds)
     const cooldownDuration = 1000;
