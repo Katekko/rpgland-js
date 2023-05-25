@@ -4,7 +4,7 @@ import { PlayerState } from "../../../../core/enums/player_state.enum";
 import { i18n } from "../../../../i18n/translation";
 import { PlayerService } from "../../../../services/player.service";
 import { ItemModel } from "../../../../core/models/item.model";
-import { ItemFactory } from "../../../../core/factories/items.factory";
+import { ItemFactory } from "../../../../core/factories/item.factory";
 
 export class HuntAttackCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {

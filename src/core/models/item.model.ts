@@ -7,14 +7,16 @@ export class ItemModel {
     public dropChance: number;
     public amount: number;
     public type: ItemType;
+    public price: number;
 
-    constructor(id: string, name: string, value: number, dropChance: number, amount: number, type: ItemType) {
+    constructor(id: string, name: string, value: number, dropChance: number, amount: number, type: ItemType, price: number) {
         this.id = id;
         this.value = value;
         this.name = name;
         this.dropChance = dropChance;
         this.amount = amount;
         this.type = type;
+        this.price = price;
     }
 
     toObject(): object {
@@ -25,6 +27,7 @@ export class ItemModel {
             dropChance: this.dropChance,
             amount: this.amount,
             type: this.type,
+            price: this.price,
         };
 
         return itemObj;
@@ -32,6 +35,7 @@ export class ItemModel {
 
     static fromData(data: FirebaseFirestore.DocumentData): ItemModel {
         return new ItemModel(data.id, data.name,
-            data.value, data.dropChance, data.amount, data.type);
+            data.value, data.dropChance, data.amount, data.type,
+            data.price);
     }
 }

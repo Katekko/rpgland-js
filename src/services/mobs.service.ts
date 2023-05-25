@@ -1,4 +1,4 @@
-import { ItemFactory } from '../core/factories/items.factory';
+import { ItemFactory } from '../core/factories/item.factory';
 import { MobModel } from '../core/models/mob.model';
 import { store } from './firebase';
 

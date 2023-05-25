@@ -1,5 +1,5 @@
-import { Buttons, Message } from "whatsapp-web.js";
-import { Command, CommandGuard } from "../../../../core/command";
+import { Message } from "whatsapp-web.js";
+import { CommandGuard } from "../../../../core/command";
 import { MobService } from "../../../../services/mobs.service";
 import { MobModel } from "../../../../core/models/mob.model";
 import { PlayerService } from "../../../../services/player.service";

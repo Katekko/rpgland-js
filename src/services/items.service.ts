@@ -1,4 +1,4 @@
-import { ItemFactory } from '../core/factories/items.factory';
+import { ItemFactory } from '../core/factories/item.factory';
 import { store } from './firebase';
 
 export class ItemsService {

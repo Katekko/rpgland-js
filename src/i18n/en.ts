@@ -62,5 +62,17 @@ export const translationEn: CommandTranslations = {
             const coinItem = player.inventory.find(item => item.type === ItemType.Currency);
             return _createProfileBox(`\`\`\`${player.state.toString()}\`\`\`\n\t🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t❤️ ${player.health}   ⚔️ *${player.getMaxAttack()}   💰 ${coinItem?.amount ?? 0}*`);
         },
+        shop: {
+            info: (items: ItemModel[]) => {
+                const itemLines = items.map(item => `🛒 *${item.name}* - Price: *${item.price}* coins`);
+                const itemsInfo = itemLines.join('\n');
+                const drawContinuousLine = (length: number): string => {
+                    return "\u2500".repeat(length);
+                };
+
+                const continuousLine = drawContinuousLine(20);
+                return `🏪 Welcome to the Shop! 🛍️\n${continuousLine}\n${itemsInfo}\n${continuousLine}\nTo buy an item, use the command: *--shop buy <item name>*`;
+            }
+        }
     }
 };

@@ -37,6 +37,9 @@ export type CommandTranslations = {
             }
         },
         perfil: (player: PlayerModel) => string,
+        shop: {
+            info: (items: ItemModel[]) => string
+        }
     };
 };
 

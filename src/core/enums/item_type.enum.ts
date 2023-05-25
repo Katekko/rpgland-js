@@ -1,3 +1,4 @@
 export enum ItemType {
-    Currency = 'Currency'
+    Currency = 'Currency',
+    Consumible = 'Consumible'
 }
