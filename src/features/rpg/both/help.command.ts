@@ -4,8 +4,7 @@ import { i18n } from "../../../i18n/translation";
 
 export class HelpCommand extends Command {
     async execute(message: Message, args: any): Promise<void> {
-        const translation = i18n();
         const chat = await message.getChat();
-        chat.sendMessage(`${translation.commands.help.title}\n\n${translation.commands.help.start}\n\n${translation.commands.help.hunt}\n\n${translation.commands.help.heal}\n\n${translation.commands.help.shop}`)
+        chat.sendMessage(`${this.translate.commands.help.title}\n\n${this.translate.commands.help.start}\n\n${this.translate.commands.help.hunt}\n\n${this.translate.commands.help.heal}\n\n${this.translate.commands.help.shop}`)
     }
 }

@@ -40,4 +40,20 @@ export class PlayerService {
             throw err;
         }
     }
+
+    async getAllPlayers(): Promise<PlayerModel[]> {
+        try {
+            const collection = store.collection('players');
+            const querySnapshot = await collection.get();
+            const players: PlayerModel[] = [];
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const model = PlayerModel.fromData(data);
+                players.push(model);
+            });
+            return players;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

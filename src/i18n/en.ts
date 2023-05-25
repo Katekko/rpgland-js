@@ -81,6 +81,18 @@ export const translationEn: CommandTranslations = {
             buy: (item: ItemModel, amount: number, totalPrice: number) => {
                 return `✅ You have successfully purchased 🛒*${amount} ${item.name}* for 💰*${totalPrice}* coins!\nEnjoy your new item! 🎉`;
             }
+        },
+        ranking: {
+            leaderboard: (players: PlayerModel[]) => {
+                const emojiPositions = ['🥇', '🥈', '🥉'];
+                let leaderboardMessage = '🏆 Leaderboard - Top Players by Level 🏆\n\n';
+                for (let i = 0; i < Math.min(players.length, 10); i++) {
+                    const player = players[i];
+                    const positionEmoji = i < 3 ? emojiPositions[i] : `#${i + 1}`;
+                    leaderboardMessage += `${positionEmoji} ${player.name} - Level ${player.level}\n`;
+                }
+                return leaderboardMessage;
+            }
         }
     }
 };
