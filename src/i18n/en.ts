@@ -26,8 +26,8 @@ export const translationEn: CommandTranslations = {
             hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ \*${commandChar}hunt find\*\n⚔️ \*${commandChar}hunt attack\*\`\`\``,
             heal: `🩹 *HEAL*   -> \`\`\`Consume a life potion to restore your health points (HP)❤️ when it's low.\n🍷 \*${commandChar}heal\*\`\`\``,
             shop: `🛍️ *SHOP*   -> \`\`\`Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``,
-            perfil: `🧍 *PERFIL*   -> \`\`\`Check your player profile and stats.\n📊 \*${commandChar}perfil\*\`\`\``, 
-
+            perfil: `🧍 *PERFIL*   -> \`\`\`Check your player profile and stats.\n📊 \*${commandChar}perfil\*\`\`\``,
+            ranking: `🏆 *RANKING*   -> \`\`\`Check the leaderboard to see the top players by level.\n👑 \*${commandChar}ranking\*\`\`\``
         },
         start: {
             welcome: (name: string) => `🌍 Welcome to the world of RPG Land, *${name}*! 🌍\nEmbark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️\n\n🕵️‍♂️ To find mobs, use the command: *${commandChar}hunt find*\n⚔️ To attack a mob, use the command: *${commandChar}hunt attack*`,

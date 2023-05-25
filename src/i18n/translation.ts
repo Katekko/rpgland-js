@@ -12,6 +12,7 @@ export type CommandTranslations = {
             heal: string,
             shop: string,
             perfil: string,
+            ranking: string,
         },
         start: {
             welcome: (name: string) => string,
@@ -57,7 +58,7 @@ export type CommandTranslations = {
         inventory: {
             emptyInventory: string,
             open: (player: PlayerModel) => string
-        }
+        },
     };
 };
 
