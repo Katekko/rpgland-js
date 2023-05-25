@@ -107,6 +107,28 @@ export const translationEn: CommandTranslations = {
             },
             noPotion: "😰 You don't have any *health potions left*. Visit the shop or continue hunting to obtain more.",
             failedToHeal: "⚠️ You are currently busy and cannot heal at the moment. Finish your current activity and try again."
+        },
+        inventory: {
+            emptyInventory: "🎒 Inventory 🎒\n\n📦 Your inventory is empty.",
+            open: (player: PlayerModel) => {
+                let inventoryMessage = "🎒 Inventory 🎒\n";
+                const drawContinuousLine = (length: number): string => {
+                    return "\u2500".repeat(length);
+                };
+
+                const continuousLine = drawContinuousLine(20);
+
+                inventoryMessage += `${continuousLine}\n`;
+
+                for (let i = 0; i < player.inventory.length; i++) {
+                    const item = player.inventory[i];
+                    inventoryMessage += `${i + 1}. ${item.name} - Amount: ${item.amount}\n`;
+                }
+
+                inventoryMessage += `${continuousLine}`;
+
+                return inventoryMessage;
+            }
         }
     }
 };

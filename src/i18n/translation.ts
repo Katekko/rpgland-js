@@ -51,6 +51,10 @@ export type CommandTranslations = {
             healedWithItem: (healedAmount: number, currentHealth: number, itemName: string) => string,
             noPotion: string,
             failedToHeal: string
+        },
+        inventory: {
+            emptyInventory: string,
+            open: (player: PlayerModel) => string
         }
     };
 };
