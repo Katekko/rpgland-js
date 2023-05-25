@@ -1,5 +1,2 @@
-- Leaderboard 
-
 - Host
-
 - Teste automatizado
