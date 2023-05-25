@@ -5,6 +5,7 @@ import { Command, CommandMap } from './core/command';
 import { FirebaseService } from './services/firebase';
 import { MobService } from './services/mobs.service';
 import { ItemsService } from './services/items.service';
+import { i18n } from './i18n/translation';
 
 export const commandChar = '--';
 
@@ -14,6 +15,7 @@ new MobService().migrateMobs();
 new ItemsService().migrateItems();
 
 const client = new Client({ authStrategy: new LocalAuth() });
+const cooldowns: { [playerId: string]: number } = {};
 
 client.on('qr', qr => {
     qrcode.generate(qr, { small: true });
@@ -24,6 +26,21 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
+    const playerId = message.from;
+    const currentTime = Date.now();
+    const lastMessageTime = cooldowns[playerId] || 0;
+    const timeDifference = currentTime - lastMessageTime;
+    const translate = i18n();
+
+    // Set the cooldown duration in milliseconds (e.g., 1 second = 1000 milliseconds)
+    const cooldownDuration = 1000;
+
+    if (timeDifference < cooldownDuration) {
+        // Reply with a message indicating that the player needs to wait
+        message.reply(translate.commands.commons.waitMessage);
+        return;
+    }
+
     const body = message.body;
     if (!body.startsWith(commandChar)) return null;
     const commandLine = body.split(commandChar)[1];
@@ -34,6 +51,9 @@ client.on('message', async message => {
     const args = _findArguments(commandLine);
     command.execute(message, args);
     console.log(`${(await message.getContact()).pushname} ${message.body}`);
+
+    // Update the player's cooldown timestamp
+    cooldowns[playerId] = currentTime;
 });
 
 client.initialize();

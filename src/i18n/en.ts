@@ -34,7 +34,8 @@ export const translationEn: CommandTranslations = {
         },
         commons: {
             needToStart: `⚠️ You need to start you journey first\nType: *${commandChar}start*`,
-            somethingWrong: '❌❌❌ Something is off, please call Katekko ❌❌❌'
+            somethingWrong: '❌❌❌ Something is off, please call Katekko ❌❌❌',
+            waitMessage: '⏳ Please wait a moment before sending another message.'
         },
         hunt: {
             find: {

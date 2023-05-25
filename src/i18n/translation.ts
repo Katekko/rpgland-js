@@ -20,6 +20,7 @@ export type CommandTranslations = {
         commons: {
             needToStart: string
             somethingWrong: string,
+            waitMessage: string,
         },
         hunt: {
             find: {
