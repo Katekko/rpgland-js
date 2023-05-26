@@ -1,4 +1,6 @@
-- change perfil to profile
-- add info about life adnd max life 30/75
+- Block buy items when hunting
+- Change perfil to profile
+- Add info about life adnd max life 30/75
 - Host
 - Automated test
+- Add pipeline to publish
