@@ -1,3 +1,5 @@
+export type Data = {[field: string]: any};
+
 export abstract class Store {
     protected tableName: string;
 
@@ -5,7 +7,7 @@ export abstract class Store {
         this.tableName = tableName;
     }
 
-    abstract getAll(): Promise<any[]>;
+    abstract getAll(): Promise<Data[]>;
 
-    abstract save(data: any): Promise<void>
+    abstract save(data: Data): Promise<void>
 }

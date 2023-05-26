@@ -2,9 +2,8 @@ import qrcode from 'qrcode-terminal';
 import { Client, LocalAuth, Message } from 'whatsapp-web.js';
 import { commands } from './commands';
 import { Command, CommandMap } from './core/abstractions/command/command';
+import { ServiceFactory } from './core/factories/service.factory';
 import { FirebaseService } from './core/firebase';
-import { MobService } from './services/mobs.service';
-import { ItemsService } from './services/items.service';
 import { i18n } from './i18n/translation';
 import { CommonsService } from './services/commons.service';
 
@@ -12,8 +11,9 @@ export const commandChar = '--';
 
 // Initializing the firebase service
 new FirebaseService();
-new MobService().migrateMobs();
-new ItemsService().migrateItems();
+
+ServiceFactory.makeMobsService().migrate();
+ServiceFactory.makeItemsService().migrate();
 
 const client = new Client({ authStrategy: new LocalAuth() });
 const cooldowns: { [playerId: string]: number } = {};
@@ -39,7 +39,7 @@ client.on('message', async message => {
     // Set the cooldown duration in milliseconds (e.g., 1 second = 1000 milliseconds)
     const cooldownDuration = 1000;
 
-    
+
 
     const body = message.body;
     if (!body.startsWith(commandChar)) return null;

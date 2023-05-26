@@ -7,7 +7,7 @@ export class ItemsService extends Service {
         super(store);
     }
 
-    async migrateItems(): Promise<void> {
+    async migrate(): Promise<void> {
         try {
             const items = ItemFactory.getAllItemsForMigration();
             for (const item of items) {

@@ -1,18 +1,17 @@
 import { Message } from "whatsapp-web.js";
 import { CommandGuard } from "../../../../core/abstractions/command/command";
-import { MobService } from "../../../../services/mobs.service";
-import { MobModel } from "../../../../core/models/mob.model";
-import { PlayerService } from "../../../../services/player.service";
 import { PlayerState } from "../../../../core/enums/player_state.enum";
+import { ServiceFactory } from "../../../../core/factories/service.factory";
+import { MobModel } from "../../../../core/models/mob.model";
 
 export class HuntCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
         try {
             await super.execute(message, args);
-            const mobService = new MobService();
-            const playerService = new PlayerService();
-            const player = await playerService.getPlayerByMessage(message);
+            const mobService = ServiceFactory.makeMobsService();
+            const playerService = ServiceFactory.makePlayersService();
 
+            const player = await playerService.getPlayerByMessage(message);
             if (player) {
                 if (player.state != PlayerState.Idle) {
                     message.reply(this.translate.commands.hunt.find.failedToSearch);

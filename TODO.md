@@ -1,3 +1,4 @@
+- Verify message time to see if is to old (one minute old), if so, ignore this message
 - i18n
 - Host
 - Automated test

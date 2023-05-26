@@ -17,7 +17,7 @@ describe('ItemsService', () => {
             const mockItems = [ItemFactory.makeCoin()];
             jest.spyOn(ItemFactory, 'getAllItemsForMigration').mockReturnValue(mockItems);
 
-            await itemsService.migrateItems();
+            await itemsService.migrate();
 
             expect(ItemFactory.getAllItemsForMigration).toHaveBeenCalled();
             expect(mockStore.save).toHaveBeenCalledTimes(mockItems.length);
@@ -27,7 +27,7 @@ describe('ItemsService', () => {
             const errorMessage = 'Failed to migrate items';
             jest.spyOn(mockStore, 'save').mockRejectedValue(new Error(errorMessage));
 
-            await expect(itemsService.migrateItems()).rejects.toThrowError(errorMessage);
+            await expect(itemsService.migrate()).rejects.toThrowError(errorMessage);
         });
     });
 });

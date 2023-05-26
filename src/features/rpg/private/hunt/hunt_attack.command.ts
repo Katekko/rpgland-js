@@ -1,16 +1,15 @@
 import { Message } from "whatsapp-web.js";
 import { CommandGuard } from "../../../../core/abstractions/command/command";
 import { PlayerState } from "../../../../core/enums/player_state.enum";
-import { i18n } from "../../../../i18n/translation";
-import { PlayerService } from "../../../../services/player.service";
-import { ItemModel } from "../../../../core/models/item.model";
 import { ItemFactory } from "../../../../core/factories/item.factory";
+import { ServiceFactory } from "../../../../core/factories/service.factory";
+import { i18n } from "../../../../i18n/translation";
 
 export class HuntAttackCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
         try {
             await super.execute(message, args);
-            const playerService = new PlayerService();
+            const playerService = ServiceFactory.makePlayersService();
             const translate = i18n();
 
             const player = await playerService.getPlayerByMessage(message);

@@ -1,10 +1,13 @@
 import { Message } from 'whatsapp-web.js';
-import { PlayerModel } from '../core/models/player.model';
+import { Service } from '../core/abstractions/service/service';
+import { Store } from '../core/abstractions/service/store';
 import { store } from '../core/firebase';
+import { PlayerModel } from '../core/models/player.model';
 
-export class PlayerService {
-    constructor() { }
-
+export class PlayersService extends Service {
+    constructor(store: Store) {
+        super(store);
+    }
     async savePlayer(player: PlayerModel): Promise<void> {
         try {
             const collection = store.collection('players');

@@ -1,13 +1,13 @@
 import { Message } from "whatsapp-web.js";
 import { CommandGuard } from "../../../core/abstractions/command/command";
-import { PlayerService } from "../../../services/player.service";
 import { ItemType } from "../../../core/enums/item_type.enum";
 import { PlayerState } from "../../../core/enums/player_state.enum";
+import { ServiceFactory } from "../../../core/factories/service.factory";
 
 export class HealCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
         super.execute(message, args);
-        const playerService = new PlayerService();
+        const playerService = ServiceFactory.makePlayersService();
         const player = await playerService.getPlayerByMessage(message);
 
         if (player) {

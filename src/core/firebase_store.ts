@@ -1,4 +1,4 @@
-import { Store } from './abstractions/service/store';
+import { Data, Store } from './abstractions/service/store';
 import { store } from './firebase';
 
 export class FirebaseStore extends Store {
@@ -6,7 +6,7 @@ export class FirebaseStore extends Store {
         super(tableName);
     }
 
-    async getAll(): Promise<any[]> {
+    async getAll(): Promise<Data[]> {
         try {
             const collection = store.collection(this.tableName);
             const snapshot = await collection.get();

@@ -1,9 +1,9 @@
-import { Store } from "../../core/abstractions/service/store";
+import { Data, Store } from "../../core/abstractions/service/store";
 
 export class MockStore extends Store {
     tableName = 'mockTable';
 
-    async getAll(): Promise<any[]> {
+    async getAll(): Promise<Data[]> {
         return [];
     }
 
