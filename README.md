@@ -1,7 +1,19 @@
-# WhatsApp Bot Project
+# RPG Land
 
-This project is a WhatsApp bot built using the WhatsApp Web API and Firebase Firestore. It provides various commands and features to interact with the bot.
+This project is an RPG WhatsApp bot built using the WhatsApp Web API and Firebase Firestore. It provides various commands and features to engage in role-playing adventures with the bot.
 
+
+ 
+ ## PRE-ALPHA STAGE
+ 
+ ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+ 
+This project is currently in pre-alpha stage, which means it is still under active development and may contain bugs or incomplete features. Please keep in mind that the project is in its early stages and is subject to changes and improvements. All text and functionality provided is part of the pre-alpha version.
+
+Please note that this pre-alpha version of the project is still under development, and there is a possibility of data wipes or resets. Any progress or data associated with your account may be subject to deletion or modification during this phase. We recommend not relying on persistent data or important information during the pre-alpha stage.
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+ 
 ## Prerequisites
 
 Before running the project, make sure you have the following prerequisites installed on your system:
