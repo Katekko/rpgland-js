@@ -9,7 +9,7 @@ export class HelpCommand extends Command {
         \n\n${this.translate.commands.help.hunt}
         \n\n${this.translate.commands.help.heal}
         \n\n${this.translate.commands.help.shop}
-        \n\n${this.translate.commands.help.perfil}
+        \n\n${this.translate.commands.help.profile}
         \n\n${this.translate.commands.help.ranking}`)
     }
 }

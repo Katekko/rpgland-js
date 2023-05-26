@@ -11,7 +11,7 @@ export type CommandTranslations = {
             hunt: string,
             heal: string,
             shop: string,
-            perfil: string,
+            profile: string,
             ranking: string,
         },
         start: {
@@ -40,7 +40,7 @@ export type CommandTranslations = {
                 itemFound: (item: ItemModel) => string,
             }
         },
-        perfil: (player: PlayerModel) => string,
+        profile: (player: PlayerModel) => string,
         shop: {
             info: (items: ItemModel[]) => string,
             itemNotFound: (itemName: string) => string,

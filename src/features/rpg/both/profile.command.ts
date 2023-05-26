@@ -3,7 +3,7 @@ import { CommandGuard } from "../../../core/command";
 import { i18n } from "../../../i18n/translation";
 import { PlayerService } from "../../../services/player.service";
 
-export class PerfilCommand extends CommandGuard {
+export class ProfileCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
         try {
             await super.execute(message, args);
@@ -11,7 +11,7 @@ export class PerfilCommand extends CommandGuard {
 
             const playerService = new PlayerService();
             const player = await playerService.getPlayerByMessage(message);
-            message.reply(translate.commands.perfil(player!));
+            message.reply(translate.commands.profile(player!));
         } catch (err) {
             // custom log here
             console.log(err);

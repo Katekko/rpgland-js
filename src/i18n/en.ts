@@ -26,7 +26,7 @@ export const translationEn: CommandTranslations = {
             hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ \*${commandChar}hunt find\*\n⚔️ \*${commandChar}hunt attack\*\`\`\``,
             heal: `🩹 *HEAL*   -> \`\`\`Consume a life potion to restore your health points (HP)❤️ when it's low.\n🍷 \*${commandChar}heal\*\`\`\``,
             shop: `🛍️ *SHOP*   -> \`\`\`Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``,
-            perfil: `🧍 *PERFIL*   -> \`\`\`Check your player profile and stats.\n📊 \*${commandChar}perfil\*\`\`\``,
+            profile: `🧍 *PROFILE*   -> \`\`\`Check your player profile and stats.\n📊 \*${commandChar}profile\*\`\`\``,
             ranking: `🏆 *RANKING*   -> \`\`\`Check the leaderboard to see the top players by level.\n👑 \*${commandChar}ranking\*\`\`\``
         },
         start: {
@@ -55,7 +55,7 @@ export const translationEn: CommandTranslations = {
                 itemFound: (item: ItemModel) => `🎉 You found ${item.amount} ${item.name}! 🎉`
             }
         },
-        perfil: (player: PlayerModel) => {
+        profile: (player: PlayerModel) => {
             const progressBarLength = 10;
             const filledBarCount = Math.floor((player.exp / player.getExpNeededForNextLevel()) * progressBarLength);
             const emptyBarCount = progressBarLength - filledBarCount;

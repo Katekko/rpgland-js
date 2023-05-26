@@ -1,7 +1,7 @@
 import { CommandMap } from './core/command';
 import { PingCommand } from './features/common/private/ping.command';
 import { HelpCommand } from './features/rpg/both/help.command';
-import { PerfilCommand } from './features/rpg/both/perfil.command';
+import { ProfileCommand } from './features/rpg/both/profile.command';
 import { RankingCommand } from './features/rpg/both/ranking.command';
 import { HealCommand } from './features/rpg/private/heal.command';
 import { HuntCommand } from './features/rpg/private/hunt/hunt.command';
@@ -16,7 +16,7 @@ export const commands: CommandMap = {
     ping: new PingCommand(),
     help: new HelpCommand(),
     start: new StartCommand(),
-    perfil: new PerfilCommand(),
+    perfil: new ProfileCommand(),
     hunt: {
         find: new HuntCommand(),
         attack: new HuntAttackCommand(),
