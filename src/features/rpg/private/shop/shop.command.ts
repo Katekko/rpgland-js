@@ -1,5 +1,5 @@
 import { Message } from "whatsapp-web.js";
-import { Command } from "../../../../core/command";
+import { Command } from "../../../../core/abstractions/command/command";
 import { ItemFactory } from "../../../../core/factories/item.factory";
 import { PlayerService } from "../../../../services/player.service";
 import { PlayerState } from "../../../../core/enums/player_state.enum";

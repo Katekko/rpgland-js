@@ -1,8 +1,8 @@
 import { Message } from "whatsapp-web.js";
-import { verifyPlayerisStartedMiddleware } from "./middlewares/verify_player_is_started.middleware";
-import { i18n } from "../i18n/translation";
-import { NeedToStartException } from "./exceptions/need_to_start.exception";
-import { delay } from "./utils/delay";
+import { verifyPlayerisStartedMiddleware } from "../../middlewares/verify_player_is_started.middleware";
+import { i18n } from "../../../i18n/translation";
+import { NeedToStartException } from "../../exceptions/need_to_start.exception";
+import { delay } from "../../utils/delay";
 
 export type CommandMap = {
     [key: string]: Command | CommandMap;

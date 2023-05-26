@@ -1,5 +1,5 @@
 import { Message } from "whatsapp-web.js";
-import { Command } from "../../../core/command";
+import { Command } from "../../../core/abstractions/command/command";
 import { PlayerService } from "../../../services/player.service";
 
 export class InventoryCommand extends Command {

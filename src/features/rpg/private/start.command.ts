@@ -1,5 +1,5 @@
 import { Message } from "whatsapp-web.js";
-import { Command } from "../../../core/command";
+import { Command } from "../../../core/abstractions/command/command";
 import { PlayerModel } from '../../../core/models/player.model';
 import { PlayerService } from "../../../services/player.service";
 import { i18n } from '../../../i18n/translation';

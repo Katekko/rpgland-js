@@ -1,7 +1,7 @@
 import { ItemFactory } from '../core/factories/item.factory';
 import { MobFactory } from '../core/factories/mob.factory';
 import { MobModel } from '../core/models/mob.model';
-import { store } from './firebase';
+import { store } from '../core/firebase';
 
 export class MobService {
     constructor() { }

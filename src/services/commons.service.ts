@@ -1,5 +1,5 @@
 import { ItemFactory } from '../core/factories/item.factory';
-import { store } from './firebase';
+import { store } from '../core/firebase';
 
 export class CommonsService {
     constructor() { }

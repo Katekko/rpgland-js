@@ -1,8 +1,8 @@
 import qrcode from 'qrcode-terminal';
 import { Client, LocalAuth, Message } from 'whatsapp-web.js';
 import { commands } from './commands';
-import { Command, CommandMap } from './core/command';
-import { FirebaseService } from './services/firebase';
+import { Command, CommandMap } from './core/abstractions/command/command';
+import { FirebaseService } from './core/firebase';
 import { MobService } from './services/mobs.service';
 import { ItemsService } from './services/items.service';
 import { i18n } from './i18n/translation';

@@ -1,5 +1,5 @@
 import { Message } from "whatsapp-web.js";
-import { CommandGuard } from "../../../core/command";
+import { CommandGuard } from "../../../core/abstractions/command/command";
 import { i18n } from "../../../i18n/translation";
 import { PlayerService } from "../../../services/player.service";
 
