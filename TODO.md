@@ -1,3 +1,4 @@
-- colocar vida maxima no perfil
+- change perfil to profile
+- add info about life adnd max life 30/75
 - Host
-- Teste automatizado
+- Automated test
