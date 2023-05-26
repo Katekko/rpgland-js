@@ -1,3 +1,4 @@
+- i18n
 - Host
 - Automated test
 - Add pipeline to publish
