@@ -1,6 +1,6 @@
-# WhatsApp Bot Project
+# RPG Land
 
-This project is a WhatsApp bot built using the WhatsApp Web API and Firebase Firestore. It provides various commands and features to interact with the bot.
+This project is an RPG WhatsApp bot built using the WhatsApp Web API and Firebase Firestore. It provides various commands and features to engage in role-playing adventures with the bot.
 
 ## Prerequisites
 
