@@ -11,24 +11,24 @@ export const translationPtBR: CommandTranslations = {
             shop: "Visite o mercado para gastar suas moedas suadas em vários itens, equipamentos e melhorias."
         },
         start: {
-            welcome: (name: string) => `🌍 Welcome to the world of RPG Land, ${name}! Embark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️`,
-            error: '❌ Failed start your journey ',
-            playerAlreadyStarted: '❌ Oops! Looks like you\'re already in the game.'
+            welcome: (name: string) => `🌍 Bem-vindo ao mundo de RPG Land, ${name}! Embarque em uma jornada épica, conquiste áreas desafiadoras e torne-se um aventureiro lendário. ⚔️🛡️`,
+            error: '❌ Falha no início de sua jornada. ',
+            playerAlreadyStarted: '❌ Ops! Parece que você já está em jogo.'
         },
         commons: {
-            needToStart: '❌ You need to start you journey first'
+            needToStart: '❌ Você precisa começar sua jornada primeiro'
         },
         hunt: {
             find: {
-                found: (mob: MobModel) => `🏹 You found a ${mob.name} with ${mob.health} health! Get ready to battle! 🏹`,
-                failedToSearch: `⚠️ You are already in hunting mode. Finish your current hunt before starting a new one.`,
+                found: (mob: MobModel) => `🏹 Você encontrou um ${mob.name} com ${mob.health} de saúde! Prepare-se para a batalha! 🏹`,
+                failedToSearch: `⚠️ Você já está no modo de caça. Termine sua caçada atual antes de iniciar uma nova.`,
             },
             attack: {
-                attacking: (mob: string, damage: number, remainingHealth: number) => `⚔️ You attacked the *${mob}* and dealt *${damage}* damage! ⚔️\nThe *${mob}* has *${remainingHealth}* ❤️ remaining.`,
-                attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 The *${mob}* attacked you and dealt *${damage}* damage! 🔥\nYou have *${remainingHealth}* ❤️ remaining.`,
-                defeated: (mob: string) => `☠️ You were defeated by the *${mob}*! ☠️\nYou have lost one level.`,
-                mobDefeated: (mob: string, exp: number) => `💥 You have defeated the *${mob}* and earned *${exp}* experience points!`,
-                failedToAttack: `⚠️ You are not currently hunting any mob. Use the command *-hunt find* to start hunting.`,
+                attacking: (mob: string, damage: number, remainingHealth: number) => `⚔️ Você atacou o *${mob}* e causou *${damage}*! ⚔️\n O *${mob}* tem *${remainingHealth}* ❤️ restante.`,
+                attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 O *${mob}* atacou você e causou *${damage}*! Você tem *${remainingHealth}* ❤️ restante.`,
+                defeated: (mob: string) => `☠️ Você foi derrotado pelo *${mob}*! ☠️\nVocê perdeu um nível.`,
+                mobDefeated: (mob: string, exp: number) => `💥 Você derrotou o *${mob}* e ganhou *${exp}* pontos de experiência!`,
+                failedToAttack: `⚠️ No momento, você não está caçando nenhum mob. Use o comando *--hunt find* para começar a caçar.`,
             }
         }
     }

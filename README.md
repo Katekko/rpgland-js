@@ -30,7 +30,7 @@ Before running the project, make sure you have the following prerequisites insta
 
 2. Install dependencies:
 
-`cd whatsapp-bot-project`
+`cd rpgland/src`
 
 `npm install`
 
