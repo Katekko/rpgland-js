@@ -16,7 +16,7 @@ export const commands: CommandMap = {
     ping: new PingCommand(),
     help: new HelpCommand(),
     start: new StartCommand(),
-    perfil: new ProfileCommand(),
+    profile: new ProfileCommand(),
     hunt: {
         find: new HuntCommand(),
         attack: new HuntAttackCommand(),

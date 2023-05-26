@@ -24,12 +24,12 @@ export class MobService {
             const goblin = new MobModel(
                 '36e35b45-bae2-4f25-91a3-64fd1087e1ec',
                 'Goblin',
-                2, 5, 
+                3, 5, 
                 [
                     ItemFactory.makeCoin(), 
                     ItemFactory.makeHealthPotion()
                 ],  
-                8, .35, 4,
+                8, .40, 4,
             );
 
             await collection.doc(slime.id).set(slime.toObject());
@@ -37,12 +37,12 @@ export class MobService {
             const wolf = new MobModel(
                 'ae6de135-37e1-4a6d-bf1f-1e5aecc8c491',
                 'Wolf',
-                3, 10, 
+                5, 10, 
                 [
                     ItemFactory.makeCoin(), 
                     ItemFactory.makeHealthPotion()
                 ],   
-                20, .15, 10,
+                20, .10, 50,
             );
 
             await collection.doc(slime.id).set(slime.toObject());
