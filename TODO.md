@@ -1,3 +1,4 @@
+- segregate messages between group and private
 - Verify message time to see if is to old (one minute old), if so, ignore this message
 - Put some log configuration
 - i18n

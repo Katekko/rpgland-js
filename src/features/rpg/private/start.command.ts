@@ -4,28 +4,31 @@ import { ServiceFactory } from "../../../core/factories/service.factory";
 import { verifyPlayerisStartedMiddleware } from "../../../core/middlewares/verify_player_is_started.middleware";
 import { PlayerModel } from '../../../core/models/player.model';
 import { i18n } from '../../../i18n/translation';
+import { commandOnlyForPrivate } from "../../../core/middlewares/command_only_for_private.middleware";
 
 export class StartCommand extends Command {
     async execute(message: Message, args: any): Promise<void> {
-        const playerStarted = await verifyPlayerisStartedMiddleware(message);
+        if (await commandOnlyForPrivate(message)) {
+            const playerStarted = await verifyPlayerisStartedMiddleware(message);
 
-        const translate = i18n();
-        const playerService = ServiceFactory.makePlayersService();
-        const contact = await message.getContact();
-        const name = contact.pushname;
-        const telephone = contact.number;
-        const player = PlayerModel.createNew(name, telephone);
+            const translate = i18n();
+            const playerService = ServiceFactory.makePlayersService();
+            const contact = await message.getContact();
+            const name = contact.pushname;
+            const telephone = contact.number;
+            const player = PlayerModel.createNew(name, telephone);
 
-        try {
-            if (!playerStarted) {
-                await playerService.savePlayer(player);
-                message.reply(translate.commands.start.welcome(player.name));
-            } else {
-                message.reply(translate.commands.start.playerAlreadyStarted);
+            try {
+                if (!playerStarted) {
+                    await playerService.savePlayer(player);
+                    message.reply(translate.commands.start.welcome(player.name));
+                } else {
+                    message.reply(translate.commands.start.playerAlreadyStarted);
+                }
+            } catch (err) {
+                console.error('Error adding player:', err);
+                message.reply(translate.commands.start.error);
             }
-        } catch (err) {
-            console.error('Error adding player:', err);
-            message.reply(translate.commands.start.error);
         }
     }
 }
