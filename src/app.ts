@@ -30,12 +30,7 @@ client.on('message', async message => {
     const translate = i18n();
     const playerId = message.from;
     const commonsService = new CommonsService()
-    const whitelistedNumbers = await commonsService.getWhitelist();
 
-    if (!whitelistedNumbers.includes((await message.getContact()).number)) {
-        message.reply(translate.commands.commons.notAuthorized);
-        return;
-    }
 
     const currentTime = Date.now();
     const lastMessageTime = cooldowns[playerId] || 0;
@@ -44,14 +39,22 @@ client.on('message', async message => {
     // Set the cooldown duration in milliseconds (e.g., 1 second = 1000 milliseconds)
     const cooldownDuration = 1000;
 
+    
+
+    const body = message.body;
+    if (!body.startsWith(commandChar)) return null;
+    const whitelistedNumbers = await commonsService.getWhitelist();
+    if (!whitelistedNumbers.includes((await message.getContact()).number)) {
+        message.reply(translate.commands.commons.notAuthorized);
+        return;
+    }
+
     if (timeDifference < cooldownDuration) {
         // Reply with a message indicating that the player needs to wait
         message.reply(translate.commands.commons.waitMessage);
         return;
     }
 
-    const body = message.body;
-    if (!body.startsWith(commandChar)) return null;
     const commandLine = body.split(commandChar)[1];
 
     const command = _findCommand(commandLine, message);
