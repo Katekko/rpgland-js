@@ -27,7 +27,7 @@ export const translationPtBR: CommandTranslations = {
             heal: `🩹 *HEAL*   -> \`\`\`Consuma uma poção de vida para restaurar seus pontos de vida (HP) ❤️ quando estiverem baixos.\n🍷 \*${commandChar}heal <amount | 1> \*\`\`\``,
             shop: `🛍️ *SHOP*   -> \`\`\`Visite o mercado para gastar suas moedas suadas em vários itens, equipamentos e aprimoramentos.\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``,
             profile: `🧍 *PROFILE*   -> \`\`\`Verifique o perfil e as estatísticas de seu jogador.\n📊 \*${commandChar}profile\*\`\`\``,
-            ranking: `🏆 *RANKING*   -> \`\`\`Verifique a tabela de classificação para ver os melhores jogadores por nível.\n👑 \*${commandChar}ranking\*\`\`\``
+            ranking: `🏆 *RANKING*   -> \`\`\`Verifique a Ranking para ver os melhores jogadores por nível.\n👑 \*${commandChar}ranking\*\`\`\``
         },
         start: {
             welcome: (name: string) => `🌍 Bem-vindo ao mundo de RPG Land, *${name}*! 🌍\nEmbarque em uma jornada épica, conquiste áreas desafiadoras e torne-se um aventureiro lendário. ⚔️🛡️\n\n🕵️‍♂️ Para encontrar mobs, use o comando: *${commandChar}hunt find*\n⚔️ Para atacar um mob, use o comando: *${commandChar}hunt attack*`,
@@ -94,12 +94,12 @@ export const translationPtBR: CommandTranslations = {
             buy: (item: ItemModel, amount: number, totalPrice: number) => {
                 return `✅ Você adquiriu com sucesso 🛒*${amount} ${item.name}* por 💰*${totalPrice}* moedas!\nAproveite sua nova compra! 🎉`;
             },
-            notIdle: "⚠️ Não é possível acessar a loja enquanto estiver envolvido em outra atividade.\nTermine sua tarefa atual antes de visitar a loja."
+            notIdle: "⚠️ Não é possível acessar a loja enquanto estiver em outra atividade.\nTermine sua tarefa atual antes de visitar a loja."
         },
         ranking: {
             leaderboard: (players: PlayerModel[]) => {
                 const emojiPositions = ['🥇', '🥈', '🥉'];
-                let leaderboardMessage = '🏆 Tabela de classificação - Melhores jogadores por nível 🏆\n\n';
+                let leaderboardMessage = '🏆 Ranking - Melhores jogadores por nível 🏆\n\n';
                 for (let i = 0; i < Math.min(players.length, 10); i++) {
                     const player = players[i];
                     const positionEmoji = i < 3 ? emojiPositions[i] : `#${i + 1}`;
@@ -112,7 +112,7 @@ export const translationPtBR: CommandTranslations = {
             healedWithItem: (healedAmount: number, currentHealth: number, itemName: string) => {
                 return `🩹 Você regenerou *${healedAmount} HP* usando uma ${itemName}! 🎉\nAtualmente você possui ❤️*${currentHealth} HP*.`;
             },
-            noPotion: "😰 Você não tem nenhuma *Poção de Cura restantes*. Visite a loja ou continue caçando para obter mais.",
+            noPotion: "😰 Você não tem nenhuma *Poção de Cura restante*. Visite a loja ou continue caçando para obter mais.",
             failedToHeal: "⚠️ Você está ocupado e não pode se curar no momento. Termine sua atividade atual e tente novamente."
         },
         inventory: {
