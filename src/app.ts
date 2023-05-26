@@ -119,7 +119,7 @@ async function _validateWhitelist(message: Message) {
         const foundNumber = whitelist.find(item => item.number === contact.number);
         if (!foundNumber) {
             throw new NotAllowedException();
-        } else if (!foundNumber.allowed) {
+        } else if (!foundNumber.allow) {
             throw new BotInMaintenanceException();
         }
 
