@@ -11,7 +11,7 @@ export class ItemsService extends Service {
         try {
             const items = ItemFactory.getAllItemsForMigration();
             for (const item of items) {
-                await this.store.save(item.toObject());
+                await this.store.save(item);
             }
         } catch (error) {
             throw error;

@@ -11,5 +11,5 @@ export abstract class Store {
 
     abstract getAll<T extends DataModel>(modelClass: new (...args: any[]) => T): Promise<T[]>
 
-    abstract save(data: Data): Promise<void>
+    abstract save(data: DataModel): Promise<void>
 }

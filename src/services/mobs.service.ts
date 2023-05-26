@@ -12,7 +12,7 @@ export class MobsService extends Service {
         try {
             const items = MobFactory.getAllMobsForMigration();
             for (const item of items) {
-                await this.store.save(item.toObject());
+                await this.store.save(item);
             }
         } catch (error) {
             throw error;

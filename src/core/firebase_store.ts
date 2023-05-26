@@ -1,10 +1,14 @@
 import { DataModel } from './abstractions/models/data_model';
-import { Data, Store } from './abstractions/service/store';
+import { Store } from './abstractions/service/store';
 import { store } from './firebase';
 
 export class FirebaseStore extends Store {
     constructor(tableName: string) {
         super(tableName);
+    }
+
+    getFirebaseCollection(): FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> {
+        return store.collection(this.tableName);
     }
 
     async getAll<T extends DataModel>(modelClass: { new(...args: any[]): T }): Promise<T[]> {
@@ -19,10 +23,11 @@ export class FirebaseStore extends Store {
         }
     }
 
-    async save(data: any): Promise<void> {
+    async save(data: DataModel): Promise<void> {
         try {
+            if (!data.id) throw Error('Object whitout ID, fix your object dumb developer')
             const collection = store.collection(this.tableName);
-            await collection.add(data);
+            await collection.doc(data.id).set(data.toObject());
         } catch (error) {
             throw error;
         }

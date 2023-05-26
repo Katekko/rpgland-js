@@ -1,6 +1,6 @@
 import { MobsService } from '../../services/mobs.service';
 import { MobFactory } from '../../core/factories/mob.factory';
-import { MobModel } from '../../core/models/mob.model';
+import MobModel from '../../core/models/mob.model';
 import { MockStore } from '../mocks/mock_store';
 import { ItemModel } from '../../core/models/item.model';
 
@@ -24,7 +24,7 @@ describe('MobsService', () => {
 
             expect(mockStore.save).toHaveBeenCalledTimes(mockMobs.length);
             for (const mob of mockMobs) {
-                expect(mockStore.save).toHaveBeenCalledWith(mob.toObject());
+                expect(mockStore.save).toHaveBeenCalledWith(mob);
             }
         });
 

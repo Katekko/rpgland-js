@@ -6,12 +6,16 @@ export class WhitelistModel extends DataModel {
     public allow: boolean;
 
     constructor(number: string, allowed: boolean) {
-        super();
+        super(number);
         this.number = number;
         this.allow = allowed;
     }
 
     static fromData(data: Data): WhitelistModel {
         return new WhitelistModel(data.number, data.allow);
+    }
+
+    toObject(): object {
+        throw new Error("Method not implemented.");
     }
 }

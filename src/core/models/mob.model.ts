@@ -1,7 +1,8 @@
+import { DataModel } from "../abstractions/models/data_model";
+import { Data } from "../abstractions/service/store";
 import { ItemModel } from "./item.model";
 
-export class MobModel {
-    public id: string;
+export class MobModel extends DataModel {
     public name: string;
     public level: number;
     public expDrop: number;
@@ -13,7 +14,7 @@ export class MobModel {
     constructor(id: string, name: string, level: number, expDrop: number,
         itemsDrop: ItemModel[], health: number, chanceToAppear: number,
         attack: number) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.level = level;
         this.expDrop = expDrop;
@@ -38,9 +39,7 @@ export class MobModel {
         return mobObj;
     }
 
-    static fromData(data: FirebaseFirestore.DocumentData | null): MobModel | null {
-        if (data == null) return null;
-
+    static fromData(data: Data): MobModel {
         const model = new MobModel(
             data.id,
             data.name,
