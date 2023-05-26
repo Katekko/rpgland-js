@@ -1,4 +1,5 @@
 import { ItemFactory } from '../core/factories/item.factory';
+import { MobFactory } from '../core/factories/mob.factory';
 import { MobModel } from '../core/models/mob.model';
 import { store } from './firebase';
 
@@ -8,46 +9,10 @@ export class MobService {
     async migrateMobs(): Promise<void> {
         try {
             const collection = store.collection('mobs');
-            const slime = new MobModel(
-                '6df300e0-4fec-4691-861f-cc4b237fc575',
-                'Slime',
-                1, 2, 
-                [
-                    ItemFactory.makeCoin(), 
-                    ItemFactory.makeHealthPotion()
-                ], 
-                4, .5, 1,
-            );
-
-            await collection.doc(slime.id).set(slime.toObject());
-
-            const goblin = new MobModel(
-                '36e35b45-bae2-4f25-91a3-64fd1087e1ec',
-                'Goblin',
-                3, 5, 
-                [
-                    ItemFactory.makeCoin(), 
-                    ItemFactory.makeHealthPotion()
-                ],  
-                8, .40, 4,
-            );
-
-            await collection.doc(slime.id).set(slime.toObject());
-
-            const wolf = new MobModel(
-                'ae6de135-37e1-4a6d-bf1f-1e5aecc8c491',
-                'Wolf',
-                5, 50, 
-                [
-                    ItemFactory.makeCoin(), 
-                    ItemFactory.makeHealthPotion()
-                ],   
-                20, .10, 10,
-            );
-
-            await collection.doc(slime.id).set(slime.toObject());
-            await collection.doc(goblin.id).set(goblin.toObject());
-            await collection.doc(wolf.id).set(wolf.toObject());
+            const items = MobFactory.getAllMobsForMigration();
+            for (const item of items) {
+                await collection.doc(item.id).set(item.toObject());
+            }
         } catch (error) {
             throw error;
         }
