@@ -1,10 +1,11 @@
+import { DataModel } from "../abstractions/models/data_model";
+import { Data } from "../abstractions/service/store";
 import { PlayerState } from "../enums/player_state.enum";
 import { ItemModel } from "./item.model";
 import { MobModel } from "./mob.model";
 import { v4 as uuidv4 } from 'uuid';
 
-export class PlayerModel {
-    public id: string;
+export class PlayerModel extends DataModel {
     public name: string;
     public level: number;
     public exp: number;
@@ -65,7 +66,7 @@ export class PlayerModel {
         level: number | null, exp: number | null,
         health: number | null, state: PlayerState | null,
         huntAgainst: MobModel | null, baseAttack: number | null, inventory: ItemModel[] | null) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.level = level ?? 1;
         this.exp = exp ?? 0;
@@ -100,11 +101,11 @@ export class PlayerModel {
         return playerDataObj;
     }
 
-    static fromData(data: FirebaseFirestore.DocumentData): PlayerModel {
+    static fromData(data: Data): PlayerModel {
         const model = new PlayerModel(
             data.id, data.name, data.telephoneNumber,
             data.level, data.exp, data.health, data.state,
-            MobModel.fromData(data.huntAgainst),
+            data.huntAgainst ? MobModel.fromData(data.huntAgainst) : null,
             data.maxAttack,
             data.inventory.map((e: any) => ItemModel.fromData(e)),
         );

@@ -1,8 +1,8 @@
 import { Message } from "whatsapp-web.js";
-import { PlayerService } from "../../services/player.service";
+import { ServiceFactory } from "../factories/service.factory";
 
 export async function verifyPlayerisStartedMiddleware(message: Message): Promise<boolean> {
-    const playerService = new PlayerService();
+    const playerService = ServiceFactory.makePlayersService();
     const response = await playerService.getPlayerByMessage(message);
     return response != null;
 }

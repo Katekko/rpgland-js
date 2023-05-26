@@ -1,4 +1,4 @@
-import { CommandMap } from './core/command';
+import { CommandMap } from './core/abstractions/command/command';
 import { PingCommand } from './features/common/private/ping.command';
 import { HelpCommand } from './features/rpg/both/help.command';
 import { ProfileCommand } from './features/rpg/both/profile.command';

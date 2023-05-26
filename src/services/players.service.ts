@@ -1,14 +1,15 @@
 import { Message } from 'whatsapp-web.js';
+import { Service } from '../core/abstractions/service/service';
+import { Store } from '../core/abstractions/service/store';
 import { PlayerModel } from '../core/models/player.model';
-import { store } from './firebase';
 
-export class PlayerService {
-    constructor() { }
-
+export class PlayersService extends Service {
+    constructor(store: Store) {
+        super(store);
+    }
     async savePlayer(player: PlayerModel): Promise<void> {
         try {
-            const collection = store.collection('players');
-            await collection.doc(player.id).set(player.toObject());
+            await this.store.save(player);
         } catch (error) {
             throw error;
         }
@@ -16,7 +17,8 @@ export class PlayerService {
 
     private async _getPlayerByPhone(phone: string): Promise<PlayerModel | null> {
         try {
-            const collection = store.collection('players');
+            // TODO: Allow send query thrghou store
+            const collection = require('../core/firebase').store.collection('players');
             const querySnapshot = await collection.where('telephoneNumber', '==', phone).get();
             if (!querySnapshot.empty) {
                 const documentSnapshot = querySnapshot.docs[0];
@@ -43,15 +45,8 @@ export class PlayerService {
 
     async getAllPlayers(): Promise<PlayerModel[]> {
         try {
-            const collection = store.collection('players');
-            const querySnapshot = await collection.get();
-            const players: PlayerModel[] = [];
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const model = PlayerModel.fromData(data);
-                players.push(model);
-            });
-            return players;
+            const response = this.store.getAll(PlayerModel);
+            return response;
         } catch (error) {
             throw error;
         }
