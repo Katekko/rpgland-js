@@ -39,6 +39,7 @@ export const translationEn: CommandTranslations = {
             somethingWrong: '❌❌❌ Something is off, please call Katekko ❌❌❌',
             waitMessage: '⏳ Please wait a moment before sending another message.',
             notAuthorized: '❌ You are not authorized to use this bot. ❌\nPlease contact the administrator for access.\n*Katekko#1429* ',
+            botMaintenance: "*🛠️ The bot is currently undergoing maintenance. 🛠️\nPlease try again later.*",
         },
         hunt: {
             find: {
@@ -91,7 +92,7 @@ export const translationEn: CommandTranslations = {
             insufficientCoins: (itemName: string) => `⚠️ You don't have enough coins to purchase *${itemName}*.`,
             buy: (item: ItemModel, amount: number, totalPrice: number) => {
                 return `✅ You have successfully purchased 🛒*${amount} ${item.name}* for 💰*${totalPrice}* coins!\nEnjoy your new item! 🎉`;
-            }, 
+            },
             notIdle: "⚠️ You cannot access the shop while you are engaged in another activity.\nPlease finish your current task before visiting the shop."
         },
         ranking: {

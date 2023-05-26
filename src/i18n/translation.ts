@@ -24,6 +24,7 @@ export type CommandTranslations = {
             somethingWrong: string,
             waitMessage: string,
             notAuthorized: string,
+            botMaintenance: string,
         },
         hunt: {
             find: {

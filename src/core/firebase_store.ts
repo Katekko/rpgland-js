@@ -1,3 +1,4 @@
+import { DataModel } from './abstractions/models/data_model';
 import { Data, Store } from './abstractions/service/store';
 import { store } from './firebase';
 
@@ -6,12 +7,13 @@ export class FirebaseStore extends Store {
         super(tableName);
     }
 
-    async getAll(): Promise<Data[]> {
+    async getAll<T extends DataModel>(modelClass: { new(...args: any[]): T }): Promise<T[]> {
         try {
             const collection = store.collection(this.tableName);
             const snapshot = await collection.get();
             const items = snapshot.docs.map((doc) => doc.data());
-            return items;
+            const response = items.map((e) => (modelClass as any).fromData(e));
+            return response;
         } catch (error) {
             throw error;
         }

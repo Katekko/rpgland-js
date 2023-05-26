@@ -1,3 +1,4 @@
+import { CommonsService } from "../../services/commons.service";
 import { ItemsService } from "../../services/items.service";
 import { MobsService } from "../../services/mobs.service";
 import { PlayersService } from "../../services/players.service";
@@ -17,5 +18,10 @@ export class ServiceFactory {
     static makePlayersService(): PlayersService {
         const store = new FirebaseStore('players');
         return new PlayersService(store);
+    }
+
+    static makeCommonsService(): CommonsService {
+        const store = new FirebaseStore('whitelist');
+        return new CommonsService(store);
     }
 } 

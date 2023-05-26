@@ -21,15 +21,8 @@ export class MobsService extends Service {
 
     async getAllMobs(): Promise<MobModel[]> {
         try {
-            const response = await this.store.getAll();
-
-            const mobs: MobModel[] = [];
-            response.forEach((data) => {
-                const mob = MobModel.fromData(data)!
-                mobs.push(mob);
-            });
-
-            return mobs;
+            const response = await this.store.getAll(MobModel);
+            return response;
         } catch (error) {
             throw error;
         }

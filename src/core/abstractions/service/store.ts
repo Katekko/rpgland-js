@@ -1,4 +1,6 @@
-export type Data = {[field: string]: any};
+import { DataModel } from "../models/data_model";
+
+export type Data = { [field: string]: any };
 
 export abstract class Store {
     protected tableName: string;
@@ -7,7 +9,7 @@ export abstract class Store {
         this.tableName = tableName;
     }
 
-    abstract getAll(): Promise<Data[]>;
+    abstract getAll<T extends DataModel>(modelClass: new (...args: any[]) => T): Promise<T[]>
 
     abstract save(data: Data): Promise<void>
 }

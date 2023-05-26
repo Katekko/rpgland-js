@@ -6,6 +6,9 @@ import { ServiceFactory } from './core/factories/service.factory';
 import { FirebaseService } from './core/firebase';
 import { i18n } from './i18n/translation';
 import { CommonsService } from './services/commons.service';
+import { Service } from './core/abstractions/service/service';
+import { BotInMaintenanceException } from './core/exceptions/bot_in_maintenance.exception';
+import { NotAllowedException } from './core/exceptions/not_allowed.exception';
 
 export const commandChar = '--';
 
@@ -27,45 +30,36 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
-    const translate = i18n();
-    const playerId = message.from;
-    const commonsService = new CommonsService()
+    try {
+        const translate = i18n();
+        const playerId = message.from;
+        const currentTime = Date.now();
+        const lastMessageTime = cooldowns[playerId] || 0;
+        const timeDifference = currentTime - lastMessageTime;
+        const cooldownDuration = 1000;
 
+        const body = message.body;
+        if (!body.startsWith(commandChar)) return null;
 
-    const currentTime = Date.now();
-    const lastMessageTime = cooldowns[playerId] || 0;
-    const timeDifference = currentTime - lastMessageTime;
+        await _validateWhitelist(message);
 
-    // Set the cooldown duration in milliseconds (e.g., 1 second = 1000 milliseconds)
-    const cooldownDuration = 1000;
+        if (timeDifference < cooldownDuration) {
+            message.reply(translate.commands.commons.waitMessage);
+            return;
+        }
 
+        const commandLine = body.split(commandChar)[1];
+        const command = _findCommand(commandLine, message);
+        if (command == null) return null;
 
+        const args = _findArguments(commandLine);
+        command.execute(message, args);
+        console.log(`${(await message.getContact()).pushname} ${message.body}`);
 
-    const body = message.body;
-    if (!body.startsWith(commandChar)) return null;
-    const whitelistedNumbers = await commonsService.getWhitelist();
-    if (!whitelistedNumbers.includes((await message.getContact()).number)) {
-        message.reply(translate.commands.commons.notAuthorized);
-        return;
+        cooldowns[playerId] = currentTime;
+    } catch (err) {
+        console.log(err);
     }
-
-    if (timeDifference < cooldownDuration) {
-        // Reply with a message indicating that the player needs to wait
-        message.reply(translate.commands.commons.waitMessage);
-        return;
-    }
-
-    const commandLine = body.split(commandChar)[1];
-
-    const command = _findCommand(commandLine, message);
-    if (command == null) return null;
-
-    const args = _findArguments(commandLine);
-    command.execute(message, args);
-    console.log(`${(await message.getContact()).pushname} ${message.body}`);
-
-    // Update the player's cooldown timestamp
-    cooldowns[playerId] = currentTime;
 });
 
 client.initialize();
@@ -112,5 +106,35 @@ function _findCommand(commandLine: String, message: Message, currentCommands: Co
     } catch (error) {
         message.reply('❌ Command not found');
         return null;
+    }
+}
+
+async function _validateWhitelist(message: Message) {
+    const translate = i18n();
+    const commonsService = ServiceFactory.makeCommonsService();
+    const whitelist = await commonsService.getWhitelist();
+    const contact = await message.getContact();
+
+    try {
+        const foundNumber = whitelist.find(item => item.number === contact.number);
+        if (!foundNumber) {
+            throw new NotAllowedException();
+        } else if (!foundNumber.allowed) {
+            throw new BotInMaintenanceException();
+        }
+
+    } catch (err) {
+        if (err instanceof NotAllowedException) {
+            console.log(`Not Authorized: ${contact.name} | ${contact.number}`);
+            message.reply(translate.commands.commons.notAuthorized);
+        } else if (err instanceof BotInMaintenanceException) {
+            message.reply(translate.commands.commons.botMaintenance);
+            console.log(`Bot in Maintenance: ${contact.name} | ${contact.number}`);
+        } else {
+            console.error(err);
+            message.reply(translate.commands.commons.somethingWrong);
+        }
+
+        throw err;
     }
 }
