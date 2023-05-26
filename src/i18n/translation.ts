@@ -47,6 +47,7 @@ export type CommandTranslations = {
             missingArguments: string,
             insufficientCoins: (itemName: string) => string,
             buy: (item: ItemModel, amount: number, totalPrice: number) => string,
+            notIdle: string,
         },
         ranking: {
             leaderboard: (players: PlayerModel[]) => string,

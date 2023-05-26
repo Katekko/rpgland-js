@@ -91,7 +91,8 @@ export const translationEn: CommandTranslations = {
             insufficientCoins: (itemName: string) => `⚠️ You don't have enough coins to purchase *${itemName}*.`,
             buy: (item: ItemModel, amount: number, totalPrice: number) => {
                 return `✅ You have successfully purchased 🛒*${amount} ${item.name}* for 💰*${totalPrice}* coins!\nEnjoy your new item! 🎉`;
-            }
+            }, 
+            notIdle: "⚠️ You cannot access the shop while you are engaged in another activity.\nPlease finish your current task before visiting the shop."
         },
         ranking: {
             leaderboard: (players: PlayerModel[]) => {
