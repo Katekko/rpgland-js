@@ -44,11 +44,11 @@ export const translationPtBR: CommandTranslations = {
         },
         hunt: {
             find: {
-                found: (mob: MobModel) => `🏹 Prepare-se para a batalha! 🏹\nVocê encontrou um *${mob.name}* com *${mob.health}*❤️ de saúde!`,
+                found: (mob: MobModel) => `🏹 Prepare-se para a batalha! 🏹\nVocê encontrou um *${mob.name}* com *${mob.health}*❤️ de vida!`,
                 failedToSearch: `⚠️ Você já está no modo de caça. Termine sua caçada atual antes de iniciar uma nova.`,
             },
             attack: {
-                attacking: (mob: string, damage: number, remainingHealth: number) => `⚔️ Você atacou o *${mob}* e causou *${damage}* de dano! ⚔️\nThe *${mob}* has *${remainingHealth}* ❤️ remaining.`,
+                attacking: (mob: string, damage: number, remainingHealth: number) => `⚔️ Você atacou o *${mob}* e causou *${damage}* de dano! ⚔️\nO *${mob}* tem *${remainingHealth}* ❤️ restantes.`,
                 attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 O *${mob}* atacou você e causou *${damage}*! Você tem *${remainingHealth}* ❤️ restantes.`,
                 defeated: (mob: string) => `☠️ Você foi derrotado pelo *${mob}*! ☠️\nVocê perdeu um nível.`,
                 mobDefeated: (mob: string, exp: number) => `💥 Você derrotou o *${mob}* e ganhou *${exp}* pontos de experiência!`,
