@@ -69,6 +69,13 @@ export type CommandTranslations = {
         language: {
             changed: (lang: string) => string,
             error: string,
+        },
+        migrate: {
+            mobs: string,
+            items: string,
+            players: string,
+            all: string,
+            error: string,
         }
     };
 };

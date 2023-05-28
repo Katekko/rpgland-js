@@ -9,6 +9,9 @@ import { HealCommand } from './features/rpg/private/heal.command';
 import { HuntCommand } from './features/rpg/private/hunt/hunt.command';
 import { HuntAttackCommand } from './features/rpg/private/hunt/hunt_attack.command';
 import { InventoryCommand } from './features/rpg/private/inventory.command';
+import { MigrateItemsCommand } from './features/rpg/private/migrate/migrate_items.command';
+import { MigrateMobsCommand } from './features/rpg/private/migrate/migrate_mobs.command';
+import { MigratePlayersCommand } from './features/rpg/private/migrate/migrate_players.command';
 import { ShopCommand } from './features/rpg/private/shop/shop.command';
 import { ShopBuyCommand } from './features/rpg/private/shop/shop_buy.command';
 import { StartCommand } from './features/rpg/private/start.command';
@@ -34,6 +37,11 @@ export const commands: CommandMap = {
         add: {
             whitelist: new AddWhitelistCommand()
         },
+        migrate: {
+            mobs: new MigrateMobsCommand(),
+            items: new MigrateItemsCommand(),
+            players: new MigratePlayersCommand(),
+        }
     },
     language: new ChangeLanguageCommand(),
 };

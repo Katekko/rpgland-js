@@ -142,6 +142,13 @@ export const translationPtBR: CommandTranslations = {
         language: {
             changed: (lang: string) => `✅ Idioma alterado com sucesso para *${lang}*`,
             error: '❌ Ocorreu um erro ao alterar o idioma. ❌\nEscolha entre estas duas opções: 🇧🇷 *pt_BR* ou 🇺🇸 *en*.',
-          }
+        },
+        migrate: {
+            all: '✅ Migração completa de *todos os dados*.',
+            mobs: '✅ Migração de *mobs* concluída.',
+            players: '✅ Migração de *jogadores* concluída.',
+            items: '✅ Migração de *itens* concluída.',
+            error: '❌ Ocorreu um *erro* durante a migração.',
+        }
     }
 };

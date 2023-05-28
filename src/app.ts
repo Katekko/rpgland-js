@@ -18,12 +18,8 @@ client.initialize();
 client.on('qr', qr => { qrcode.generate(qr, { small: true }); });
 client.on('authenticated', () => { console.log('[RPG LAND] Client successfully authenticated.'); });
 client.on('ready', () => {
-    console.log('[RPG LAND] Loading services!');
     new FirebaseService();
-
-    ServiceFactory.makeMobsService().migrate();
-    ServiceFactory.makeItemsService().migrate();
-    ServiceFactory.makePlayersService().migrate();
+    console.log('[RPG LAND] Client ready to receive messages!');
 });
 
 client.on('message', async message => {
