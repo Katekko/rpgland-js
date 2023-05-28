@@ -41,7 +41,8 @@ export const translationPtBR: CommandTranslations = {
             notAuthorized: '❌ Você não está autorizado a usar este bot. ❌\nEntre em contato com o administrador para obter acesso.\n*Katekko#1429* ',
             botMaintenance: "*🛠️ O bot está passando por manutenção no momento. 🛠️\nTente novamente mais tarde.*",
             commandOnlyForPrivate: '❌ Esse comando só pode ser usado em bate-papos privados. ❌',
-            youAreNotKatekko: '❌ Você não é o katekko seu corno ❌'
+            youAreNotKatekko: '❌ Você não é o katekko seu corno ❌',
+            commandNotFound: '❌ Comando inexistente',
         },
         hunt: {
             find: {

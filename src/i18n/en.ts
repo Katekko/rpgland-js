@@ -42,6 +42,7 @@ export const translationEn: CommandTranslations = {
             botMaintenance: "*🛠️ The bot is currently undergoing maintenance. 🛠️\nPlease try again later.*",
             commandOnlyForPrivate: '❌ This command can only be used in private chats. ❌',
             youAreNotKatekko: '❌ You are not katekko you little bastard. ❌',
+            commandNotFound: '❌ Command not found',
         },
         hunt: {
             find: {

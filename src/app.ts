@@ -15,7 +15,7 @@ const cooldowns: { [playerId: string]: number } = {};
 console.log(`[RPG LAND] Loading api wrapper whatsapp!`);
 client.initialize();
 
-client.on('qr', qr => {qrcode.generate(qr, { small: true });});
+client.on('qr', qr => { qrcode.generate(qr, { small: true }); });
 client.on('authenticated', () => { console.log('[RPG LAND] Client successfully authenticated.'); });
 client.on('ready', () => {
     console.log('[RPG LAND] Loading services!');
@@ -47,7 +47,7 @@ client.on('message', async message => {
         }
 
         const commandLine = body.split(commandChar)[1];
-        const command = _findCommand(commandLine, message);
+        const command = await _findCommand(commandLine, message);
         if (command == null) return null;
 
         const args = _findArguments(commandLine);
@@ -79,7 +79,7 @@ function _findArguments(commandLine: string): string[] {
     return args;
 }
 
-function _findCommand(commandLine: String, message: Message, currentCommands: CommandMap = commands): Command | null {
+async function _findCommand(commandLine: String, message: Message, currentCommands: CommandMap = commands): Promise<Command | null> {
     try {
         const commandParts = commandLine.split(' ');
         for (const command of commandParts) {
@@ -100,7 +100,9 @@ function _findCommand(commandLine: String, message: Message, currentCommands: Co
 
         throw Error();
     } catch (error) {
-        message.reply('❌ Command not found');
+        const number = (await message.getContact()).number;
+        const translate = i18n(number);
+        message.reply(translate.commands.commons.commandNotFound);
         return null;
     }
 }

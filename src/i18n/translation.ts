@@ -28,6 +28,7 @@ export type CommandTranslations = {
             botMaintenance: string,
             commandOnlyForPrivate: string,
             youAreNotKatekko: string,
+            commandNotFound: string,
         },
         hunt: {
             find: {
