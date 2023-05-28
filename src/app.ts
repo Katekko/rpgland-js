@@ -2,13 +2,11 @@ import qrcode from 'qrcode-terminal';
 import { Client, LocalAuth, Message } from 'whatsapp-web.js';
 import { commands } from './commands';
 import { Command, CommandMap } from './core/abstractions/command/command';
+import { BotInMaintenanceException } from './core/exceptions/bot_in_maintenance.exception';
+import { NotAllowedException } from './core/exceptions/not_allowed.exception';
 import { ServiceFactory } from './core/factories/service.factory';
 import { FirebaseService } from './core/firebase';
 import { i18n } from './i18n/translation';
-import { CommonsService } from './services/commons.service';
-import { Service } from './core/abstractions/service/service';
-import { BotInMaintenanceException } from './core/exceptions/bot_in_maintenance.exception';
-import { NotAllowedException } from './core/exceptions/not_allowed.exception';
 
 export const commandChar = '--';
 

@@ -26,6 +26,7 @@ export type CommandTranslations = {
             notAuthorized: string,
             botMaintenance: string,
             commandOnlyForPrivate: string,
+            youAreNotKatekko: string,
         },
         hunt: {
             find: {

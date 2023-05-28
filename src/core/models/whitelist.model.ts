@@ -5,10 +5,10 @@ export class WhitelistModel extends DataModel {
     public number: string;
     public allow: boolean;
 
-    constructor(number: string, allowed: boolean) {
+    constructor(number: string, allow: boolean) {
         super(number);
         this.number = number;
-        this.allow = allowed;
+        this.allow = allow;
     }
 
     static fromData(data: Data): WhitelistModel {
@@ -16,6 +16,15 @@ export class WhitelistModel extends DataModel {
     }
 
     toObject(): object {
-        throw new Error("Method not implemented.");
+        const obj = {
+            number: this.number,
+            allow: this.allow,
+        }
+
+        return obj;
+    }
+
+    toString(): string {
+        return `[PERSON]: ${this.number} | ${this.allow}`;
     }
 }

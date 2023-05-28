@@ -41,6 +41,7 @@ export const translationEn: CommandTranslations = {
             notAuthorized: '❌ You are not authorized to use this bot. ❌\nPlease contact the administrator for access.\n*Katekko#1429* ',
             botMaintenance: "*🛠️ The bot is currently undergoing maintenance. 🛠️\nPlease try again later.*",
             commandOnlyForPrivate: '❌ This command can only be used in private chats. ❌',
+            youAreNotKatekko: '❌ You are not katekko you little bastard. ❌',
         },
         hunt: {
             find: {

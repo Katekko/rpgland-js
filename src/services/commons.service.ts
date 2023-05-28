@@ -15,4 +15,12 @@ export class CommonsService extends Service {
       throw error;
     }
   }
+
+  async saveWhitelistEntry(person: WhitelistModel) {
+    try {
+      await this.store.save(person);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
