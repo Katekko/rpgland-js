@@ -12,7 +12,15 @@ export class RankingCommand extends Command {
             await super.execute(message, args);
             const playerService = ServiceFactory.makePlayersService();
             const players = await playerService.getAllPlayers();
-            players.sort((a, b) => b.level - a.level);
+
+            players.sort((a, b) => {
+                if (a.level !== b.level) {
+                    return b.level - a.level;
+                } else {
+                    return b.exp - a.exp;
+                }
+            });
+
             const chat = await message.getChat();
             chat.sendMessage(this.translate.commands.ranking.leaderboard(players));
         } catch (err) {
