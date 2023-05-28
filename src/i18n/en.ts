@@ -24,7 +24,7 @@ export const translationEn: CommandTranslations = {
             title: "🌍 *Welcome to the world of RPG Land!* 🌍\n```Embark on an epic journey, conquer challenging areas, and become a legendary adventurer.\nHere's how to play:```",
             start: `🎮 *START*   -> \`\`\`Begin your adventure in RPG Land! Use this command to initiate your journey and explore the vast world filled with challenges, treasures, and epic quests.\n🌟 \*${commandChar}start\*\`\`\``,
             hunt: `🏹 *HUNT*   -> \`\`\`Venture into the wilderness to hunt dangerous creatures and earn XP and coins.\n🕵️‍♂️ \*${commandChar}hunt find\*\n⚔️ \*${commandChar}hunt attack\*\`\`\``,
-            heal: `🩹 *HEAL*   -> \`\`\`Consume a life potion to restore your health points (HP)❤️ when it's low.\n🍷 \*${commandChar}heal <amount | 1> \*\`\`\``,
+            heal: `🩹 *HEAL*   -> \`\`\`Consume a life potion to restore your health points (HP)❤️ when it's low.\n🍷 *${commandChar}heal <amount | 1>*\`\`\``,
             shop: `🛍️ *SHOP*   -> \`\`\`Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``,
             profile: `🧍 *PROFILE*   -> \`\`\`Check your player profile and stats.\n📊 \*${commandChar}profile\*\`\`\``,
             ranking: `🏆 *RANKING*   -> \`\`\`Check the leaderboard to see the top players by level.\n👑 \*${commandChar}ranking\*\`\`\``
@@ -136,7 +136,11 @@ export const translationEn: CommandTranslations = {
                 inventoryMessage += `${continuousLine}`;
 
                 return inventoryMessage;
-            }
+            },
+        },
+        language: {
+            changed: (lang: string) => `✅ Language changed successfully to *${lang}*`,
+            error: '❌ Error occurred while changing the language. ❌\nChoose between these two options: 🇧🇷 *pt_BR* or 🇺🇸 *en*.',
         }
     }
 };

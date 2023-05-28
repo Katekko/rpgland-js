@@ -4,6 +4,7 @@ import { HelpCommand } from './features/rpg/both/help.command';
 import { ProfileCommand } from './features/rpg/both/profile.command';
 import { RankingCommand } from './features/rpg/both/ranking.command';
 import { AddWhitelistCommand } from './features/rpg/private/admin/add_whitelist.command';
+import { ChangeLanguageCommand } from './features/rpg/private/change_language.command';
 import { HealCommand } from './features/rpg/private/heal.command';
 import { HuntCommand } from './features/rpg/private/hunt/hunt.command';
 import { HuntAttackCommand } from './features/rpg/private/hunt/hunt_attack.command';
@@ -34,4 +35,5 @@ export const commands: CommandMap = {
             whitelist: new AddWhitelistCommand()
         },
     },
+    language: new ChangeLanguageCommand(),
 };

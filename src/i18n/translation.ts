@@ -65,6 +65,10 @@ export type CommandTranslations = {
             emptyInventory: string,
             open: (player: PlayerModel) => string
         },
+        language: {
+            changed: (lang: string) => string,
+            error: string,
+        }
     };
 };
 

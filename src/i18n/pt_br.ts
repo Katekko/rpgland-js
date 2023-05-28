@@ -137,6 +137,10 @@ export const translationPtBR: CommandTranslations = {
 
                 return inventoryMessage;
             }
-        }
+        },
+        language: {
+            changed: (lang: string) => `✅ Idioma alterado com sucesso para *${lang}*`,
+            error: '❌ Ocorreu um erro ao alterar o idioma. ❌\nEscolha entre estas duas opções: 🇧🇷 *pt_BR* ou 🇺🇸 *en*.',
+          }
     }
 };
