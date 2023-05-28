@@ -2,6 +2,7 @@ import { ItemModel } from "../core/models/item.model";
 import { MobModel } from "../core/models/mob.model";
 import { PlayerModel } from "../core/models/player.model";
 import { translationEn } from "./en";
+import { translationPtBR } from "./pt_br";
 
 export type CommandTranslations = {
     commands: {
@@ -67,8 +68,10 @@ export type CommandTranslations = {
     };
 };
 
-export function i18n(): CommandTranslations {
-    // based in a variable somewhere will decide if will be english or portugues (or something else)
-    // <default english>
-    return translationEn;
+export function i18n(number: string | null, language: string | void): CommandTranslations {
+    if (language) {
+        return language == 'pt_BR' ? translationPtBR : translationEn;
+    } else {
+        return number?.startsWith('55') ? translationPtBR : translationEn;
+    }
 }

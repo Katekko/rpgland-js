@@ -1,7 +1,4 @@
-- Add command to add whitelist
-    - add
-    - remove
-- Add command to disallow everyone in the whitelist
+- Create command for migrations
 - Make the ranking based on exp aswell
 - Verify message time to see if is to old (one minute old), if so, ignore this message
 - Put some log configuration

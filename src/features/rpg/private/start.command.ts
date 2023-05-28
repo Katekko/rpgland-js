@@ -3,15 +3,17 @@ import { Command } from "../../../core/abstractions/command/command";
 import { ServiceFactory } from "../../../core/factories/service.factory";
 import { verifyPlayerisStartedMiddleware } from "../../../core/middlewares/verify_player_is_started.middleware";
 import { PlayerModel } from '../../../core/models/player.model';
-import { i18n } from '../../../i18n/translation';
 import { commandOnlyForPrivate } from "../../../core/middlewares/command_only_for_private.middleware";
 
 export class StartCommand extends Command {
+    constructor() {
+        super(false);
+    }
+
     async execute(message: Message, args: any): Promise<void> {
         if (await commandOnlyForPrivate(message)) {
+            await super.execute(message, args);
             const playerStarted = await verifyPlayerisStartedMiddleware(message);
-
-            const translate = i18n();
             const playerService = ServiceFactory.makePlayersService();
             const contact = await message.getContact();
             const name = contact.pushname;
@@ -21,13 +23,13 @@ export class StartCommand extends Command {
             try {
                 if (!playerStarted) {
                     await playerService.savePlayer(player);
-                    message.reply(translate.commands.start.welcome(player.name));
+                    message.reply(this.translate.commands.start.welcome(player.name));
                 } else {
-                    message.reply(translate.commands.start.playerAlreadyStarted);
+                    message.reply(this.translate.commands.start.playerAlreadyStarted);
                 }
             } catch (err) {
                 console.error('Error adding player:', err);
-                message.reply(translate.commands.start.error);
+                message.reply(this.translate.commands.start.error);
             }
         }
     }

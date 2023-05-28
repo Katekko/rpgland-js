@@ -10,12 +10,13 @@ export class HuntCommand extends CommandGuard {
         try {
             if (await commandOnlyForPrivate(message)) {
                 await super.execute(message, args);
+
                 const mobService = ServiceFactory.makeMobsService();
                 const playerService = ServiceFactory.makePlayersService();
 
-                const player = await playerService.getPlayerByMessage(message);
-                if (player) {
-                    if (player.state != PlayerState.Idle) {
+                await super.execute(message, args);
+                if (this.player) {
+                    if (this.player.state != PlayerState.Idle) {
                         message.reply(this.translate.commands.hunt.find.failedToSearch);
                         return;
                     }
@@ -35,9 +36,9 @@ export class HuntCommand extends CommandGuard {
                     }
 
                     if (selectedMob) {
-                        player!.state = PlayerState.Hunting;
-                        player!.huntAgainst = selectedMob;
-                        playerService.savePlayer(player);
+                        this.player!.state = PlayerState.Hunting;
+                        this.player!.huntAgainst = selectedMob;
+                        await playerService.savePlayer(this.player);
                         message.reply(this.translate.commands.hunt.find.found(selectedMob));
                     }
                 } else {

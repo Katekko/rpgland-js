@@ -7,6 +7,7 @@ export class PlayersService extends Service {
     constructor(store: Store) {
         super(store);
     }
+
     async savePlayer(player: PlayerModel): Promise<void> {
         try {
             await this.store.save(player);
@@ -47,8 +48,21 @@ export class PlayersService extends Service {
         try {
             const response = this.store.getAll(PlayerModel);
             return response;
-        } catch (error) {
-            throw error;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async migrate(): Promise<void> {
+        try {
+            const players = await this.getAllPlayers();
+            for (const item of players) {
+                await this.store.save(item);
+            }
+            console.log('[RPG LAND] PLAYERS- Migration completed successfully.');
+        } catch (err) {
+            console.error('[RPG LAND] PLAYERS- Migration failed:', err);
+            throw err;
         }
     }
 }

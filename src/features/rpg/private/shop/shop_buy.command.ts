@@ -10,9 +10,9 @@ export class ShopBuyCommand extends Command {
     async execute(message: Message, args: any): Promise<void> {
         if (await commandOnlyForPrivate(message)) {
             const playerService = ServiceFactory.makePlayersService();
-            const player = await playerService.getPlayerByMessage(message);
-            if (player) {
-                if (player.state != PlayerState.Idle) {
+            await super.execute(message, args);
+            if (this.player) {
+                if (this.player.state != PlayerState.Idle) {
                     message.reply(this.translate.commands.shop.notIdle);
                     return;
                 }
@@ -34,7 +34,7 @@ export class ShopBuyCommand extends Command {
 
                 const totalPrice = item.price * quantity;
 
-                const coinItem = player.inventory.find((item) => item.type === ItemType.Currency);
+                const coinItem = this.player.inventory.find((item) => item.type === ItemType.Currency);
                 if (!coinItem || coinItem.amount < totalPrice) {
                     message.reply(this.translate.commands.shop.insufficientCoins(item.name));
                     return;
@@ -42,17 +42,17 @@ export class ShopBuyCommand extends Command {
 
                 coinItem.amount -= totalPrice;
 
-                const existingItem = player.inventory.find(e => e.id === item.id);
+                const existingItem = this.player.inventory.find(e => e.id === item.id);
 
                 if (existingItem) {
                     existingItem.amount += quantity;
                 } else {
                     const newItem = ItemFactory.makeItemByType(item.type);
                     newItem.amount = quantity;
-                    player.inventory.push(newItem);
+                    this.player.inventory.push(newItem);
                 }
 
-                await playerService.savePlayer(player);
+                await playerService.savePlayer(this.player);
                 message.reply(this.translate.commands.shop.buy(item, quantity, totalPrice));
             }
         }

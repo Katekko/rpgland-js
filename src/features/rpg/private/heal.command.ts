@@ -8,17 +8,16 @@ import { commandOnlyForPrivate } from "../../../core/middlewares/command_only_fo
 export class HealCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
         if (await commandOnlyForPrivate(message)) {
-            super.execute(message, args);
+            await super.execute(message, args);
             const playerService = ServiceFactory.makePlayersService();
-            const player = await playerService.getPlayerByMessage(message);
 
-            if (player) {
-                if (player.state != PlayerState.Idle) {
+            if (this.player) {
+                if (this.player.state != PlayerState.Idle) {
                     message.reply(this.translate.commands.heal.failedToHeal);
                     return;
                 }
 
-                const potion = player.inventory.find(item => item.type === ItemType.HealthPotion);
+                const potion = this.player.inventory.find(item => item.type === ItemType.HealthPotion);
                 if (potion) {
                     let potionAmount = 1; // Default amount is 1
 
@@ -35,27 +34,27 @@ export class HealCommand extends CommandGuard {
                     potionAmount = Math.min(potionAmount, availableAmount);
 
                     // Calculate the total healed amount
-                    const maxHealth = player.getMaxHealth();
-                    const currentHealth = player.health;
+                    const maxHealth = this.player.getMaxHealth();
+                    const currentHealth = this.player.health;
                     const healedAmount = Math.min(maxHealth - currentHealth, potion.value * potionAmount);
 
                     // Update the player's health
-                    player.health += healedAmount;
+                    this.player.health += healedAmount;
 
                     // Update the potion amount in the inventory
                     potion.amount -= potionAmount;
 
                     // Remove the potion from the inventory if its amount reaches zero
                     if (potion.amount <= 0) {
-                        const potionIndex = player.inventory.indexOf(potion);
-                        player.inventory.splice(potionIndex, 1);
+                        const potionIndex = this.player.inventory.indexOf(potion);
+                        this.player.inventory.splice(potionIndex, 1);
                     }
 
                     // Save the updated player
-                    await playerService.savePlayer(player);
+                    await playerService.savePlayer(this.player);
 
                     // Send a message to the player confirming the healing
-                    message.reply(this.translate.commands.heal.healedWithItem(healedAmount, player.health, potion.name));
+                    message.reply(this.translate.commands.heal.healedWithItem(healedAmount, this.player.health, potion.name));
                 } else {
                     message.reply(this.translate.commands.heal.noPotion);
                 }

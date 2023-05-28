@@ -50,12 +50,12 @@ export const translationPtBR: CommandTranslations = {
             },
             attack: {
                 attacking: (mob: string, damage: number, remainingHealth: number) => `⚔️ Você atacou o *${mob}* e causou *${damage}* de dano! ⚔️\nO *${mob}* tem *${remainingHealth}* ❤️ restantes.`,
-                attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 O *${mob}* atacou você e causou *${damage}*! Você tem *${remainingHealth}* ❤️ restantes.`,
+                attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 O *${mob}* atacou você e causou *${damage}*!\nVocê tem *${remainingHealth}* ❤️ restantes.`,
                 defeated: (mob: string) => `☠️ Você foi derrotado pelo *${mob}*! ☠️\nVocê perdeu um nível.`,
                 mobDefeated: (mob: string, exp: number) => `💥 Você derrotou o *${mob}* e ganhou *${exp}* pontos de experiência!`,
                 failedToAttack: `⚠️ No momento, você não está caçando nenhum mob. Use o comando *${commandChar}hunt find* para começar a caçar.`,
                 levelUp: (level: number) => `🎉 Parabéns! 🎉\nVocê atingiu o nível *${level}*!`,
-                itemFound: (item: ItemModel) => `🎉 Você encontrou ${item.amount} ${item.name}! 🎉`
+                itemFound: (item: ItemModel) => `🎉 Você encontrou 💰${item.amount} ${item.name}! 🎉`
             }
         },
         profile: (player: PlayerModel) => {

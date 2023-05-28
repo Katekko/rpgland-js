@@ -13,8 +13,10 @@ export class ItemsService extends Service {
             for (const item of items) {
                 await this.store.save(item);
             }
-        } catch (error) {
-            throw error;
+            console.log('[RPG LAND] ITEMS- Migration completed successfully.');
+        } catch (err) {
+            console.error('[RPG LAND] ITEMS- Migration failed:', err);
+            throw err;
         }
     }
 }

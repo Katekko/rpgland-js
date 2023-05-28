@@ -4,7 +4,6 @@ import { PlayerState } from "../../../../core/enums/player_state.enum";
 import { ItemFactory } from "../../../../core/factories/item.factory";
 import { ServiceFactory } from "../../../../core/factories/service.factory";
 import { commandOnlyForPrivate } from "../../../../core/middlewares/command_only_for_private.middleware";
-import { i18n } from "../../../../i18n/translation";
 
 export class HuntAttackCommand extends CommandGuard {
     async execute(message: Message, args: any): Promise<void> {
@@ -12,52 +11,50 @@ export class HuntAttackCommand extends CommandGuard {
             if (await commandOnlyForPrivate(message)) {
                 await super.execute(message, args);
                 const playerService = ServiceFactory.makePlayersService();
-                const translate = i18n();
 
-                const player = await playerService.getPlayerByMessage(message);
-                if (player) {
-                    if (player.state != PlayerState.Hunting) {
-                        message.reply(translate.commands.hunt.attack.failedToAttack);
+                if (this.player) {
+                    if (this.player.state != PlayerState.Hunting) {
+                        message.reply(this.translate.commands.hunt.attack.failedToAttack);
                         return;
                     }
-
-                    const mob = player.huntAgainst!;
-                    const realAttack = player.getRandomAttack();
+                    
+                    const mob = this.player!.huntAgainst!;
+                    const realAttack = this.player.getRandomAttack();
                     mob.health -= realAttack;
-                    message.reply(translate.commands.hunt.attack.attacking(mob.name, realAttack, mob.health))
+                    message.reply(this.translate.commands.hunt.attack.attacking(mob.name, realAttack, mob.health))
 
                     // Player kill the mob
                     if (mob.health <= 0) {
-                        player.state = PlayerState.Idle;
-                        player.huntAgainst = null;
-                        player.exp += mob.expDrop;
-                        message.reply(translate.commands.hunt.attack.mobDefeated(mob.name, mob.expDrop));
+                        this.player.state = PlayerState.Idle;
+                        this.player.huntAgainst = null;
+                        this.player.exp += mob.expDrop;
+                        message.reply(this.translate.commands.hunt.attack.mobDefeated(mob.name, mob.expDrop));
 
                         mob.itemsDrop.forEach((item) => {
                             if (Math.random() <= item.dropChance) {
                                 const itemQuantity = Math.floor(Math.random() * item.amount * mob.level) + 1;
                                 const newItem = ItemFactory.makeItemByType(item.type);
                                 newItem.amount = itemQuantity;
-                                const existingItemIndex = player.inventory.findIndex(existingItem => existingItem.type === item.type);
+                                const existingItemIndex = this.player!.inventory.findIndex(existingItem => existingItem.type === item.type);
 
                                 if (existingItemIndex !== -1) {
-                                    player.inventory[existingItemIndex].amount += newItem.amount;
+                                    this.player!.inventory[existingItemIndex].amount += newItem.amount;
                                 } else {
-                                    player.inventory.push(newItem);
+                                    this.player!.inventory.push(newItem);
                                 }
-                                message.reply(translate.commands.hunt.attack.itemFound(newItem));
+                                message.reply(this.translate.commands.hunt.attack.itemFound(newItem));
                             }
                         });
 
                         // Player levelup
-                        if (player.exp >= player.getExpNeededForNextLevel()) {
-                            const remainingExp = player.exp - player.getExpNeededForNextLevel();
-                            player.level++;
-                            player.exp = remainingExp;
-                            message.reply(translate.commands.hunt.attack.levelUp(player.level));
+                        if (this.player.exp >= this.player.getExpNeededForNextLevel()) {
+                            const remainingExp = this.player.exp - this.player.getExpNeededForNextLevel();
+                            this.player.level++;
+                            this.player.exp = remainingExp;
+                            message.reply(this.translate.commands.hunt.attack.levelUp(this.player.level));
                         }
 
-                        playerService.savePlayer(player);
+                        await playerService.savePlayer(this.player);
                         return;
                     }
 
@@ -65,17 +62,17 @@ export class HuntAttackCommand extends CommandGuard {
                         const mobAttack = mob.attack;
                         const randomMobDamage = Math.random() * (mobAttack - 1) + 1;
                         const roundedMobDamage = Math.round(randomMobDamage);
-                        player.health -= roundedMobDamage;
+                        this.player!.health -= roundedMobDamage;
 
-                        await playerService.savePlayer(player);
+                        await playerService.savePlayer(this.player!);
 
-                        message.reply(translate.commands.hunt.attack.attacked(mob.name, roundedMobDamage, player.health));
-                        if (player.health <= 0) {
-                            player.setPlayerDeath();
-                            message.reply(translate.commands.hunt.attack.defeated(mob.name));
+                        message.reply(this.translate.commands.hunt.attack.attacked(mob.name, roundedMobDamage, this.player!.health));
+                        if (this.player!.health <= 0) {
+                            this.player!.setPlayerDeath();
+                            message.reply(this.translate.commands.hunt.attack.defeated(mob.name));
                         }
 
-                        playerService.savePlayer(player);
+                        playerService.savePlayer(this.player!);
                     }, 100);
                 }
             }

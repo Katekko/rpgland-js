@@ -33,5 +33,5 @@ export const commands: CommandMap = {
         add: {
             whitelist: new AddWhitelistCommand()
         },
-    }
+    },
 };

@@ -6,10 +6,13 @@ import { commandOnlyForPrivate } from "../../../../core/middlewares/command_only
 import { verifyIsKatekkoMiddleware } from "../../../../core/middlewares/verify_is_katekko.middleware";
 
 export class AddWhitelistCommand extends Command {
+    constructor() { super(false) }
+    
     async execute(message: Message, args: any): Promise<void> {
         try {
             if (await commandOnlyForPrivate(message)) {
                 if (await verifyIsKatekkoMiddleware(message)) {
+                    await super.execute(message, args);
                     const commonsService = ServiceFactory.makeCommonsService();
                     const phoneNumber = args[0];
                     const allowed = ((args[1] ?? 'true') === 'true');

@@ -8,10 +8,9 @@ import { commandOnlyForPrivate } from "../../../../core/middlewares/command_only
 export class ShopCommand extends Command {
     async execute(message: Message, args: any): Promise<void> {
         if (await commandOnlyForPrivate(message)) {
-            const playerService = ServiceFactory.makePlayersService();
-            const player = await playerService.getPlayerByMessage(message);
-            if (player) {
-                if (player.state != PlayerState.Idle) {
+            await super.execute(message, args);
+            if (this.player) {
+                if (this.player.state != PlayerState.Idle) {
                     message.reply(this.translate.commands.shop.notIdle);
                     return;
                 }

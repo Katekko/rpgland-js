@@ -11,6 +11,7 @@ export class PlayerModel extends DataModel {
     public exp: number;
     public telephoneNumber: string;
     public health: number;
+    public language: string;
 
     public state: PlayerState;
 
@@ -65,7 +66,9 @@ export class PlayerModel extends DataModel {
     constructor(id: string, name: string, telephoneNumber: string,
         level: number | null, exp: number | null,
         health: number | null, state: PlayerState | null,
-        huntAgainst: MobModel | null, baseAttack: number | null, inventory: ItemModel[] | null) {
+        huntAgainst: MobModel | null, baseAttack: number | null, inventory: ItemModel[] | null,
+        language: string = 'pt_BR'
+    ) {
         super(id);
         this.name = name;
         this.level = level ?? 1;
@@ -76,11 +79,13 @@ export class PlayerModel extends DataModel {
         this.huntAgainst = huntAgainst;
         this.baseAttack = baseAttack ?? this._getBaseAttack();
         this.inventory = inventory ?? [];
+        this.language = language;
     }
 
     static createNew(name: string, telephone: string): PlayerModel {
+        const languagePtBr = telephone.startsWith('55');
         const player = new PlayerModel(uuidv4(), name, telephone,
-            null, null, null, null, null, null, null);
+            null, null, null, null, null, null, null, languagePtBr ? 'pt_BR' : 'en');
         return player;
     }
 
@@ -96,6 +101,7 @@ export class PlayerModel extends DataModel {
             huntAgainst: this.huntAgainst?.toObject() ?? null,
             maxAttack: this.baseAttack,
             inventory: this.inventory.map((e) => e.toObject()),
+            language: this.language
         };
 
         return playerDataObj;
@@ -108,6 +114,7 @@ export class PlayerModel extends DataModel {
             data.huntAgainst ? MobModel.fromData(data.huntAgainst) : null,
             data.maxAttack,
             data.inventory.map((e: any) => ItemModel.fromData(e)),
+            data.language
         );
 
         return model;

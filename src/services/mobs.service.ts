@@ -14,8 +14,10 @@ export class MobsService extends Service {
             for (const item of items) {
                 await this.store.save(item);
             }
-        } catch (error) {
-            throw error;
+            console.log('[RPG LAND] MOBS- Migration completed successfully.');
+        } catch (err) {
+            console.error('[RPG LAND] MOBS- Migration failed:', err);
+            throw err;
         }
     }
 
@@ -23,8 +25,8 @@ export class MobsService extends Service {
         try {
             const response = await this.store.getAll(MobModel);
             return response;
-        } catch (error) {
-            throw error;
+        } catch (err) {
+            throw err;
         }
     }
 }

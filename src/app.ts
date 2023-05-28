@@ -10,26 +10,26 @@ import { i18n } from './i18n/translation';
 
 export const commandChar = '--';
 
-// Initializing the firebase service
-new FirebaseService();
-
-ServiceFactory.makeMobsService().migrate();
-ServiceFactory.makeItemsService().migrate();
-
 const client = new Client({ authStrategy: new LocalAuth() });
 const cooldowns: { [playerId: string]: number } = {};
+console.log(`[RPG LAND] Loading api wrapper whatsapp!`);
+client.initialize();
 
-client.on('qr', qr => {
-    qrcode.generate(qr, { small: true });
-});
-
+client.on('qr', qr => {qrcode.generate(qr, { small: true });});
+client.on('authenticated', () => { console.log('[RPG LAND] Client successfully authenticated.'); });
 client.on('ready', () => {
-    console.log('Client is ready!');
+    console.log('[RPG LAND] Loading services!');
+    new FirebaseService();
+
+    ServiceFactory.makeMobsService().migrate();
+    ServiceFactory.makeItemsService().migrate();
+    ServiceFactory.makePlayersService().migrate();
 });
 
 client.on('message', async message => {
     try {
-        const translate = i18n();
+        const number = (await message.getContact()).number;
+        const translate = i18n(number);
         const playerId = message.from;
         const currentTime = Date.now();
         const lastMessageTime = cooldowns[playerId] || 0;
@@ -56,11 +56,9 @@ client.on('message', async message => {
 
         cooldowns[playerId] = currentTime;
     } catch (err) {
-        console.log(err);
+        console.log(`[RPG LAND] ${err}`);
     }
 });
-
-client.initialize();
 
 function _findArguments(commandLine: string): string[] {
     const commandParts = commandLine.split(' ');
@@ -108,10 +106,10 @@ function _findCommand(commandLine: String, message: Message, currentCommands: Co
 }
 
 async function _validateWhitelist(message: Message) {
-    const translate = i18n();
     const commonsService = ServiceFactory.makeCommonsService();
     const whitelist = await commonsService.getWhitelist();
     const contact = await message.getContact();
+    const translate = i18n(contact.number);
 
     try {
         const foundNumber = whitelist.find(item => item.number === contact.number);
@@ -123,11 +121,11 @@ async function _validateWhitelist(message: Message) {
 
     } catch (err) {
         if (err instanceof NotAllowedException) {
-            console.log(`Not Authorized: ${contact.name} | ${contact.number}`);
+            console.log(`[RPG LAND] Not Authorized: ${contact.name} | ${contact.number}`);
             message.reply(translate.commands.commons.notAuthorized);
         } else if (err instanceof BotInMaintenanceException) {
             message.reply(translate.commands.commons.botMaintenance);
-            console.log(`Bot in Maintenance: ${contact.name} | ${contact.number}`);
+            console.log(`[RPG LAND] Bot in Maintenance: ${contact.name} | ${contact.number}`);
         } else {
             console.error(err);
             message.reply(translate.commands.commons.somethingWrong);
