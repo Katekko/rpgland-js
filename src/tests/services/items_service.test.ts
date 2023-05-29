@@ -10,6 +10,8 @@ describe('ItemsService', () => {
         mockStore = new MockStore('items');
         mockStore.save = jest.fn().mockResolvedValue(undefined);
         itemsService = new ItemsService(mockStore);
+        console.log = jest.fn();
+        console.error = jest.fn();
     });
 
     describe('migrateItems', () => {

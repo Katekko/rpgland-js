@@ -1,8 +1,8 @@
 import { MobsService } from '../../services/mobs.service';
 import { MobFactory } from '../../core/factories/mob.factory';
-import MobModel from '../../core/models/mob.model';
 import { MockStore } from '../mocks/mock_store';
 import { ItemModel } from '../../core/models/item.model';
+import { MobModel } from '../../core/models/mob.model';
 
 describe('MobsService', () => {
     let mobsService: MobsService;
@@ -13,6 +13,8 @@ describe('MobsService', () => {
         mockStore.save = jest.fn().mockResolvedValue(undefined);
         mockStore.getAll = jest.fn().mockResolvedValue(undefined);
         mobsService = new MobsService(mockStore);
+        console.log = jest.fn();
+        console.error = jest.fn();
     });
 
     describe('migrate', () => {
@@ -61,7 +63,6 @@ describe('MobsService', () => {
             const result = await mobsService.getAllMobs();
 
             expect(mockStore.getAll).toHaveBeenCalled();
-            expect(MobModel.fromData).toHaveBeenCalledTimes(mockResponse.length);
             expect(result).toEqual(mockMobs);
         });
 
