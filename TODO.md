@@ -1,4 +1,3 @@
-- Verify message time to see if is to old (one minute old), if so, ignore this message
 - Host
 - Automated test
 - Add pipeline to publish

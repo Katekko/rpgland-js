@@ -24,6 +24,8 @@ client.on('ready', () => {
 
 client.on('message', async message => {
     try {
+        if (_verifyIgnoreMessage(message)) return;
+
         const number = (await message.getContact()).number;
         const translate = i18n(number);
         const playerId = message.from;
@@ -131,4 +133,16 @@ async function _validateWhitelist(message: Message) {
 
         throw err;
     }
+}
+
+function _verifyIgnoreMessage(message: Message): boolean {
+    const oneMinute = 60 * 1000; // One minute in milliseconds
+
+    // Inside your message handling logic
+    const messageTimestamp = message.timestamp;
+    const currentTimestamp = Date.now();
+    const messageDate = new Date(messageTimestamp * 1000);
+
+
+    return currentTimestamp - messageDate.getTime() > oneMinute;
 }
