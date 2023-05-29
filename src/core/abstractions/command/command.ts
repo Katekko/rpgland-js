@@ -17,6 +17,10 @@ export abstract class Command {
     // Every command will try to fullfill the player
     public player: PlayerModel | null = null;
 
+    getLoadPlayer(): boolean {
+        return this.loadPlayer;
+      }
+
     constructor(loadPlayer: boolean | void) {
         this.loadPlayer = loadPlayer ?? true;
         this.translate = i18n(null, 'pt_BR');

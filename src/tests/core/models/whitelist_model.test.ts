@@ -1,5 +1,5 @@
-import { Data } from "../../core/abstractions/service/store";
-import { WhitelistModel } from "../../core/models/whitelist.model";
+import { Data } from "../../../core/abstractions/service/store";
+import { WhitelistModel } from "../../../core/models/whitelist.model";
 
 describe('WhitelistModel', () => {
   const mockData: Data = {

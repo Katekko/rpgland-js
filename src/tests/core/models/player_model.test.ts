@@ -1,7 +1,7 @@
-import { PlayerState } from "../../core/enums/player_state.enum";
-import { ItemFactory } from "../../core/factories/item.factory";
-import { MobFactory } from "../../core/factories/mob.factory";
-import { PlayerModel } from "../../core/models/player.model";
+import { PlayerState } from "../../../core/enums/player_state.enum";
+import { ItemFactory } from "../../../core/factories/item.factory";
+import { MobFactory } from "../../../core/factories/mob.factory";
+import { PlayerModel } from "../../../core/models/player.model";
 
 
 describe('PlayerModel', () => {

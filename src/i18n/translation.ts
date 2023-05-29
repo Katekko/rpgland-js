@@ -5,6 +5,7 @@ import { translationEn } from "./en";
 import { translationPtBR } from "./pt_br";
 
 export type CommandTranslations = {
+    getLocale: () => string;
     commands: {
         help: {
             title: string,

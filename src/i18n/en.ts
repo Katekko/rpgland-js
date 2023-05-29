@@ -19,6 +19,7 @@ function _createProfileBox(profile: string): string {
 }
 
 export const translationEn: CommandTranslations = {
+    getLocale: () => 'en',
     commands: {
         help: {
             title: "🌍 *Welcome to the world of RPG Land!* 🌍\n```Embark on an epic journey, conquer challenging areas, and become a legendary adventurer.\nHere's how to play:```",

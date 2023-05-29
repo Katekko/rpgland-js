@@ -1,6 +1,6 @@
-import { Data } from "../../core/abstractions/service/store";
-import { ItemModel } from "../../core/models/item.model";
-import { MobModel } from "../../core/models/mob.model";
+import { Data } from "../../../core/abstractions/service/store";
+import { ItemModel } from "../../../core/models/item.model";
+import { MobModel } from "../../../core/models/mob.model";
 
 describe('MobModel', () => {
   const mockData: Data = {
