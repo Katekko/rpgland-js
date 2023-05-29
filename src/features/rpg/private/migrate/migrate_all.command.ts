@@ -1,22 +1,42 @@
-import { Message } from "whatsapp-web.js";
 import { Command } from "../../../../core/abstractions/command/command";
 import { commandOnlyForPrivate } from "../../../../core/middlewares/command_only_for_private.middleware";
-import { ServiceFactory } from "../../../../core/factories/service.factory";
+import { PlayerModel } from "../../../../core/models/player.model";
+import { CustomMessage } from "../../../../handle_messages";
+import { CommandTranslations } from "../../../../i18n/translation";
+import { ItemsService } from "../../../../services/items.service";
+import { MobsService } from "../../../../services/mobs.service";
+import { PlayersService } from "../../../../services/players.service";
 
 export class MigrateItemsCommand extends Command {
-    constructor() { super(false) }
+    playersService: PlayersService | null = null;
+    itemsService: ItemsService | null = null;
+    mobsService: MobsService | null = null;
 
-    async execute(message: Message, args: any): Promise<void> {
+    injectDependencies(i18n: CommandTranslations, player: PlayerModel | null, services: { [key: string]: any; }): void {
+        this.i18n = i18n;
+        this.playersService = services.PlayersService;
+        this.itemsService = services.ItemsService;
+        this.mobsService = services.MobsService;
+    }
+
+
+    async execute(message: CustomMessage, args: any): Promise<void> {
         try {
-            if (await commandOnlyForPrivate(message)) {
-                await super.execute(message, args);
-                await ServiceFactory.makeItemsService().migrate();
-                await ServiceFactory.makeMobsService().migrate();
-                await ServiceFactory.makePlayersService().migrate();
-                message.reply(this.translate.commands.migrate.all);
+            if (this.i18n) {
+                try {
+                    if (await commandOnlyForPrivate(message, this.i18n)) {
+                        await this.itemsService!.migrate();
+                        await this.mobsService!.migrate();
+                        await this.playersService!.migrate();
+
+                        message.reply(this.i18n.commands.migrate.all);
+                    }
+                } catch (err) {
+                    message.reply(this.i18n.commands.migrate.error);
+                    throw err;
+                }
             }
         } catch (err) {
-            message.reply(this.translate.commands.migrate.error);
             throw err;
         }
     }

@@ -4,40 +4,40 @@ import { MobModel } from "../core/models/mob.model";
 import { PlayerModel } from "../core/models/player.model";
 import { CommandTranslations } from "./translation";
 
-const commandChar = '--';
+export class TranslationPtBr extends CommandTranslations {
+    constructor(public commandChar: string) {
+        super();
+    }
 
-function _createProfileBox(profile: string): string {
-    const width = 20; // Width of the box
-    const horizontalLine = '─'.repeat(width); // Horizontal line for the box
+    getLocale(): string { return 'pt_BR' };
 
-    const boxTop = `╭${horizontalLine}╮\n`; // Top line of the box
-    const boxBottom = `\n╰${horizontalLine}╯`; // Bottom line of the box
+    private _createProfileBox(profile: string): string {
+        const width = 20;
+        const horizontalLine = '─'.repeat(width);
+        const boxTop = `╭${horizontalLine}╮\n`;
+        const boxBottom = `\n╰${horizontalLine}╯`;
+        const emptyLine = `${' '.repeat(width)}`;
+        return `${boxTop}${emptyLine}\n\t${profile}\n${emptyLine}${boxBottom}`;
+    }
 
-    const emptyLine = `${' '.repeat(width)}`; // Empty line with matching width
-
-    return `${boxTop}${emptyLine}\n\t${profile}\n${emptyLine}${boxBottom}`;
-}
-
-export const translationPtBR: CommandTranslations = {
-    getLocale: () => 'pt_BR',
-    commands: {
+    commands = {
         help: {
             title: "🌍 *Bem-vindo ao mundo de RPG Land!* 🌍\n```Embarque em uma jornada épica, conquiste áreas desafiadoras e torne-se um aventureiro lendário.\nVeja como jogar:```",
-            start: `🎮 *START*   -> \`\`\`Comece sua aventura em RPG Land! Use este comando para iniciar sua jornada e explorar o vasto mundo repleto de desafios, tesouros e missões épicas.\n🌟 \*${commandChar}start\*\`\`\``,
-            hunt: `🏹 *HUNT*   -> \`\`\`Aventure-se na natureza selvagem para caçar criaturas perigosas e ganhar EXP e moedas.\n🕵️‍♂️ \*${commandChar}hunt find\*\n⚔️ \*${commandChar}hunt attack\*\`\`\``,
-            heal: `🩹 *HEAL*   -> \`\`\`Consuma uma poção de vida para restaurar seus pontos de vida (HP) ❤️ quando estiverem baixos.\n🍷 \*${commandChar}heal <amount | 1> \*\`\`\``,
-            shop: `🛍️ *SHOP*   -> \`\`\`Visite o mercado para gastar suas moedas suadas em vários itens, equipamentos e aprimoramentos.\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``,
-            profile: `🧍 *PROFILE*   -> \`\`\`Verifique o perfil e as estatísticas de seu jogador.\n📊 \*${commandChar}profile\*\`\`\``,
-            ranking: `🏆 *RANKING*   -> \`\`\`Verifique a Ranking para ver os melhores jogadores por nível.\n👑 \*${commandChar}ranking\*\`\`\``,
+            start: `🎮 *START*   -> \`\`\`Comece sua aventura em RPG Land! Use este comando para iniciar sua jornada e explorar o vasto mundo repleto de desafios, tesouros e missões épicas.\n🌟 \*${this.commandChar}start\*\`\`\``,
+            hunt: `🏹 *HUNT*   -> \`\`\`Aventure-se na natureza selvagem para caçar criaturas perigosas e ganhar EXP e moedas.\n🕵️‍♂️ \*${this.commandChar}hunt find\*\n⚔️ \*${this.commandChar}hunt attack\*\`\`\``,
+            heal: `🩹 *HEAL*   -> \`\`\`Consuma uma poção de vida para restaurar seus pontos de vida (HP) ❤️ quando estiverem baixos.\n🍷 \*${this.commandChar}heal <amount | 1> \*\`\`\``,
+            shop: `🛍️ *SHOP*   -> \`\`\`Visite o mercado para gastar suas moedas suadas em vários itens, equipamentos e aprimoramentos.\n🛒 *${this.commandChar}shop info*\n💰 \*${this.commandChar}shop buy <item name> <amount>\*\`\`\``,
+            profile: `🧍 *PROFILE*   -> \`\`\`Verifique o perfil e as estatísticas de seu jogador.\n📊 \*${this.commandChar}profile\*\`\`\``,
+            ranking: `🏆 *RANKING*   -> \`\`\`Verifique a Ranking para ver os melhores jogadores por nível.\n👑 \*${this.commandChar}ranking\*\`\`\``,
             language: '🌐 Para alterar o idioma do bot, use o comando *language* seguido do código do idioma desejado.\n\nExemplo: `--language pt_BR` ou `--language en`.',
         },
         start: {
-            welcome: (name: string) => `🌍 Bem-vindo ao mundo de RPG Land, *${name}*! 🌍\nEmbarque em uma jornada épica, conquiste áreas desafiadoras e torne-se um aventureiro lendário. ⚔️🛡️\n\n🕵️‍♂️ Para encontrar mobs, use o comando: *${commandChar}hunt find*\n⚔️ Para atacar um mob, use o comando: *${commandChar}hunt attack*`,
+            welcome: (name: string) => `🌍 Bem-vindo ao mundo de RPG Land, *${name}*! 🌍\nEmbarque em uma jornada épica, conquiste áreas desafiadoras e torne-se um aventureiro lendário. ⚔️🛡️\n\n🕵️‍♂️ Para encontrar mobs, use o comando: *${this.commandChar}hunt find*\n⚔️ Para atacar um mob, use o comando: *${this.commandChar}hunt attack*`,
             error: '❌ Falha no início de sua jornada ',
             playerAlreadyStarted: '❌ Ops! Parece que você já está no jogo.'
         },
         commons: {
-            needToStart: `⚠️ Você precisa começar sua jornada primeiro\nEnvie: *${commandChar}start*`,
+            needToStart: `⚠️ Você precisa começar sua jornada primeiro\nEnvie: *${this.commandChar}start*`,
             somethingWrong: '❌❌❌ Algo está errado, entre em contato com a Katekko ❌❌❌',
             waitMessage: '⏳ Aguarde um momento antes de enviar outra mensagem.',
             notAuthorized: '❌ Você não está autorizado a usar este bot. ❌\nEntre em contato com o administrador para obter acesso.\n*Katekko#1429* ',
@@ -56,7 +56,7 @@ export const translationPtBR: CommandTranslations = {
                 attacked: (mob: string, damage: number, remainingHealth: number) => `🔥 O *${mob}* atacou você e causou *${damage}*!\nVocê tem *${remainingHealth}* ❤️ restantes.`,
                 defeated: (mob: string) => `☠️ Você foi derrotado pelo *${mob}*! ☠️\nVocê perdeu um nível.`,
                 mobDefeated: (mob: string, exp: number) => `💥 Você derrotou o *${mob}* e ganhou *${exp}* pontos de experiência!`,
-                failedToAttack: `⚠️ No momento, você não está caçando nenhum mob. Use o comando *${commandChar}hunt find* para começar a caçar.`,
+                failedToAttack: `⚠️ No momento, você não está caçando nenhum mob. Use o comando *${this.commandChar}hunt find* para começar a caçar.`,
                 levelUp: (level: number) => `🎉 Parabéns! 🎉\nVocê atingiu o nível *${level}*!`,
                 itemFound: (item: ItemModel) => `🎉 Você encontrou 💰${item.amount} ${item.name}! 🎉`
             }
@@ -77,7 +77,7 @@ export const translationPtBR: CommandTranslations = {
                 }
                 return total;
             }, 0);
-            return _createProfileBox(`\`\`\`${player.state.toString()}\`\`\`\n\t🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t❤️ ${player.health}/${player.getMaxHealth()}   ⚔️ *${player.getMaxAttack()}   💰 ${coinItem?.amount ?? 0}   🍷 ${potionCount}*`);
+            return this._createProfileBox(`\`\`\`${player.state.toString()}\`\`\`\n\t🧍 *${player.name}* > *Lv. ${player.level}*\n\t[${filledBar}${emptyBar}] (${player.exp}/${player.getExpNeededForNextLevel()})\n\n\t❤️ ${player.health}/${player.getMaxHealth()}   ⚔️ *${player.getMaxAttack()}   💰 ${coinItem?.amount ?? 0}   🍷 ${potionCount}*`);
         },
         shop: {
             info: (items: ItemModel[]) => {
@@ -153,4 +153,5 @@ export const translationPtBR: CommandTranslations = {
             error: '❌ Ocorreu um *erro* durante a migração.',
         }
     }
-};
+
+}

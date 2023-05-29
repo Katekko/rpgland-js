@@ -1,28 +1,32 @@
-import { Message } from "whatsapp-web.js";
 import { Command } from "../../../core/abstractions/command/command";
-import { ServiceFactory } from "../../../core/factories/service.factory";
+import { PlayerModel } from "../../../core/models/player.model";
+import { CustomMessage } from "../../../handle_messages";
+import { CommandTranslations } from "../../../i18n/translation";
+import { PlayersService } from "../../../services/players.service";
 
 export class RankingCommand extends Command {
-    constructor() {
-        super(false);
+    playersService: PlayersService | null = null;
+
+    injectDependencies(i18n: CommandTranslations, player: PlayerModel | null, services: { [key: string]: any; }): void {
+        this.i18n = i18n;
+        this.playersService = services.PlayersService;
     }
 
-    async execute(message: Message, args: any): Promise<void> {
+    async execute(message: CustomMessage, args: any): Promise<void> {
         try {
-            await super.execute(message, args);
-            const playerService = ServiceFactory.makePlayersService();
-            const players = await playerService.getAllPlayers();
+            if (this.i18n) {
+                const players = await this.playersService!.getAllPlayers();
 
-            players.sort((a, b) => {
-                if (a.level !== b.level) {
-                    return b.level - a.level;
-                } else {
-                    return b.exp - a.exp;
-                }
-            });
+                players.sort((a, b) => {
+                    if (a.level !== b.level) {
+                        return b.level - a.level;
+                    } else {
+                        return b.exp - a.exp;
+                    }
+                });
 
-            const chat = await message.getChat();
-            chat.sendMessage(this.translate.commands.ranking.leaderboard(players));
+                message.reply(this.i18n.commands.ranking.leaderboard(players));
+            }
         } catch (err) {
             throw err;
         }

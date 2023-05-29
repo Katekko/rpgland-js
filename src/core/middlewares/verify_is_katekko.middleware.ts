@@ -1,6 +1,6 @@
-import { Message } from "whatsapp-web.js";
+import { CustomMessage } from "../../handle_messages";
 
-export async function verifyIsKatekkoMiddleware(message: Message): Promise<boolean> {
-    const number = (await message.getContact()).number;
+export function verifyIsKatekkoMiddleware(message: CustomMessage): boolean {
+    const number = message.phone;
     return number == '5527999912909';
 }

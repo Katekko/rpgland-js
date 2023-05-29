@@ -2,6 +2,7 @@ import { Message } from 'whatsapp-web.js';
 import { Service } from '../core/abstractions/service/service';
 import { Store } from '../core/abstractions/service/store';
 import { PlayerModel } from '../core/models/player.model';
+import { CustomMessage } from '../handle_messages';
 
 export class PlayersService extends Service {
     constructor(store: Store) {
@@ -34,10 +35,9 @@ export class PlayersService extends Service {
         }
     }
 
-    async getPlayerByMessage(message: Message): Promise<PlayerModel | null> {
+    async getPlayerByMessage(message: CustomMessage): Promise<PlayerModel | null> {
         try {
-            const contact = await message.getContact();
-            const phone = contact.number;
+            const phone = message.phone;
             return this._getPlayerByPhone(phone);
         } catch (err) {
             throw err;

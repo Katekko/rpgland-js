@@ -1,17 +1,12 @@
 import qrcode from 'qrcode-terminal';
-import { Client, LocalAuth, Message } from 'whatsapp-web.js';
-import { commands } from './commands';
-import { Command, CommandMap } from './core/abstractions/command/command';
-import { BotInMaintenanceException } from './core/exceptions/bot_in_maintenance.exception';
-import { NotAllowedException } from './core/exceptions/not_allowed.exception';
+import { Client, LocalAuth } from 'whatsapp-web.js';
 import { ServiceFactory } from './core/factories/service.factory';
 import { FirebaseService } from './core/firebase';
-import { i18n } from './i18n/translation';
+import { CustomMessage, HandleMessages } from './handle_messages';
 
 export const commandChar = '--';
 
 const client = new Client({ authStrategy: new LocalAuth() });
-const cooldowns: { [playerId: string]: number } = {};
 console.log(`[RPG LAND] Loading api wrapper whatsapp!`);
 client.initialize();
 
@@ -24,125 +19,31 @@ client.on('ready', () => {
 
 client.on('message', async message => {
     try {
-        if (_verifyIgnoreMessage(message)) return;
+        const contact = await message.getContact();
+        const customMessage = new CustomMessage(
+            {
+                timestamp: message.timestamp,
+                phone: contact.number,
+                body: message.body,
+                reply: (text: string) => message.reply(text),
+                name: (await message.getContact()).pushname,
+                isGroup: (await message.getChat()).isGroup,
+            }
+        );
 
-        const number = (await message.getContact()).number;
-        const translate = i18n(number);
-        const playerId = message.from;
-        const currentTime = Date.now();
-        const lastMessageTime = cooldowns[playerId] || 0;
-        const timeDifference = currentTime - lastMessageTime;
-        const cooldownDuration = 1000;
+        const handler = new HandleMessages(
+            {
+                message: customMessage,
+                commandChar: commandChar,
+                playersService: ServiceFactory.makePlayersService(),
+                commonsService: ServiceFactory.makeCommonsService(),
+                itemsService: ServiceFactory.makeItemsService(),
+                mobsService: ServiceFactory.makeMobsService(),
+            }
+        );
 
-        const body = message.body;
-        if (!body.startsWith(commandChar)) return null;
-
-        await _validateWhitelist(message);
-
-        if (timeDifference < cooldownDuration) {
-            message.reply(translate.commands.commons.waitMessage);
-            return;
-        }
-
-        const commandLine = body.split(commandChar)[1];
-        const command = await _findCommand(commandLine, message);
-        if (command == null) return null;
-
-        const args = _findArguments(commandLine);
-        command.execute(message, args);
-        console.log(`${(await message.getContact()).pushname} ${message.body}`);
-
-        cooldowns[playerId] = currentTime;
+        await handler.handle();
     } catch (err) {
         console.log(`[RPG LAND] ${err}`);
     }
 });
-
-function _findArguments(commandLine: string): string[] {
-    const commandParts = commandLine.split(' ');
-    const args: string[] = [];
-
-    let currentCommand: CommandMap | Command = commands;
-
-    for (let i = 0; i < commandParts.length; i++) {
-        const commandPart = commandParts[i];
-
-        if (typeof currentCommand === 'object' && commandPart in currentCommand) {
-            currentCommand = (currentCommand as CommandMap)[commandPart] as Command | CommandMap;
-        } else {
-            args.push(commandPart);
-        }
-    }
-
-    return args;
-}
-
-async function _findCommand(commandLine: String, message: Message, currentCommands: CommandMap = commands): Promise<Command | null> {
-    try {
-        const commandParts = commandLine.split(' ');
-        for (const command of commandParts) {
-            if (currentCommands instanceof Command) {
-                return currentCommands;
-            }
-
-            if (!(command in currentCommands)) {
-                throw Error();
-            }
-
-            currentCommands = currentCommands[command] as CommandMap;
-        }
-
-        if (currentCommands instanceof Command) {
-            return currentCommands;
-        }
-
-        throw Error();
-    } catch (error) {
-        const number = (await message.getContact()).number;
-        const translate = i18n(number);
-        message.reply(translate.commands.commons.commandNotFound);
-        return null;
-    }
-}
-
-async function _validateWhitelist(message: Message) {
-    const commonsService = ServiceFactory.makeCommonsService();
-    const whitelist = await commonsService.getWhitelist();
-    const contact = await message.getContact();
-    const translate = i18n(contact.number);
-
-    try {
-        const foundNumber = whitelist.find(item => item.number === contact.number);
-        if (!foundNumber) {
-            throw new NotAllowedException();
-        } else if (!foundNumber.allow) {
-            throw new BotInMaintenanceException();
-        }
-
-    } catch (err) {
-        if (err instanceof NotAllowedException) {
-            console.log(`[RPG LAND] Not Authorized: ${contact.name} | ${contact.number}`);
-            message.reply(translate.commands.commons.notAuthorized);
-        } else if (err instanceof BotInMaintenanceException) {
-            message.reply(translate.commands.commons.botMaintenance);
-            console.log(`[RPG LAND] Bot in Maintenance: ${contact.name} | ${contact.number}`);
-        } else {
-            console.error(err);
-            message.reply(translate.commands.commons.somethingWrong);
-        }
-
-        throw err;
-    }
-}
-
-function _verifyIgnoreMessage(message: Message): boolean {
-    const oneMinute = 60 * 1000; // One minute in milliseconds
-
-    // Inside your message handling logic
-    const messageTimestamp = message.timestamp;
-    const currentTimestamp = Date.now();
-    const messageDate = new Date(messageTimestamp * 1000);
-
-
-    return currentTimestamp - messageDate.getTime() > oneMinute;
-}
