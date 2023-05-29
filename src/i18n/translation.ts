@@ -14,6 +14,7 @@ export type CommandTranslations = {
             shop: string,
             profile: string,
             ranking: string,
+            language: string,
         },
         start: {
             welcome: (name: string) => string,
@@ -76,7 +77,7 @@ export type CommandTranslations = {
             players: string,
             all: string,
             error: string,
-        }
+        },
     };
 };
 

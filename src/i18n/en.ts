@@ -27,7 +27,8 @@ export const translationEn: CommandTranslations = {
             heal: `🩹 *HEAL*   -> \`\`\`Consume a life potion to restore your health points (HP)❤️ when it's low.\n🍷 *${commandChar}heal <amount | 1>*\`\`\``,
             shop: `🛍️ *SHOP*   -> \`\`\`Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.\n🛒 *${commandChar}shop info*\n💰 \*${commandChar}shop buy <item name> <amount>\*\`\`\``,
             profile: `🧍 *PROFILE*   -> \`\`\`Check your player profile and stats.\n📊 \*${commandChar}profile\*\`\`\``,
-            ranking: `🏆 *RANKING*   -> \`\`\`Check the leaderboard to see the top players by level.\n👑 \*${commandChar}ranking\*\`\`\``
+            ranking: `🏆 *RANKING*   -> \`\`\`Check the leaderboard to see the top players by level.\n👑 \*${commandChar}ranking\*\`\`\``,
+            language: '🌐 To change the language of the bot, use the *language* command with the desired language code.\n\nExample: `--language pt_BR` or `--language en`.',
         },
         start: {
             welcome: (name: string) => `🌍 Welcome to the world of RPG Land, *${name}*! 🌍\nEmbark on an epic journey, conquer challenging areas, and become a legendary adventurer. ⚔️🛡️\n\n🕵️‍♂️ To find mobs, use the command: *${commandChar}hunt find*\n⚔️ To attack a mob, use the command: *${commandChar}hunt attack*`,
@@ -142,7 +143,7 @@ export const translationEn: CommandTranslations = {
         language: {
             changed: (lang: string) => `✅ Language changed successfully to *${lang}*`,
             error: '❌ Error occurred while changing the language. ❌\nChoose between these two options: 🇧🇷 *pt_BR* or 🇺🇸 *en*.',
-        }, 
+        },
         migrate: {
             all: '✅ Migration completed for *all data*.',
             mobs: '✅ Mob migration completed.',
