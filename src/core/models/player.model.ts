@@ -1,5 +1,6 @@
 import { DataModel } from "../abstractions/models/data_model";
 import { Data } from "../abstractions/service/store";
+import { ItemType } from "../enums/item_type.enum";
 import { PlayerState } from "../enums/player_state.enum";
 import { ItemModel } from "./item.model";
 import { MobModel } from "./mob.model";
@@ -29,7 +30,7 @@ export class PlayerModel extends DataModel {
 
     // Max range of your attack
     getMaxAttack(): number {
-        return this.baseAttack * this.level;
+        return this._getBaseAttack() * this.level;
     }
 
     // Random attack to attack the mob
@@ -47,8 +48,13 @@ export class PlayerModel extends DataModel {
     }
 
     private _getBaseAttack(): number {
-        // modificadores de gear
-        return 5;
+        let baseAttack = 5; // Default base attack value
+        const equippedItems = this.inventory.filter((item) => item.equipped && item.type === ItemType.Weapon);
+        if (equippedItems.length > 0) {
+            baseAttack += equippedItems.reduce((totalAttack, item) => totalAttack + item.value, 0);
+        }
+
+        return baseAttack;
     }
 
     setPlayerDeath() {

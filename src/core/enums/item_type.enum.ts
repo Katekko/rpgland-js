@@ -1,4 +1,5 @@
 export enum ItemType {
     Currency = 'Currency',
-    HealthPotion = 'HealthPotion'
+    HealthPotion = 'HealthPotion',
+    Weapon = 'Weapon'
 }

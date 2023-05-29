@@ -78,5 +78,11 @@ export abstract class CommandTranslations {
             all: string;
             error: string;
         };
+        equip: {
+            success: (itemName: string) => string,
+            notWeapon: (itemName: string) => string,
+            notFoundOrEquipped: (itemName: string) => string,
+            noItemProvided: string,
+        }
     };
 }

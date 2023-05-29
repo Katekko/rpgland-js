@@ -43,10 +43,11 @@ export class HuntAttackCommand extends CommandGuard {
                     this.player.exp += mob.expDrop;
                     message.reply(this.i18n.commands.hunt.attack.mobDefeated(mob.name, mob.expDrop));
 
+                    // TODO: Pass the chance to drop to mob model
                     mob.itemsDrop.forEach((item) => {
                         if (Math.random() <= item.dropChance) {
                             const itemQuantity = Math.floor(Math.random() * item.amount * mob.level) + 1;
-                            const newItem = ItemFactory.makeItemByType(item.type);
+                            const newItem = ItemFactory.makeItemByName(item.name);
                             newItem.amount = itemQuantity;
                             const existingItemIndex = this.player!.inventory.findIndex(existingItem => existingItem.type === item.type);
 

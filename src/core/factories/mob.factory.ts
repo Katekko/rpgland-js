@@ -33,10 +33,11 @@ export class MobFactory {
         return new MobModel(
             'ae6de135-37e1-4a6d-bf1f-1e5aecc8c491',
             'Wolf',
-            5, 50,
+            5, 30,
             [
                 ItemFactory.makeCoin(),
-                ItemFactory.makeHealthPotion()
+                ItemFactory.makeHealthPotion(),
+                ItemFactory.makeSillySword(),
             ],
             20, .10, 10,
         );

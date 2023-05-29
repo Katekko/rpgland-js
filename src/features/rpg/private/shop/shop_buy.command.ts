@@ -57,7 +57,7 @@ export class ShopBuyCommand extends Command {
                     if (existingItem) {
                         existingItem.amount += quantity;
                     } else {
-                        const newItem = ItemFactory.makeItemByType(item.type);
+                        const newItem = ItemFactory.makeItemByName(item.name);
                         newItem.amount = quantity;
                         this.player.inventory.push(newItem);
                     }

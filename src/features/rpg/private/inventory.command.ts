@@ -1,5 +1,4 @@
 import { CommandGuard } from "../../../core/abstractions/command/command";
-import { commandOnlyForPrivate } from "../../../core/middlewares/command_only_for_private.middleware";
 import { PlayerModel } from "../../../core/models/player.model";
 import { CustomMessage } from "../../../handle_messages";
 import { CommandTranslations } from "../../../i18n/translation";

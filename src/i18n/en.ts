@@ -182,5 +182,15 @@ export class TranslationEn extends CommandTranslations {
             items: "✅ Item migration completed.",
             error: "❌ An *error* occurred during migration.",
         },
+        equip: {
+            success: (itemName: string) =>
+                `✅ You have successfully equipped the item *${itemName}*!`,
+            notWeapon: (itemName: string) =>
+                `⚠️ The item *${itemName}* is not a weapon and cannot be equipped.`,
+            notFoundOrEquipped: (itemName: string) =>
+                `⚠️ The item *${itemName}* was not found in your inventory or is already equipped.`,
+            noItemProvided:
+                `⚠️ You did not provide the name of the item to equip.`,
+        },
     };
 }

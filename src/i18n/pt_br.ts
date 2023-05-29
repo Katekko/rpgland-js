@@ -151,7 +151,16 @@ export class TranslationPtBr extends CommandTranslations {
             players: '✅ Migração de *jogadores* concluída.',
             items: '✅ Migração de *itens* concluída.',
             error: '❌ Ocorreu um *erro* durante a migração.',
-        }
+        },
+        equip: {
+            success: (itemName: string) =>
+                `✅ Você equipou o item *${itemName}* com sucesso!`,
+            notWeapon: (itemName: string) =>
+                `⚠️ O item *${itemName}* não é uma arma e não pode ser equipado.`,
+            notFoundOrEquipped: (itemName: string) =>
+                `⚠️ O item *${itemName}* não foi encontrado no seu inventário ou já está equipado.`,
+            noItemProvided: `⚠️ Você não forneceu o nome do item para equipar.`,
+        },
     }
 
 }
