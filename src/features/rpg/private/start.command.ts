@@ -10,7 +10,7 @@ export class StartCommand extends Command {
 
     injectDependencies(i18n: CommandTranslations, player: PlayerModel | null, services: { [key: string]: any }): void {
         this.i18n = i18n;
-        this.playersService = services.PlayerService;
+        this.playersService = services.PlayersService;
     }
 
     async execute(message: CustomMessage, args: any): Promise<void> {
