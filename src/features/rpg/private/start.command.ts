@@ -1,5 +1,4 @@
 import { Command } from "../../../core/abstractions/command/command";
-import { commandOnlyForPrivate } from "../../../core/middlewares/command_only_for_private.middleware";
 import { verifyPlayerisStartedMiddleware } from "../../../core/middlewares/verify_player_is_started.middleware";
 import { PlayerModel } from '../../../core/models/player.model';
 import { CustomMessage } from "../../../handle_messages";
@@ -9,7 +8,7 @@ import { PlayersService } from "../../../services/players.service";
 export class StartCommand extends Command {
     playersService: PlayersService | undefined;
 
-    injectDependencies(i18n: CommandTranslations, player: PlayerModel, services: { [key: string]: any }): void {
+    injectDependencies(i18n: CommandTranslations, player: PlayerModel | null, services: { [key: string]: any }): void {
         this.i18n = i18n;
         this.playersService = services.PlayerService;
     }

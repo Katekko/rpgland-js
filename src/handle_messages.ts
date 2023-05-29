@@ -169,7 +169,7 @@ export class HandleMessages {
         return args;
     }
 
-    commandOnlyForPrivate(i18n: CommandTranslations, command: Command): boolean {
+    private commandOnlyForPrivate(i18n: CommandTranslations, command: Command): boolean {
         if (this.message.isGroup) {
             const commandType = command.constructor as typeof Command;
             if (privateCommands.includes(commandType)) {
