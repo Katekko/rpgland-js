@@ -1,4 +1,4 @@
-import { CommandMap } from './core/abstractions/command/command';
+import { Command, CommandMap } from './core/abstractions/command/command';
 import { PingCommand } from './features/common/private/ping.command';
 import { HelpCommand } from './features/rpg/both/help.command';
 import { ProfileCommand } from './features/rpg/both/profile.command';
@@ -45,3 +45,12 @@ export const commands: CommandMap = {
     },
     language: new ChangeLanguageCommand(),
 };
+
+type PrivateCommandTypes = typeof Command[];
+
+export const privateCommands: PrivateCommandTypes = [
+    StartCommand, HuntCommand, HuntAttackCommand,
+    ShopCommand, ShopBuyCommand, HealCommand,
+    InventoryCommand, MigrateMobsCommand, MigrateItemsCommand,
+    MigratePlayersCommand,
+];

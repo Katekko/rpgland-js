@@ -18,17 +18,15 @@ export class ChangeLanguageCommand extends Command {
     async execute(message: CustomMessage, args: any): Promise<void> {
         try {
             if (this.i18n) {
-                if (await commandOnlyForPrivate(message, this.i18n)) {
-                    if (this.player) {
-                        const languages = ['pt_BR', 'en'];
-                        const language = args[0];
-                        if (language && languages.includes(language)) {
-                            this.player.language = language;
-                            await this.playersService!.savePlayer(this.player);
-                            message.reply(this.i18n.commands.language.changed(language));
-                        } else {
-                            message.reply(this.i18n.commands.language.error);
-                        }
+                if (this.player) {
+                    const languages = ['pt_BR', 'en'];
+                    const language = args[0];
+                    if (language && languages.includes(language)) {
+                        this.player.language = language;
+                        await this.playersService!.savePlayer(this.player);
+                        message.reply(this.i18n.commands.language.changed(language));
+                    } else {
+                        message.reply(this.i18n.commands.language.error);
                     }
                 }
             }

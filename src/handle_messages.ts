@@ -1,5 +1,5 @@
 import { commandChar } from "./app";
-import { commands } from "./commands";
+import { commands, privateCommands } from "./commands";
 import { Command, CommandMap } from "./core/abstractions/command/command";
 import { BotInMaintenanceException } from "./core/exceptions/bot_in_maintenance.exception";
 import { NotAllowedException } from "./core/exceptions/not_allowed.exception";
@@ -94,7 +94,7 @@ export class HandleMessages {
         return timeDifference < cooldownDuration;
     }
 
-    async validateWhitelist(i18n: CommandTranslations) {
+    private async validateWhitelist(i18n: CommandTranslations) {
         const commonsService = this.commonsService;
         const whitelist = await commonsService.getWhitelist();
         const phone = this.message.phone;
@@ -124,7 +124,7 @@ export class HandleMessages {
         }
     }
 
-    findCommand(commandLine: String, i18n: CommandTranslations, currentCommands: CommandMap = commands): Command | null {
+    private findCommand(commandLine: String, i18n: CommandTranslations, currentCommands: CommandMap = commands): Command | null {
         try {
             const commandParts = commandLine.split(' ');
             for (const command of commandParts) {
@@ -150,7 +150,7 @@ export class HandleMessages {
         }
     }
 
-    findArguments(commandLine: string): string[] {
+    private findArguments(commandLine: string): string[] {
         const commandParts = commandLine.split(' ');
         const args: string[] = [];
 
@@ -169,10 +169,22 @@ export class HandleMessages {
         return args;
     }
 
+    commandOnlyForPrivate(i18n: CommandTranslations, command: Command): boolean {
+        if (this.message.isGroup) {
+            const commandType = command.constructor as typeof Command;
+            if (privateCommands.includes(commandType)) {
+                this.message.reply(i18n.commands.commons.commandOnlyForPrivate);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     async handle() {
         try {
             if (this.verifyIfNeedToIgnore()) return;
-            if (!this.verifyIfIsCommand()) return null;
+            if (!this.verifyIfIsCommand()) return;
             const player = await this.playersService.getPlayerByMessage(this.message);
             const i18n = await this.defineLanguage(player);
 
@@ -188,10 +200,10 @@ export class HandleMessages {
             const commandLine = this.message.body.split(commandChar)[1];
             const command = this.findCommand(commandLine, i18n);
             if (command == null) return null;
+            if (this.commandOnlyForPrivate(i18n, command)) return;
 
             const args = this.findArguments(commandLine);
 
-            // test if the command is for private chat only
             command.injectDependencies(i18n, player,
                 {
                     PlayersService: this.playersService,

@@ -19,20 +19,18 @@ export class AddWhitelistCommand extends Command {
     async execute(message: CustomMessage, args: any): Promise<void> {
         try {
             if (this.i18n) {
-                if (await commandOnlyForPrivate(message, this.i18n)) {
-                    if (await verifyIsKatekkoMiddleware(message)) {
-                        const phoneNumber = args[0];
-                        const allowed = ((args[1] ?? 'true') === 'true');
-                        if (typeof allowed === 'boolean') {
-                            const person = new WhitelistModel(phoneNumber, allowed);
-                            await this.commonsService!.saveWhitelistEntry(person);
-                            message.reply(person.toString());
-                        } else {
-                            message.reply(this.i18n.commands.commons.somethingWrong);
-                        }
+                if (await verifyIsKatekkoMiddleware(message)) {
+                    const phoneNumber = args[0];
+                    const allowed = ((args[1] ?? 'true') === 'true');
+                    if (typeof allowed === 'boolean') {
+                        const person = new WhitelistModel(phoneNumber, allowed);
+                        await this.commonsService!.saveWhitelistEntry(person);
+                        message.reply(person.toString());
                     } else {
-                        message.reply(this.i18n.commands.commons.youAreNotKatekko);
+                        message.reply(this.i18n.commands.commons.somethingWrong);
                     }
+                } else {
+                    message.reply(this.i18n.commands.commons.youAreNotKatekko);
                 }
             }
         } catch (err) {

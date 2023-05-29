@@ -17,17 +17,15 @@ export class ShopCommand extends Command {
     async execute(message: CustomMessage, args: any): Promise<void> {
         try {
             if (this.i18n) {
-                if (await commandOnlyForPrivate(message, this.i18n)) {
-                    if (this.player) {
-                        if (this.player.state != PlayerState.Idle) {
-                            message.reply(this.i18n.commands.shop.notIdle);
-                            return;
-                        }
+                if (this.player) {
+                    if (this.player.state != PlayerState.Idle) {
+                        message.reply(this.i18n.commands.shop.notIdle);
+                        return;
                     }
-
-                    const items = ItemFactory.makeItemsToShop();
-                    message.reply(this.i18n.commands.shop.info(items));
                 }
+
+                const items = ItemFactory.makeItemsToShop();
+                message.reply(this.i18n.commands.shop.info(items));
             }
         } catch (err) {
             throw err;

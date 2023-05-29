@@ -18,10 +18,8 @@ export class MigrateItemsCommand extends Command {
         try {
             if (this.i18n) {
                 try {
-                    if (await commandOnlyForPrivate(message, this.i18n)) {
-                        await this.itemsService!.migrate();
-                        message.reply(this.i18n.commands.migrate.items);
-                    }
+                    await this.itemsService!.migrate();
+                    message.reply(this.i18n.commands.migrate.items);
                 } catch (err) {
                     message.reply(this.i18n.commands.migrate.error);
                     throw err;

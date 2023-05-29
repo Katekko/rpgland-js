@@ -20,46 +20,44 @@ export class HealCommand extends CommandGuard {
     async execute(message: CustomMessage, args: any): Promise<void> {
         try {
             if (this.i18n) {
-                if (await commandOnlyForPrivate(message, this.i18n)) {
-                    if (this.player) {
-                        if (this.player.state != PlayerState.Idle) {
-                            message.reply(this.i18n.commands.heal.failedToHeal);
-                            return;
+                if (this.player) {
+                    if (this.player.state != PlayerState.Idle) {
+                        message.reply(this.i18n.commands.heal.failedToHeal);
+                        return;
+                    }
+
+                    const potion = this.player.inventory.find(item => item.type === ItemType.HealthPotion);
+                    if (potion) {
+                        let potionAmount = 1;
+
+
+                        const userAmount = args[0];
+                        if (userAmount && !isNaN(userAmount)) {
+                            potionAmount = parseInt(userAmount);
                         }
 
-                        const potion = this.player.inventory.find(item => item.type === ItemType.HealthPotion);
-                        if (potion) {
-                            let potionAmount = 1;
 
+                        const availableAmount = potion.amount;
+                        potionAmount = Math.min(potionAmount, availableAmount);
 
-                            const userAmount = args[0];
-                            if (userAmount && !isNaN(userAmount)) {
-                                potionAmount = parseInt(userAmount);
-                            }
+                        const maxHealth = this.player.getMaxHealth();
+                        const currentHealth = this.player.health;
+                        const healedAmount = Math.min(maxHealth - currentHealth, potion.value * potionAmount);
 
+                        this.player.health += healedAmount;
 
-                            const availableAmount = potion.amount;
-                            potionAmount = Math.min(potionAmount, availableAmount);
+                        potion.amount -= potionAmount;
 
-                            const maxHealth = this.player.getMaxHealth();
-                            const currentHealth = this.player.health;
-                            const healedAmount = Math.min(maxHealth - currentHealth, potion.value * potionAmount);
-
-                            this.player.health += healedAmount;
-
-                            potion.amount -= potionAmount;
-
-                            if (potion.amount <= 0) {
-                                const potionIndex = this.player.inventory.indexOf(potion);
-                                this.player.inventory.splice(potionIndex, 1);
-                            }
-
-                            await this.playersService!.savePlayer(this.player);
-
-                            message.reply(this.i18n.commands.heal.healedWithItem(healedAmount, this.player.health, potion.name));
-                        } else {
-                            message.reply(this.i18n.commands.heal.noPotion);
+                        if (potion.amount <= 0) {
+                            const potionIndex = this.player.inventory.indexOf(potion);
+                            this.player.inventory.splice(potionIndex, 1);
                         }
+
+                        await this.playersService!.savePlayer(this.player);
+
+                        message.reply(this.i18n.commands.heal.healedWithItem(healedAmount, this.player.health, potion.name));
+                    } else {
+                        message.reply(this.i18n.commands.heal.noPotion);
                     }
                 }
             }

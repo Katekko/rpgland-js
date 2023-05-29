@@ -23,36 +23,34 @@ export class HuntCommand extends CommandGuard {
     async execute(message: CustomMessage, args: any): Promise<void> {
         try {
             if (this.i18n) {
-                if (await commandOnlyForPrivate(message, this.i18n)) {
-                    if (this.player) {
-                        if (this.player.state != PlayerState.Idle) {
-                            message.reply(this.i18n.commands.hunt.find.failedToSearch);
-                            return;
-                        }
-                        const mobs = await this.mobsService!.getAllMobs();
-                        const totalChance = mobs.reduce((sum, mob) => sum + mob.chanceToAppear, 0);
-                        let randomChance = Math.random() * totalChance;
-
-                        let selectedMob: MobModel | undefined;
-
-                        for (const mob of mobs) {
-                            const chance = mob.chanceToAppear / totalChance;
-                            if (randomChance <= chance) {
-                                selectedMob = mob;
-                                break;
-                            }
-                            randomChance -= chance;
-                        }
-
-                        if (selectedMob) {
-                            this.player!.state = PlayerState.Hunting;
-                            this.player!.huntAgainst = selectedMob;
-                            await this.playersService!.savePlayer(this.player);
-                            message.reply(this.i18n.commands.hunt.find.found(selectedMob));
-                        }
-                    } else {
-                        message.reply(this.i18n.commands.commons.needToStart);
+                if (this.player) {
+                    if (this.player.state != PlayerState.Idle) {
+                        message.reply(this.i18n.commands.hunt.find.failedToSearch);
+                        return;
                     }
+                    const mobs = await this.mobsService!.getAllMobs();
+                    const totalChance = mobs.reduce((sum, mob) => sum + mob.chanceToAppear, 0);
+                    let randomChance = Math.random() * totalChance;
+
+                    let selectedMob: MobModel | undefined;
+
+                    for (const mob of mobs) {
+                        const chance = mob.chanceToAppear / totalChance;
+                        if (randomChance <= chance) {
+                            selectedMob = mob;
+                            break;
+                        }
+                        randomChance -= chance;
+                    }
+
+                    if (selectedMob) {
+                        this.player!.state = PlayerState.Hunting;
+                        this.player!.huntAgainst = selectedMob;
+                        await this.playersService!.savePlayer(this.player);
+                        message.reply(this.i18n.commands.hunt.find.found(selectedMob));
+                    }
+                } else {
+                    message.reply(this.i18n.commands.commons.needToStart);
                 }
             }
         } catch (err) {

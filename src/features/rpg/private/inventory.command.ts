@@ -15,14 +15,12 @@ export class InventoryCommand extends CommandGuard {
     async execute(message: CustomMessage, args: any): Promise<void> {
         try {
             if (this.i18n) {
-                if (await commandOnlyForPrivate(message, this.i18n)) {
-                    if (this.player) {
-                        const inventory = this.player.inventory;
-                        if (inventory.length > 0) {
-                            message.reply(this.i18n.commands.inventory.open(this.player));
-                        } else {
-                            message.reply(this.i18n.commands.inventory.emptyInventory);
-                        }
+                if (this.player) {
+                    const inventory = this.player.inventory;
+                    if (inventory.length > 0) {
+                        message.reply(this.i18n.commands.inventory.open(this.player));
+                    } else {
+                        message.reply(this.i18n.commands.inventory.emptyInventory);
                     }
                 }
             } else {

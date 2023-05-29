@@ -18,20 +18,18 @@ export class StartCommand extends Command {
         try {
             const translate = this.i18n;
             if (translate && this.playersService) {
-                if (await commandOnlyForPrivate(message, translate)) {
-                    const playerStarted = await verifyPlayerisStartedMiddleware(message);
-                    const player = PlayerModel.createNew(message.name, message.phone);
-                    try {
-                        if (!playerStarted) {
-                            await this.playersService.savePlayer(player);
-                            message.reply(translate.commands.start.welcome(player.name));
-                        } else {
-                            message.reply(translate.commands.start.playerAlreadyStarted);
-                        }
-                    } catch (err) {
-                        console.error('Error adding player:', err);
-                        message.reply(this.i18n!.commands.start.error);
+                const playerStarted = await verifyPlayerisStartedMiddleware(message);
+                const player = PlayerModel.createNew(message.name, message.phone);
+                try {
+                    if (!playerStarted) {
+                        await this.playersService.savePlayer(player);
+                        message.reply(translate.commands.start.welcome(player.name));
+                    } else {
+                        message.reply(translate.commands.start.playerAlreadyStarted);
                     }
+                } catch (err) {
+                    console.error('Error adding player:', err);
+                    message.reply(this.i18n!.commands.start.error);
                 }
             } else {
                 throw ReferenceError();

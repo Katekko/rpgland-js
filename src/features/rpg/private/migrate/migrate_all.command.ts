@@ -24,13 +24,11 @@ export class MigrateItemsCommand extends Command {
         try {
             if (this.i18n) {
                 try {
-                    if (await commandOnlyForPrivate(message, this.i18n)) {
-                        await this.itemsService!.migrate();
-                        await this.mobsService!.migrate();
-                        await this.playersService!.migrate();
+                    await this.itemsService!.migrate();
+                    await this.mobsService!.migrate();
+                    await this.playersService!.migrate();
 
-                        message.reply(this.i18n.commands.migrate.all);
-                    }
+                    message.reply(this.i18n.commands.migrate.all);
                 } catch (err) {
                     message.reply(this.i18n.commands.migrate.error);
                     throw err;
