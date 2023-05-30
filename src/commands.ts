@@ -54,7 +54,7 @@ type NeedToStartCommandTypes = typeof Command[];
 export const privateCommands: PrivateCommandTypes = [
     StartCommand, HuntCommand, HuntAttackCommand,
     ShopBuyCommand, HealCommand,
-    InventoryCommand, MigrateMobsCommand, MigrateItemsCommand,
+    MigrateMobsCommand, MigrateItemsCommand,
     MigratePlayersCommand,
 ];
 

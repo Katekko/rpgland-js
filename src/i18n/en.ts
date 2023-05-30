@@ -29,6 +29,7 @@ export class TranslationEn extends CommandTranslations {
             heal: `🩹 *HEAL*   -> \`\`\`Consume a life potion to restore your health points (HP)❤️ when it's low.\n🍷 *${this.commandChar}heal <amount | 1>*\`\`\``,
             shop: `🛍️ *SHOP*   -> \`\`\`Visit the marketplace to spend your hard-earned coins on various items, gear, and enhancements.\n🛒 *${this.commandChar}shop info*\n💰 \*${this.commandChar}shop buy <item name> <amount>\*\`\`\``,
             profile: `🧍 *PROFILE*   -> \`\`\`Check your player profile and stats.\n📊 \*${this.commandChar}profile\*\`\`\``,
+            equip: `🧍 *EQUIP*   -> \`\`\`Equip items to become stronger.\n📊 \*${this.commandChar}equip <item name>\*\`\`\``,
             ranking: `🏆 *RANKING*   -> \`\`\`Check the leaderboard to see the top players by level.\n👑 \*${this.commandChar}ranking\*\`\`\``,
             language:
                 '🌐 To change the language of the bot, use the *language* command with the desired language code.\n\nExample: `--language pt_BR` or `--language en`.',

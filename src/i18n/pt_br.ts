@@ -28,6 +28,7 @@ export class TranslationPtBr extends CommandTranslations {
             heal: `🩹 *HEAL*   -> \`\`\`Consuma uma poção de vida para restaurar seus pontos de vida (HP) ❤️ quando estiverem baixos.\n🍷 \*${this.commandChar}heal <amount | 1> \*\`\`\``,
             shop: `🛍️ *SHOP*   -> \`\`\`Visite o mercado para gastar suas moedas suadas em vários itens, equipamentos e aprimoramentos.\n🛒 *${this.commandChar}shop info*\n💰 \*${this.commandChar}shop buy <item name> <amount>\*\`\`\``,
             profile: `🧍 *PROFILE*   -> \`\`\`Verifique o perfil e as estatísticas de seu jogador.\n📊 \*${this.commandChar}profile\*\`\`\``,
+            equip: `⚔️ *EQUIP*   -> \`\`\`Equipe itens para se tornar mais forte.\n📊 *${this.commandChar}equip <nome do item>\*\`\`\``,
             ranking: `🏆 *RANKING*   -> \`\`\`Verifique a Ranking para ver os melhores jogadores por nível.\n👑 \*${this.commandChar}ranking\*\`\`\``,
             language: '🌐 Para alterar o idioma do bot, use o comando *language* seguido do código do idioma desejado.\n\nExemplo: `--language pt_BR` ou `--language en`.',
         },

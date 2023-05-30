@@ -13,6 +13,7 @@ export abstract class CommandTranslations {
             heal: string;
             shop: string;
             profile: string;
+            equip: string;
             ranking: string;
             language: string;
         };

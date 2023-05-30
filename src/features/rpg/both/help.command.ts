@@ -17,7 +17,9 @@ export class HelpCommand extends Command {
                 \n\n${this.i18n.commands.help.heal}
                 \n\n${this.i18n.commands.help.shop}
                 \n\n${this.i18n.commands.help.profile}
-                \n\n${this.i18n.commands.help.ranking}`);
+                \n\n${this.i18n.commands.help.equip}
+                \n\n${this.i18n.commands.help.ranking}
+                \n\n${this.i18n.commands.help.language}`);
             }
         } catch (err) {
             throw err;
