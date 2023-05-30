@@ -49,7 +49,7 @@ export class PlayerModel extends DataModel {
 
     private _getBaseAttack(): number {
         let baseAttack = 5; // Default base attack value
-        const equippedItems = this.inventory.filter((item) => item.equipped && item.type === ItemType.Weapon);
+        const equippedItems = this.inventory?.filter((item) => item.equipped && item.type === ItemType.Weapon) ?? [];
         if (equippedItems.length > 0) {
             baseAttack += equippedItems.reduce((totalAttack, item) => totalAttack + item.value, 0);
         }

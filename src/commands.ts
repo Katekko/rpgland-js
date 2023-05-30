@@ -49,10 +49,18 @@ export const commands: CommandMap = {
 };
 
 type PrivateCommandTypes = typeof Command[];
+type NeedToStartCommandTypes = typeof Command[];
 
 export const privateCommands: PrivateCommandTypes = [
     StartCommand, HuntCommand, HuntAttackCommand,
-    ShopCommand, ShopBuyCommand, HealCommand,
+    ShopBuyCommand, HealCommand,
     InventoryCommand, MigrateMobsCommand, MigrateItemsCommand,
     MigratePlayersCommand,
+];
+
+export const needToStartCommands: NeedToStartCommandTypes = [
+    HuntCommand, HuntAttackCommand,
+    ShopBuyCommand, HealCommand,
+    InventoryCommand, ProfileCommand, ChangeLanguageCommand,
+    EquipItemCommand,
 ];

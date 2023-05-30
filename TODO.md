@@ -1,4 +1,4 @@
-- Make the same (private commands) for need to start the game first
+- Add command for equip items in help
 
 
 - Host

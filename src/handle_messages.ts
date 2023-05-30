@@ -1,5 +1,5 @@
 import { commandChar } from "./app";
-import { commands, privateCommands } from "./commands";
+import { commands, needToStartCommands, privateCommands } from "./commands";
 import { Command, CommandMap } from "./core/abstractions/command/command";
 import { BotInMaintenanceException } from "./core/exceptions/bot_in_maintenance.exception";
 import { NotAllowedException } from "./core/exceptions/not_allowed.exception";
@@ -181,6 +181,16 @@ export class HandleMessages {
         return false;
     }
 
+    private commandNeedToStart(i18n: CommandTranslations, command: Command, player: PlayerModel | null): boolean {
+        const commandType = command.constructor as typeof Command;
+        if (needToStartCommands.includes(commandType) && !player) {
+            this.message.reply(i18n.commands.commons.needToStart);
+            return true;
+        }
+
+        return false;
+    }
+
     async handle() {
         try {
             if (this.verifyIfNeedToIgnore()) return;
@@ -195,12 +205,13 @@ export class HandleMessages {
                 return;
             }
 
-            this.validateWhitelist(i18n);
+            await this.validateWhitelist(i18n);
 
             const commandLine = this.message.body.split(commandChar)[1];
             const command = this.findCommand(commandLine, i18n);
             if (command == null) return null;
             if (this.commandOnlyForPrivate(i18n, command)) return;
+            if (this.commandNeedToStart(i18n, command, player)) return;
 
             const args = this.findArguments(commandLine);
 
