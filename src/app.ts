@@ -6,7 +6,13 @@ import { CustomMessage, HandleMessages } from './handle_messages';
 
 export const commandChar = '--';
 
-const client = new Client({ authStrategy: new LocalAuth() });
+const client = new Client({
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    }
+});
+
 console.log(`[RPG LAND] Loading api wrapper whatsapp!`);
 client.initialize();
 
